@@ -1,0 +1,70 @@
+{
+  "_meta": {
+    "note": "This file is the live data store for FlyScout. Entries with auto_detected:false are bootstrap/seed examples included to demonstrate the schema before the first automated scan runs. Entries with auto_detected:true are written exclusively by check_rules.py via the scheduled GitHub Action — do not hand-edit those going forward. Seed entries should be verified and either confirmed or removed once real monitoring is live.",
+    "schema_version": 1,
+    "markets": ["US", "UK", "EU", "AU", "SG", "CA", "JP"],
+    "last_updated": "2026-06-20T00:00:00Z"
+  },
+  "changes": [
+    {
+      "id": "seed_001",
+      "market": "EU",
+      "network": "Both",
+      "category": "interchange",
+      "cnp": false,
+      "title": "EU Interchange Fee Regulation caps in force",
+      "summary": "EU Regulation 2015/751 caps consumer debit card interchange at 0.2% and consumer credit card interchange at 0.3% of transaction value for both Visa and Mastercard. Commercial/corporate cards are exempt from the cap.",
+      "old_value": null,
+      "new_value": "0.2% debit / 0.3% credit",
+      "trigger": "regulatory_order",
+      "effective_date": "2015-12-09",
+      "detected_at": "2026-06-20T00:00:00Z",
+      "source_name": "EU Interchange Fee Regulation (EU) 2015/751",
+      "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32015R0751",
+      "old_snippet": null,
+      "new_snippet": "Interchange fees for consumer debit cards shall not exceed 0.2% and for consumer credit cards shall not exceed 0.3% of the value of the transaction.",
+      "reviewed": true,
+      "auto_detected": false
+    },
+    {
+      "id": "seed_002",
+      "market": "UK",
+      "network": "Both",
+      "category": "interchange",
+      "cnp": true,
+      "title": "UK-EEA cross-border card-not-present interchange raised post-Brexit",
+      "summary": "Following the UK's exit from the EU's Interchange Fee Regulation framework, Visa and Mastercard raised interchange fees on consumer card transactions between UK merchants and EEA-issued cards (and vice versa) for card-not-present transactions, citing the cross-border exemption no longer applying. This was widely reported by UK media and merchant bodies as a substantial cost increase for cross-border e-commerce.",
+      "old_value": "0.2% / 0.3% (EU IFR cap)",
+      "new_value": "Increased — exact current rate should be verified against current Visa/Mastercard UK bulletins",
+      "trigger": "network_policy_update",
+      "effective_date": "2021-10-01",
+      "detected_at": "2026-06-20T00:00:00Z",
+      "source_name": "Visa/Mastercard UK cross-border interchange announcements",
+      "source_url": "https://www.psr.org.uk/our-work/card-acquiring/",
+      "old_snippet": null,
+      "new_snippet": "Cross-border UK-EEA interchange no longer subject to the EU IFR cap following the end of the Brexit transition period.",
+      "reviewed": true,
+      "auto_detected": false
+    },
+    {
+      "id": "seed_003",
+      "market": "AU",
+      "network": "Both",
+      "category": "surcharge",
+      "cnp": true,
+      "title": "RBA card payments and surcharging review (open consultation)",
+      "summary": "The Reserve Bank of Australia opened a review of card payment costs, including surcharging practices, with options under consideration ranging from tighter enforcement of the 'cost of acceptance' surcharge cap to a broader prohibition on surcharging for some payment types. This is an open regulatory process, not yet a finalised rule change.",
+      "old_value": null,
+      "new_value": null,
+      "trigger": "government_consultation",
+      "effective_date": null,
+      "detected_at": "2026-06-20T00:00:00Z",
+      "source_name": "RBA Review of Merchant Card Payment Costs and Surcharging",
+      "source_url": "https://www.rba.gov.au/payments-and-infrastructure/payments-system/card-payments-regulation/",
+      "old_snippet": null,
+      "new_snippet": "The Reserve Bank is reviewing card payment costs and surcharging practices, with a consultation paper published for industry feedback.",
+      "reviewed": true,
+      "auto_detected": false
+    }
+  ]
+}
