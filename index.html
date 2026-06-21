@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>FlyScout · Card Network Rule Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#14213D; --navy-deep:#0B1426; --teal:#0D9488; --teal-light:#CCFBF1;
+  --teal-dark:#0F766E; --green:#16A34A; --green-bg:#F0FDF4; --amber:#D97706; --amber-bg:#FFFBEB;
+  --red:#DC2626; --red-bg:#FEF2F2; --blue:#2563EB; --blue-bg:#EFF6FF;
+  --bg:#FFFFFF; --bg-soft:#F8FAFC; --bg-card:#FFFFFF; --border:#E2E8F0; --border-soft:#EDF1F7;
+  --text:#14213D; --text-muted:#64748B; --text-faint:#94A3B8;
+  --r:8px; --r2:12px; --shadow:0 1px 2px rgba(20,33,61,0.05); --shadow-md:0 4px 16px rgba(20,33,61,0.08);
+  --ff:'Inter',-apple-system,sans-serif; --fm:'JetBrains Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--ff);background:var(--bg-soft);color:var(--text);line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:var(--teal-dark);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* HEADER */
+.topbar{background:var(--bg);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;gap:24px;position:sticky;top:0;z-index:50}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:16px;color:var(--navy)}
+.brand-icon{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,var(--navy),var(--teal));display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;flex-shrink:0}
+.nav{display:flex;gap:4px;margin-left:8px}
+.nav-item{padding:8px 14px;border-radius:7px;font-size:13px;font-weight:600;color:var(--text-muted);cursor:pointer;transition:.15s}
+.nav-item:hover{background:var(--bg-soft);color:var(--text)}
+.nav-item.active{background:var(--navy);color:#fff}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:10px}
+.live-pill{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;padding:5px 10px;border-radius:20px;background:var(--green-bg);color:var(--green);border:1px solid #BBF7D0}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+.wrap{max-width:1180px;margin:0 auto;padding:28px 24px 60px}
+.view{display:none}.view.active{display:block;animation:fade .2s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.page-title{font-size:22px;font-weight:800;color:var(--navy);margin-bottom:4px}
+.page-sub{font-size:13px;color:var(--text-muted);margin-bottom:24px}
+
+/* STAT CARDS */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px}
+.stat-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r2);padding:18px 20px;box-shadow:var(--shadow)}
+.stat-val{font-size:28px;font-weight:800;color:var(--navy);margin-bottom:3px;font-family:var(--fm)}
+.stat-label{font-size:12px;color:var(--text-muted);font-weight:600}
+.stat-sub{font-size:11px;color:var(--text-faint);margin-top:6px}
+
+/* BREAKDOWN GRID */
+.bd-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px}
+.bd-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r2);padding:18px 20px}
+.bd-title{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.bd-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border-soft);font-size:12px}
+.bd-row:last-child{border-bottom:none}
+.bd-row-label{flex:1;color:var(--text)}
+.bd-row-bar{width:80px;height:5px;border-radius:3px;background:var(--border-soft);overflow:hidden}
+.bd-row-fill{height:100%;background:var(--teal);border-radius:3px}
+.bd-row-val{font-family:var(--fm);font-weight:600;color:var(--navy);width:24px;text-align:right}
+
+/* BADGES */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.02em}
+.b-market{background:var(--blue-bg);color:var(--blue)}
+.b-visa{background:#EEF2FF;color:#4F46E5}
+.b-mc{background:#FEF2F2;color:#DC2626}
+.b-both{background:#F1F5F9;color:#475569}
+.b-interchange{background:var(--teal-light);color:var(--teal-dark)}
+.b-surcharge{background:#FDF4FF;color:#A21CAF}
+.b-cnp{background:var(--amber-bg);color:var(--amber)}
+.b-trigger{background:var(--bg-soft);color:var(--text-muted);border:1px solid var(--border)}
+.b-due{background:var(--amber-bg);color:var(--amber)}
+.b-pending{background:var(--blue-bg);color:var(--blue)}
+.b-seed{background:#F1F5F9;color:var(--text-faint)}
+
+/* FILTER BAR */
+.fbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:18px}
+.fchip{padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:#fff;cursor:pointer;font-size:11px;font-weight:600;color:var(--text-muted);transition:.15s}
+.fchip:hover{border-color:var(--teal)}
+.fchip.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+/* CHANGE LOG CARDS */
+.chg-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r2);padding:16px 18px;margin-bottom:10px;box-shadow:var(--shadow)}
+.chg-head{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.chg-date{font-size:11px;color:var(--text-faint);font-family:var(--fm);margin-left:auto}
+.chg-title{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:5px}
+.chg-summary{font-size:12.5px;color:var(--text-muted);line-height:1.6;margin-bottom:10px}
+.chg-diff{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.diff-box{flex:1;min-width:140px;padding:8px 11px;border-radius:7px;font-size:12px}
+.diff-old{background:var(--red-bg);color:var(--red)}
+.diff-new{background:var(--green-bg);color:var(--green)}
+.diff-label{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px;opacity:.7}
+.chg-snippet{background:var(--bg-soft);border-left:3px solid var(--border);padding:8px 12px;font-size:11.5px;color:var(--text-muted);border-radius:0 6px 6px 0;margin-bottom:10px;font-style:italic}
+.chg-foot{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--text-faint)}
+.chg-foot a{font-weight:600}
+
+/* PREDICTIONS */
+.pred-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r2);padding:18px 20px;margin-bottom:12px;border-left:4px solid var(--amber)}
+.pred-card.pending{border-left-color:var(--blue)}
+.pred-head{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.pred-title{font-size:14px;font-weight:700;color:var(--navy)}
+.pred-reasoning{font-size:12.5px;color:var(--text-muted);line-height:1.65;margin-bottom:10px}
+.pred-method{font-size:10.5px;color:var(--text-faint);display:flex;align-items:center;gap:5px}
+
+/* EMPTY STATE */
+.empty{text-align:center;padding:50px 20px;color:var(--text-faint)}
+.empty-icon{font-size:32px;margin-bottom:10px;opacity:.4}
+.empty p{font-size:13px;line-height:1.6}
+
+/* CHAT */
+.chat-wrap{display:flex;flex-direction:column;height:calc(100vh - 160px);max-width:760px;margin:0 auto}
+.chat-grounding{display:flex;align-items:center;gap:8px;padding:9px 14px;background:var(--teal-light);border:1px solid #99F6E4;border-radius:var(--r);font-size:11.5px;color:var(--teal-dark);margin-bottom:14px}
+.chat-body{flex:1;overflow-y:auto;padding-right:4px}
+.cmsg{display:flex;gap:10px;margin-bottom:16px}
+.cmsg.u{flex-direction:row-reverse}
+.cavt{width:30px;height:30px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800}
+.cavt.ai{background:linear-gradient(135deg,var(--navy),var(--teal));color:#fff}
+.cavt.u{background:var(--bg-soft);color:var(--text-muted);border:1px solid var(--border)}
+.cbub{max-width:82%;padding:12px 15px;border-radius:var(--r2);font-size:13px;line-height:1.7;background:var(--bg-card);border:1px solid var(--border)}
+.cmsg.u .cbub{background:var(--navy);color:#fff;border-color:var(--navy)}
+.cite-row{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap}
+.cite-chip{font-size:10px;padding:2px 8px;border-radius:20px;background:var(--teal-light);color:var(--teal-dark);font-weight:600}
+.cite-chip.web{background:var(--amber-bg);color:var(--amber)}
+.chat-input-row{display:flex;gap:8px;margin-top:14px;background:#fff;border:1px solid var(--border);border-radius:var(--r2);padding:8px 10px;box-shadow:var(--shadow)}
+.chat-input-row textarea{flex:1;border:none;outline:none;resize:none;font-family:var(--ff);font-size:13px;min-height:20px;max-height:90px}
+.send-btn{width:32px;height:32px;border-radius:7px;background:var(--navy);border:none;color:#fff;cursor:pointer;flex-shrink:0;font-size:13px}
+.send-btn:hover{background:var(--teal-dark)}
+.qsug{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.qsug-item{padding:7px 12px;border:1px solid var(--border);border-radius:20px;font-size:11.5px;color:var(--text-muted);cursor:pointer;background:#fff}
+.qsug-item:hover{border-color:var(--teal);color:var(--teal-dark)}
+
+/* SETTINGS */
+.settings-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r2);padding:20px 22px;max-width:520px;margin-bottom:14px}
+.s-label{font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.s-input{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:7px;font-size:13px;font-family:var(--fm);margin-bottom:6px}
+.s-input:focus{outline:none;border-color:var(--teal)}
+.s-status{font-size:11px;color:var(--text-faint)}
+.s-btn{padding:8px 16px;border-radius:7px;border:1px solid var(--navy);background:var(--navy);color:#fff;font-size:12px;font-weight:600;cursor:pointer}
+.s-btn:hover{background:var(--teal-dark);border-color:var(--teal-dark)}
+.s-note{font-size:11.5px;color:var(--text-muted);line-height:1.6;margin-top:10px;padding-top:10px;border-top:1px solid var(--border-soft)}
+
+@media(max-width:800px){.stats{grid-template-columns:1fr 1fr}.bd-grid{grid-template-columns:1fr}.nav{display:none}}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand"><div class="brand-icon">⬡</div>FlyScout</div>
+  <nav class="nav">
+    <div class="nav-item active" onclick="showView('dashboard',this)">Dashboard</div>
+    <div class="nav-item" onclick="showView('changelog',this)">Change Log</div>
+    <div class="nav-item" onclick="showView('predictions',this)">Predictions</div>
+    <div class="nav-item" onclick="showView('chat',this)">Ask FlyScout</div>
+    <div class="nav-item" onclick="showView('settings',this)">Settings</div>
+  </nav>
+  <div class="topbar-right">
+    <div class="live-pill" id="live-pill"><div class="live-dot"></div><span id="live-pill-txt">Loading...</span></div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- DASHBOARD -->
+  <div class="view active" id="view-dashboard">
+    <div class="page-title">Card Network Rule Tracker</div>
+    <div class="page-sub">Interchange &amp; surcharge rule changes across US, UK, EU, Australia, Singapore, Canada, Japan — Visa &amp; Mastercard</div>
+
+    <div class="stats">
+      <div class="stat-card"><div class="stat-val" id="st-total">—</div><div class="stat-label">Rule changes tracked</div><div class="stat-sub">Since Jan 2024</div></div>
+      <div class="stat-card"><div class="stat-val" id="st-month">—</div><div class="stat-label">Changes this month</div><div class="stat-sub" id="st-month-sub">—</div></div>
+      <div class="stat-card"><div class="stat-val" id="st-lastcheck">—</div><div class="stat-label">Last automated check</div><div class="stat-sub">Runs 3x daily via GitHub Action</div></div>
+      <div class="stat-card"><div class="stat-val" id="st-predictions">—</div><div class="stat-label">Markets flagged for predicted change</div><div class="stat-sub">Rule-based, not AI-guessed</div></div>
+    </div>
+
+    <div class="bd-grid">
+      <div class="bd-card"><div class="bd-title">📍 By Market</div><div id="bd-market"></div></div>
+      <div class="bd-card"><div class="bd-title">💳 By Network</div><div id="bd-network"></div></div>
+      <div class="bd-card"><div class="bd-title">📂 By Category</div><div id="bd-category"></div></div>
+      <div class="bd-card"><div class="bd-title">⚡ By Trigger Type</div><div id="bd-trigger"></div></div>
+    </div>
+  </div>
+
+  <!-- CHANGE LOG -->
+  <div class="view" id="view-changelog">
+    <div class="page-title">Change Log</div>
+    <div class="page-sub">Every detected rule change, since Jan 2024 — newest first</div>
+    <div class="fbar" id="cl-filters"></div>
+    <div id="cl-list"></div>
+  </div>
+
+  <!-- PREDICTIONS -->
+  <div class="view" id="view-predictions">
+    <div class="page-title">Predictions</div>
+    <div class="page-sub">Computed from real change history — not AI-generated. Every prediction shows its evidence.</div>
+    <div id="pred-list"></div>
+  </div>
+
+  <!-- CHAT -->
+  <div class="view" id="view-chat">
+    <div class="page-title">Ask FlyScout</div>
+    <div class="page-sub">Grounded in tracked rule changes — searches the live web for anything not yet covered</div>
+    <div class="chat-wrap">
+      <div class="chat-grounding"><span>🔎</span><span>Answers are grounded in tracked data first. When asked about something not yet tracked, FlyScout searches the web live and cites its source.</span></div>
+      <div class="qsug" id="qsug"></div>
+      <div class="chat-body" id="chat-body"></div>
+      <div class="chat-input-row">
+        <textarea id="chat-inp" rows="1" placeholder="Ask about interchange rates, surcharge rules, or recent changes..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat()}"></textarea>
+        <button class="send-btn" onclick="sendChat()">→</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SETTINGS -->
+  <div class="view" id="view-settings">
+    <div class="page-title">Settings</div>
+    <div class="page-sub">Optional — FlyScout works fully without any keys configured</div>
+    <div class="settings-card">
+      <div class="s-label">Gemini API Key (optional)</div>
+      <input type="password" class="s-input" id="gemini-key-inp" placeholder="AIzaSy..." oninput="saveGeminiKey(this.value)"/>
+      <div class="s-status" id="gemini-key-status">Not configured — chat uses local keyword search only</div>
+      <div class="s-note">Get a free key at <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a>. Stored only in your browser. With a key configured, the chat assistant can phrase grounded answers naturally and search the live web for questions not yet covered by tracked data.</div>
+    </div>
+    <div class="settings-card">
+      <div class="s-label">Data source</div>
+      <div style="font-size:12.5px;color:var(--text-muted);line-height:1.7">
+        Rule changes are detected automatically by a scheduled script (GitHub Actions, 3x daily) and committed to <code style="font-family:var(--fm);background:var(--bg-soft);padding:1px 5px;border-radius:3px">data/rule-changes.json</code> in this repository. Slack alerts are sent server-side from that same script — configure <code style="font-family:var(--fm);background:var(--bg-soft);padding:1px 5px;border-radius:3px">SLACK_WEBHOOK_URL</code> as a repository secret to enable them. No settings needed here for that part.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+'use strict';
+
+// ── DATA LOADING ─────────────────────────────────────────────────
+let CHANGES = [];
+let PREDICTIONS = [];
+let META = {};
+
+async function loadData() {
+  try {
+    const [changesRes, predsRes] = await Promise.all([
+      fetch('data/rule-changes.json'),
+      fetch('data/predictions.json'),
+    ]);
+    const changesData = await changesRes.json();
+    const predsData = await predsRes.json();
+    CHANGES = changesData.changes || [];
+    PREDICTIONS = predsData.predictions || [];
+    META = changesData._meta || {};
+  } catch (e) {
+    console.warn('Could not load data files — running with empty dataset', e);
+    CHANGES = []; PREDICTIONS = []; META = {};
+  }
+  renderAll();
+}
+
+// ── KEY MANAGEMENT ───────────────────────────────────────────────
+function getGeminiKey() { try { return localStorage.getItem('fs_gemini_key') || ''; } catch(e) { return ''; } }
+function saveGeminiKey(v) {
+  try { localStorage.setItem('fs_gemini_key', v.trim()); } catch(e) {}
+  updateKeyStatus();
+}
+function loadKeyIntoUI() {
+  const v = getGeminiKey();
+  const inp = document.getElementById('gemini-key-inp');
+  if (inp && v) inp.value = v;
+  updateKeyStatus();
+}
+function updateKeyStatus() {
+  const st = document.getElementById('gemini-key-status');
+  const has = !!getGeminiKey();
+  if (st) st.textContent = has
+    ? 'Configured — chat can phrase answers naturally and search the live web'
+    : 'Not configured — chat uses local keyword search only (still accurate, just less conversational)';
+}
+
+// ── NAVIGATION ────────────────────────────────────────────────────
+function showView(name, el) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('view-' + name).classList.add('active');
+  if (el) el.classList.add('active');
+}
+
+// ── DASHBOARD ─────────────────────────────────────────────────────
+function renderDashboard() {
+  const total = CHANGES.length;
+  document.getElementById('st-total').textContent = total;
+
+  const thisMonth = new Date().toISOString().slice(0, 7);
+  const monthChanges = CHANGES.filter(c => (c.detected_at || '').startsWith(thisMonth));
+  document.getElementById('st-month').textContent = monthChanges.length;
+  document.getElementById('st-month-sub').textContent = total ? `of ${total} total` : '—';
+
+  const lastCheck = META.last_updated;
+  document.getElementById('st-lastcheck').textContent = lastCheck ? timeAgo(lastCheck) : 'Not yet run';
+
+  const flagged = PREDICTIONS.filter(p => p.status === 'due' || p.status === 'pending');
+  const uniqueMarkets = new Set(flagged.map(p => p.market));
+  document.getElementById('st-predictions').textContent = uniqueMarkets.size;
+
+  renderBreakdown('bd-market', groupCount(CHANGES, 'market'));
+  renderBreakdown('bd-network', groupCount(CHANGES, 'network'));
+  renderBreakdown('bd-category', groupCount(CHANGES, c => c.category + (c.cnp ? ' (CNP)' : '')));
+  renderBreakdown('bd-trigger', groupCount(CHANGES, c => (c.trigger||'').replace(/_/g,' ')));
+}
+
+function groupCount(arr, key) {
+  const counts = {};
+  arr.forEach(item => {
+    const k = typeof key === 'function' ? key(item) : item[key];
+    counts[k] = (counts[k] || 0) + 1;
+  });
+  return Object.entries(counts).sort((a,b) => b[1]-a[1]);
+}
+
+function renderBreakdown(elId, pairs) {
+  const el = document.getElementById(elId);
+  if (!pairs.length) { el.innerHTML = '<div style="font-size:11.5px;color:var(--text-faint);padding:8px 0">No data yet</div>'; return; }
+  const max = Math.max(...pairs.map(p => p[1]));
+  el.innerHTML = pairs.map(([label, count]) => `
+    <div class="bd-row">
+      <div class="bd-row-label">${label}</div>
+      <div class="bd-row-bar"><div class="bd-row-fill" style="width:${Math.round((count/max)*100)}%"></div></div>
+      <div class="bd-row-val">${count}</div>
+    </div>`).join('');
+}
+
+function timeAgo(iso) {
+  const diff = Date.now() - new Date(iso).getTime();
+  const mins = Math.floor(diff / 60000);
+  if (mins < 1) return 'Just now';
+  if (mins < 60) return mins + 'm ago';
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return hrs + 'h ago';
+  return Math.floor(hrs / 24) + 'd ago';
+}
+
+// ── CHANGE LOG ────────────────────────────────────────────────────
+let activeFilter = 'all';
+function renderFilters() {
+  const markets = [...new Set(CHANGES.map(c => c.market))];
+  const el = document.getElementById('cl-filters');
+  el.innerHTML = ['all', ...markets].map(m =>
+    `<div class="fchip ${activeFilter===m?'on':''}" onclick="setFilter('${m}')">${m === 'all' ? 'All markets' : m}</div>`
+  ).join('');
+}
+function setFilter(m) { activeFilter = m; renderFilters(); renderChangeLog(); }
+
+function renderChangeLog() {
+  renderFilters();
+  const el = document.getElementById('cl-list');
+  let items = activeFilter === 'all' ? CHANGES : CHANGES.filter(c => c.market === activeFilter);
+  items = [...items].sort((a,b) => new Date(b.detected_at) - new Date(a.detected_at));
+
+  if (!items.length) {
+    el.innerHTML = '<div class="empty"><div class="empty-icon">📭</div><p>No rule changes tracked yet for this filter.<br>The automated check runs 3x daily — check back soon, or trigger a manual run from the Actions tab.</p></div>';
+    return;
+  }
+
+  el.innerHTML = items.map(c => {
+    const netClass = c.network === 'Visa' ? 'b-visa' : c.network === 'Mastercard' ? 'b-mc' : 'b-both';
+    const catClass = c.category === 'surcharge' ? 'b-surcharge' : 'b-interchange';
+    return `<div class="chg-card">
+      <div class="chg-head">
+        <span class="badge b-market">${c.market}</span>
+        <span class="badge ${netClass}">${c.network}</span>
+        <span class="badge ${catClass}">${c.category}</span>
+        ${c.cnp ? '<span class="badge b-cnp">CNP</span>' : ''}
+        <span class="badge b-trigger">${(c.trigger||'').replace(/_/g,' ')}</span>
+        ${c.auto_detected === false ? '<span class="badge b-seed">seed example</span>' : ''}
+        <span class="chg-date">${(c.detected_at||'').slice(0,10)}</span>
+      </div>
+      <div class="chg-title">${c.title}</div>
+      <div class="chg-summary">${c.summary}</div>
+      ${(c.old_value || c.new_value) ? `<div class="chg-diff">
+        <div class="diff-box diff-old"><div class="diff-label">Before</div>${c.old_value || '—'}</div>
+        <div class="diff-box diff-new"><div class="diff-label">After</div>${c.new_value || '—'}</div>
+      </div>` : ''}
+      ${c.new_snippet ? `<div class="chg-snippet">"${c.new_snippet}"</div>` : ''}
+      <div class="chg-foot"><span>${c.source_name}</span> · <a href="${c.source_url}" target="_blank" rel="noopener">View source →</a></div>
+    </div>`;
+  }).join('');
+}
+
+// ── PREDICTIONS ───────────────────────────────────────────────────
+function renderPredictions() {
+  const el = document.getElementById('pred-list');
+  if (!PREDICTIONS.length) {
+    el.innerHTML = '<div class="empty"><div class="empty-icon">🔮</div><p>No predictions yet — the prediction engine needs at least 2 tracked changes for a market/network/category combination to detect a pattern, or an open consultation with no resolved change.<br>Check back after a few automated runs.</p></div>';
+    return;
+  }
+  el.innerHTML = PREDICTIONS.map(p => `
+    <div class="pred-card ${p.status}">
+      <div class="pred-head">
+        <span class="badge b-${p.status}">${p.status === 'due' ? '🔮 Looks due' : '⏳ Pending consultation'}</span>
+        <span class="badge b-market">${p.market}</span>
+        <span class="badge b-both">${p.network}</span>
+        <span class="badge b-interchange">${p.category}</span>
+      </div>
+      <div class="pred-reasoning">${p.reasoning}</div>
+      <div class="pred-method">⚙️ Rule-based — based on ${p.evidence_ids.length} historical entr${p.evidence_ids.length===1?'y':'ies'}, not AI-generated</div>
+    </div>`).join('');
+}
+
+// ── CHAT — grounded in local data, falls back to live web search ──
+const QUICK_QUESTIONS = [
+  "What are the EU interchange caps?",
+  "What changed in the UK recently?",
+  "Is there an open consultation in Australia?",
+  "Summarize CNP surcharge rules",
+];
+
+function renderQuickQs() {
+  document.getElementById('qsug').innerHTML = QUICK_QUESTIONS.map(q =>
+    `<div class="qsug-item" onclick="askQ('${q.replace(/'/g,"\\'")}')">𝍐 ${q}</div>`).join('');
+}
+function askQ(q) { document.getElementById('chat-inp').value = q; sendChat(); }
+
+const STOPWORDS = new Set(['the','and','are','was','were','for','with','what','which','this',
+  'that','has','have','had','not','but','you','your','our','can','will','when','who','why',
+  'how','did','does','about','any','all','out','get','got','from','into','more','most','some',
+  'than','then','them','they','their','there','here','where','been','being','also','just']);
+const MARKET_CODES = ['US','UK','EU','AU','SG','CA','JP'];
+
+function searchLocalData(query) {
+  // Detect explicit market-code mentions first — these are 2-letter codes
+  // (US/UK/EU/AU/SG/CA/JP) and would otherwise be stripped by the length
+  // filter below, which is wrong given markets are the primary axis here.
+  const mentionedMarkets = MARKET_CODES.filter(m =>
+    new RegExp('\\b' + m + '\\b', 'i').test(query));
+
+  const q = query.toLowerCase();
+  const terms = q.split(/\W+/).filter(t => t.length > 2 && !STOPWORDS.has(t));
+  if (!terms.length && !mentionedMarkets.length) return [];
+
+  const scored = CHANGES.map(c => {
+    const haystack = `${c.network} ${c.category} ${c.title} ${c.summary} ${c.trigger}`.toLowerCase();
+    const matchedTerms = terms.filter(t => haystack.includes(t));
+    const marketBonus = mentionedMarkets.includes(c.market) ? 3 : 0;
+    return { c, score: matchedTerms.length + marketBonus };
+  }).filter(s => s.score > 0);
+
+  scored.sort((a, b) => b.score - a.score);
+  return scored.slice(0, 5).map(s => s.c);
+}
+
+function formatLocalAnswer(query, matches) {
+  if (!matches.length) return null;
+
+  // If the query explicitly names a market that none of the matches belong to,
+  // say so clearly rather than silently presenting other-market results as if
+  // they answer the question.
+  const mentionedMarkets = MARKET_CODES.filter(m => new RegExp('\\b' + m + '\\b', 'i').test(query));
+  const matchedMarkets = new Set(matches.map(c => c.market));
+  const missingMarkets = mentionedMarkets.filter(m => !matchedMarkets.has(m));
+
+  let txt = '';
+  if (missingMarkets.length) {
+    txt += `No tracked data for ${missingMarkets.join('/')} yet on this topic. Here's the closest related tracked data:\n\n`;
+  } else {
+    txt += `Based on tracked data, here's what I found:\n\n`;
+  }
+  matches.forEach(c => {
+    txt += `**${c.market} · ${c.network} · ${c.category}${c.cnp?' (CNP)':''}**\n${c.summary}`;
+    if (c.old_value || c.new_value) txt += `\nBefore: ${c.old_value||'—'} → After: ${c.new_value||'—'}`;
+    txt += `\n\n`;
+  });
+  return { text: txt.trim(), sources: matches.map(c => ({label: c.source_name, url: c.source_url})) };
+}
+
+async function callGeminiGrounded(query, localContext) {
+  const key = getGeminiKey();
+  if (!key) return null;
+
+  const systemPrompt = `You are FlyScout, a card network rule tracker assistant for a Cards Network team. ` +
+    `You help with Visa/Mastercard interchange rates and CNP surcharge rules across US, UK, EU, Australia, Singapore, Canada, Japan. ` +
+    `Always cite sources. If you don't have tracked data on something, search the web and clearly say the answer came from a live web search, not from our internal tracker, and recommend verification before relying on it for compliance decisions. Never invent specific rate numbers — only state numbers you can attribute to a source.`;
+
+  const contextBlock = localContext.length
+    ? `\n\n[Internally tracked data relevant to this question]\n${localContext.map(c => `- ${c.market} ${c.network} ${c.category}: ${c.summary} (source: ${c.source_name})`).join('\n')}`
+    : `\n\n[No internally tracked data matches this question — search the web for an answer and label it clearly as web-sourced, not from our tracker]`;
+
+  try {
+    const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        systemInstruction: { parts: [{ text: systemPrompt }] },
+        contents: [{ role: 'user', parts: [{ text: query + contextBlock }] }],
+        tools: [{ google_search: {} }],
+        generationConfig: { maxOutputTokens: 700 }
+      })
+    });
+    if (!resp.ok) throw new Error('Gemini ' + resp.status);
+    const data = await resp.json();
+    const candidate = (data.candidates || [])[0];
+    const text = candidate?.content?.parts?.[0]?.text || '';
+    const groundingChunks = candidate?.groundingMetadata?.groundingChunks || [];
+    const webSources = groundingChunks.map(g => ({
+      label: g.web?.title || 'Web source', url: g.web?.uri || '#', web: true
+    }));
+    return { text, sources: webSources, usedWebSearch: webSources.length > 0 };
+  } catch (e) {
+    console.warn('Gemini call failed:', e.message);
+    return null;
+  }
+}
+
+async function sendChat() {
+  const inp = document.getElementById('chat-inp');
+  const q = inp.value.trim();
+  if (!q) return;
+  inp.value = '';
+  addChatMsg('u', q);
+  const typingId = addTyping();
+
+  const localMatches = searchLocalData(q);
+  let result = null;
+
+  if (getGeminiKey()) {
+    result = await callGeminiGrounded(q, localMatches);
+  }
+
+  if (!result) {
+    result = formatLocalAnswer(q, localMatches) || {
+      text: localMatches.length === 0
+        ? `I don't have tracked data matching that question yet. Configure a Gemini API key in Settings to enable live web search for questions outside our tracked sources.`
+        : `Found ${localMatches.length} related entries, but couldn't format a response. Check the Change Log directly.`,
+      sources: []
+    };
+  }
+
+  removeTyping(typingId);
+  addChatMsg('ai', result.text, result.sources, result.usedWebSearch);
+}
+
+function addChatMsg(role, text, sources, usedWeb) {
+  const body = document.getElementById('chat-body');
+  const d = document.createElement('div');
+  d.className = 'cmsg' + (role === 'u' ? ' u' : '');
+  const fmt = text.replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+  let citesHtml = '';
+  if (sources && sources.length) {
+    citesHtml = '<div class="cite-row">' + sources.map(s =>
+      `<a href="${s.url}" target="_blank" class="cite-chip ${s.web?'web':''}">${s.web?'🌐':'📋'} ${s.label.slice(0,40)}</a>`
+    ).join('') + '</div>';
+  }
+  d.innerHTML = `<div class="cavt ${role}">${role==='u'?'You':'FS'}</div><div class="cbub">${fmt}${citesHtml}</div>`;
+  body.appendChild(d);
+  body.scrollTop = body.scrollHeight;
+}
+function addTyping() {
+  const body = document.getElementById('chat-body');
+  const id = 'ty' + Date.now();
+  const d = document.createElement('div');
+  d.className = 'cmsg'; d.id = id;
+  d.innerHTML = '<div class="cavt ai">FS</div><div class="cbub" style="color:var(--text-faint)">Thinking...</div>';
+  body.appendChild(d); body.scrollTop = body.scrollHeight;
+  return id;
+}
+function removeTyping(id) { const e = document.getElementById(id); if (e) e.remove(); }
+
+// ── LIVE PILL ─────────────────────────────────────────────────────
+function updateLivePill() {
+  const txt = document.getElementById('live-pill-txt');
+  if (CHANGES.length && CHANGES.some(c => c.auto_detected)) {
+    txt.textContent = 'Live · ' + CHANGES.filter(c=>c.auto_detected).length + ' auto-detected';
+  } else if (CHANGES.length) {
+    txt.textContent = 'Seed data — awaiting first scan';
+  } else {
+    txt.textContent = 'No data loaded';
+  }
+}
+
+// ── INIT ──────────────────────────────────────────────────────────
+function renderAll() {
+  renderDashboard();
+  renderChangeLog();
+  renderPredictions();
+  renderQuickQs();
+  updateLivePill();
+}
+
+loadKeyIntoUI();
+loadData();
+addChatMsg('ai', `Hi — I'm FlyScout. I track Visa &amp; Mastercard interchange and CNP surcharge rule changes across US, UK, EU, Australia, Singapore, Canada, and Japan.\n\nAsk me anything, and I'll search tracked data first — then the live web if needed.`);
+</script>
+</body>
+</html>
