@@ -1,0 +1,7 @@
+{
+  "_meta": {
+    "computed_at": null,
+    "method": "deterministic rule-based — not AI-generated. Predictions are computed from patterns in data/rule-changes.json: historical change cadence per market+network+category, and open government consultations with no resulting rule change yet. Every prediction shows which historical entries it's reasoning from."
+  },
+  "predictions": []
+}
