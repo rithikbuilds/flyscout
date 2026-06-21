@@ -246,9 +246,10 @@ a:hover{text-decoration:underline}
     <div class="page-sub">Optional — FlyScout works fully without any keys configured</div>
     <div class="settings-card">
       <div class="s-label">Gemini API Key (optional)</div>
-      <input type="password" class="s-input" id="gemini-key-inp" placeholder="AIzaSy..." oninput="saveGeminiKey(this.value)"/>
+      <input type="password" class="s-input" id="gemini-key-inp" placeholder="AIzaSy..." onkeydown="if(event.key==='Enter')saveAndTestGeminiKey()"/>
+      <button class="s-btn" style="margin-bottom:8px" onclick="saveAndTestGeminiKey()">Save &amp; Test Key</button>
       <div class="s-status" id="gemini-key-status">Not configured — chat uses local keyword search only</div>
-      <div class="s-note">Get a free key at <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a>. Stored only in your browser. With a key configured, the chat assistant can phrase grounded answers naturally and search the live web for questions not yet covered by tracked data.</div>
+      <div class="s-note">Get a free key at <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a>. Stored only in your browser. Clicking "Save &amp; Test" makes one real request to Gemini to confirm the key actually works before marking it as configured — typing alone doesn't count.</div>
     </div>
     <div class="settings-card">
       <div class="s-label">Data source</div>
@@ -287,23 +288,73 @@ async function loadData() {
 }
 
 // ── KEY MANAGEMENT ───────────────────────────────────────────────
+// "Configured" must mean "verified to actually work" — not "something was
+// typed in the box." We store the key separately from whether it has been
+// successfully tested, and re-test only when the user explicitly asks.
 function getGeminiKey() { try { return localStorage.getItem('fs_gemini_key') || ''; } catch(e) { return ''; } }
-function saveGeminiKey(v) {
-  try { localStorage.setItem('fs_gemini_key', v.trim()); } catch(e) {}
-  updateKeyStatus();
-}
+function getVerifiedKey() { try { return localStorage.getItem('fs_gemini_key_verified_for') || ''; } catch(e) { return ''; } }
+
 function loadKeyIntoUI() {
   const v = getGeminiKey();
   const inp = document.getElementById('gemini-key-inp');
   if (inp && v) inp.value = v;
-  updateKeyStatus();
+  // Reset status as input changes, so an edited-but-untested key never
+  // shows as "Configured" — only a key that's actually been tested can.
+  if (inp) inp.addEventListener('input', () => setKeyStatus('unsaved'));
+  setKeyStatus(v && v === getVerifiedKey() ? 'verified' : (v ? 'unsaved' : 'empty'));
 }
-function updateKeyStatus() {
+
+function setKeyStatus(state, detail) {
   const st = document.getElementById('gemini-key-status');
-  const has = !!getGeminiKey();
-  if (st) st.textContent = has
-    ? 'Configured — chat can phrase answers naturally and search the live web'
-    : 'Not configured — chat uses local keyword search only (still accurate, just less conversational)';
+  if (!st) return;
+  const map = {
+    empty: { text: 'Not configured — chat uses local keyword search only', color: 'var(--text-faint)' },
+    unsaved: { text: 'Not tested yet — click "Save & Test Key" to verify it actually works', color: 'var(--amber)' },
+    testing: { text: 'Testing key against Gemini...', color: 'var(--amber)' },
+    verified: { text: '✓ Verified — key is real and working. Chat can phrase answers and search the live web.', color: 'var(--green)' },
+    invalid: { text: '✗ ' + (detail || 'Invalid key — Gemini rejected it. Double-check you copied it correctly.'), color: 'var(--red)' },
+    error: { text: '⚠ Could not verify — ' + (detail || 'network error') + '. The key was saved but not confirmed working; try testing again.', color: 'var(--amber)' },
+  };
+  const m = map[state] || map.empty;
+  st.textContent = m.text;
+  st.style.color = m.color;
+}
+
+async function saveAndTestGeminiKey() {
+  const inp = document.getElementById('gemini-key-inp');
+  const v = (inp ? inp.value.trim() : '');
+
+  if (!v) {
+    try { localStorage.removeItem('fs_gemini_key'); localStorage.removeItem('fs_gemini_key_verified_for'); } catch(e) {}
+    setKeyStatus('empty');
+    return;
+  }
+
+  setKeyStatus('testing');
+  try { localStorage.setItem('fs_gemini_key', v); } catch(e) {}
+
+  try {
+    const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${v}`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        contents: [{ role: 'user', parts: [{ text: 'Reply with the single word: ok' }] }],
+        generationConfig: { maxOutputTokens: 10 }
+      })
+    });
+    const data = await resp.json().catch(() => ({}));
+
+    if (resp.ok && data?.candidates?.length) {
+      try { localStorage.setItem('fs_gemini_key_verified_for', v); } catch(e) {}
+      setKeyStatus('verified');
+    } else {
+      const apiMsg = data?.error?.message;
+      try { localStorage.removeItem('fs_gemini_key_verified_for'); } catch(e) {}
+      setKeyStatus('invalid', apiMsg);
+    }
+  } catch (e) {
+    setKeyStatus('error', e.message);
+  }
 }
 
 // ── NAVIGATION ────────────────────────────────────────────────────
@@ -659,7 +710,10 @@ async function sendChat() {
   const localMatches = searchLocalData(q);
   let result = null;
 
-  if (getGeminiKey()) {
+  // Only attempt Gemini if the key has been verified to actually work —
+  // an unsaved/untested/known-bad key falls straight to local search rather
+  // than silently failing on every message.
+  if (getGeminiKey() && getGeminiKey() === getVerifiedKey()) {
     result = await callGeminiGrounded(q, localMatches);
     // An empty-but-successful response (e.g. safety-filtered, or an
     // unexpected response shape) should fall back too — not render blank.
