@@ -521,6 +521,9 @@ async function sendChat() {
 
   if (getGeminiKey()) {
     result = await callGeminiGrounded(q, localMatches);
+    // An empty-but-successful response (e.g. safety-filtered, or an
+    // unexpected response shape) should fall back too — not render blank.
+    if (result && !result.text) result = null;
   }
 
   if (!result) {
