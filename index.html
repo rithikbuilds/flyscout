@@ -334,7 +334,7 @@ async function saveAndTestGeminiKey() {
   try { localStorage.setItem('fs_gemini_key', v); } catch(e) {}
 
   try {
-    const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${v}`, {
+    const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${v}`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -673,8 +673,15 @@ async function callGeminiGrounded(query, localContext) {
     ? `\n\n[Internally tracked data relevant to this question]\n${localContext.map(c => `- ${c.market} ${c.network} ${c.category}: ${c.summary} (source: ${c.source_name})`).join('\n')}`
     : `\n\n[No internally tracked data matches this question — search the web for an answer and label it clearly as web-sourced, not from our tracker]`;
 
+  // MAINTENANCE NOTE: Google periodically deprecates Gemini model versions
+  // (gemini-2.0-flash was shut down June 2026, which is what broke this once
+  // already). If chat or key verification suddenly starts failing with a
+  // quota/model error, check https://ai.google.dev/gemini-api/docs/models
+  // for the current free-tier model name and update it in BOTH this function
+  // and saveAndTestGeminiKey() above — search this file for "generateContent"
+  // to find both spots.
   try {
-    const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`, {
+    const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
