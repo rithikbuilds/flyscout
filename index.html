@@ -6,6 +6,7 @@
 <title>FlyScout · Card Network Rule Tracker</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
 :root{
   --navy:#14213D; --navy-deep:#0B1426; --teal:#0D9488; --teal-light:#CCFBF1;
@@ -138,16 +139,29 @@ a:hover{text-decoration:underline}
 .s-btn:hover{background:var(--teal-dark);border-color:var(--teal-dark)}
 .s-note{font-size:11.5px;color:var(--text-muted);line-height:1.6;margin-top:10px;padding-top:10px;border-top:1px solid var(--border-soft)}
 
-@media(max-width:800px){.stats{grid-template-columns:1fr 1fr}.bd-grid{grid-template-columns:1fr}.nav{display:none}}
+@media(max-width:800px){
+  .stats{grid-template-columns:1fr 1fr}
+  .bd-grid{grid-template-columns:1fr}
+  .topbar{padding:0 12px;gap:10px}
+  .brand span{display:none}
+  .nav{margin-left:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;flex:1}
+  .nav::-webkit-scrollbar{display:none}
+  .nav-item{white-space:nowrap;flex-shrink:0;padding:8px 11px;font-size:12px}
+  .live-pill span{display:none}
+  .wrap{padding:18px 14px 50px}
+  .page-title{font-size:18px}
+  .chat-wrap{height:calc(100vh - 200px)}
+}
 </style>
 </head>
 <body>
 
 <header class="topbar">
-  <div class="brand"><div class="brand-icon">⬡</div>FlyScout</div>
+  <div class="brand"><div class="brand-icon">⬡</div><span>FlyScout</span></div>
   <nav class="nav">
     <div class="nav-item active" onclick="showView('dashboard',this)">Dashboard</div>
     <div class="nav-item" onclick="showView('changelog',this)">Change Log</div>
+    <div class="nav-item" onclick="showView('trends',this)">Trends</div>
     <div class="nav-item" onclick="showView('predictions',this)">Predictions</div>
     <div class="nav-item" onclick="showView('chat',this)">Ask FlyScout</div>
     <div class="nav-item" onclick="showView('settings',this)">Settings</div>
@@ -185,6 +199,23 @@ a:hover{text-decoration:underline}
     <div class="page-sub">Every detected rule change, since Jan 2024 — newest first</div>
     <div class="fbar" id="cl-filters"></div>
     <div id="cl-list"></div>
+  </div>
+
+  <!-- TRENDS -->
+  <div class="view" id="view-trends">
+    <div class="page-title">Trends</div>
+    <div class="page-sub">Built from the same tracked data — fills in automatically as more changes are detected</div>
+    <div class="fbar">
+      <div class="fchip on" id="tt-rate" onclick="setTrendTab('rate',this)">Rate trend</div>
+      <div class="fchip" id="tt-activity" onclick="setTrendTab('activity',this)">Activity</div>
+    </div>
+    <div id="trend-rate-wrap">
+      <div class="bd-card" style="margin-bottom:16px"><canvas id="rateChart" height="90"></canvas></div>
+      <div id="rate-empty"></div>
+    </div>
+    <div id="trend-activity-wrap" style="display:none">
+      <div class="bd-card"><canvas id="activityChart" height="90"></canvas></div>
+    </div>
   </div>
 
   <!-- PREDICTIONS -->
@@ -281,6 +312,7 @@ function showView(name, el) {
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById('view-' + name).classList.add('active');
   if (el) el.classList.add('active');
+  if (name === 'trends') setTimeout(renderTrends, 30); // canvas needs to be visible first to size correctly
 }
 
 // ── DASHBOARD ─────────────────────────────────────────────────────
@@ -402,6 +434,114 @@ function renderPredictions() {
       <div class="pred-reasoning">${p.reasoning}</div>
       <div class="pred-method">⚙️ Rule-based — based on ${p.evidence_ids.length} historical entr${p.evidence_ids.length===1?'y':'ies'}, not AI-generated</div>
     </div>`).join('');
+}
+
+// ── TRENDS — built from the same rule-changes.json, no new data source ──
+let rateChartInst = null, activityChartInst = null;
+let trendTab = 'rate';
+
+function setTrendTab(tab, el) {
+  trendTab = tab;
+  document.querySelectorAll('#tt-rate, #tt-activity').forEach(b => b.classList.remove('on'));
+  if (el) el.classList.add('on');
+  document.getElementById('trend-rate-wrap').style.display = tab === 'rate' ? '' : 'none';
+  document.getElementById('trend-activity-wrap').style.display = tab === 'activity' ? '' : 'none';
+  renderTrends();
+}
+
+// Extract a single representative numeric rate (first % found) from a value string.
+// Handles strings like "0.20%, 0.30%" (takes first) or "0.2% debit / 0.3% credit" (takes first).
+// Returns null if no clean number is present (e.g. "Increased — verify against current bulletin").
+function extractFirstRate(valueStr) {
+  if (!valueStr) return null;
+  const m = valueStr.match(/(\d{1,2}\.\d{1,3})\s*%/);
+  return m ? parseFloat(m[1]) : null;
+}
+
+function renderRateChart() {
+  const canvas = document.getElementById('rateChart');
+  const emptyEl = document.getElementById('rate-empty');
+  if (!canvas) return;
+
+  // Build per-market series of [date, rate] points from any entry with an
+  // extractable new_value number. Entries without a clean number are skipped
+  // here (they still show in the Change Log) rather than guessed at.
+  const byMarket = {};
+  CHANGES.forEach(c => {
+    const rate = extractFirstRate(c.new_value);
+    if (rate === null) return;
+    const date = (c.detected_at || c.effective_date || '').slice(0, 10);
+    if (!date) return;
+    byMarket[c.market] = byMarket[c.market] || [];
+    byMarket[c.market].push({ x: date, y: rate });
+  });
+  Object.values(byMarket).forEach(arr => arr.sort((a, b) => a.x.localeCompare(b.x)));
+
+  const marketColors = { US:'#2563EB', UK:'#7C3AED', EU:'#0D9488', AU:'#D97706', SG:'#DB2777', CA:'#16A34A', JP:'#DC2626' };
+  const datasets = Object.entries(byMarket).map(([market, points]) => ({
+    label: market, data: points, borderColor: marketColors[market] || '#64748B',
+    backgroundColor: 'transparent', tension: 0.25, pointRadius: 4, borderWidth: 2,
+  }));
+
+  if (rateChartInst) { rateChartInst.destroy(); rateChartInst = null; }
+
+  if (!datasets.length) {
+    canvas.style.display = 'none';
+    emptyEl.innerHTML = '<div class="empty"><div class="empty-icon">📈</div><p>No extractable rate numbers in tracked data yet.<br>This fills in automatically once the automated check detects a change with a clear percentage value (e.g. "0.20% → 0.15%"). Entries without a clean number — like open consultations — show in the Change Log instead, since showing a guessed number here would be inaccurate.</p></div>';
+    return;
+  }
+  canvas.style.display = '';
+  emptyEl.innerHTML = '';
+
+  rateChartInst = new Chart(canvas.getContext('2d'), {
+    type: 'line',
+    data: { datasets },
+    options: {
+      responsive: true,
+      plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 11 } } } },
+      scales: {
+        x: { type: 'category', ticks: { font: { size: 10 } } },
+        y: { ticks: { callback: v => v + '%', font: { size: 10 } } },
+      },
+    },
+  });
+}
+
+function renderActivityChart() {
+  const canvas = document.getElementById('activityChart');
+  if (!canvas) return;
+
+  // Count changes per month, last 12 months
+  const months = [];
+  const now = new Date();
+  for (let i = 11; i >= 0; i--) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    months.push(d.toISOString().slice(0, 7));
+  }
+  const counts = months.map(m => CHANGES.filter(c => (c.detected_at || '').startsWith(m)).length);
+
+  if (activityChartInst) { activityChartInst.destroy(); activityChartInst = null; }
+
+  activityChartInst = new Chart(canvas.getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: months.map(m => m.slice(2)), // YY-MM, compact for mobile
+      datasets: [{ label: 'Changes detected', data: counts, backgroundColor: '#0D9488', borderRadius: 4 }],
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { font: { size: 10 } } },
+        y: { ticks: { stepSize: 1, font: { size: 10 } }, beginAtZero: true },
+      },
+    },
+  });
+}
+
+function renderTrends() {
+  if (trendTab === 'rate') renderRateChart();
+  else renderActivityChart();
 }
 
 // ── CHAT — grounded in local data, falls back to live web search ──
