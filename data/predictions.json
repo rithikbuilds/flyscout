@@ -1,7 +1,46 @@
 {
   "_meta": {
-    "computed_at": null,
-    "method": "deterministic rule-based — not AI-generated. Predictions are computed from patterns in data/rule-changes.json: historical change cadence per market+network+category, and open government consultations with no resulting rule change yet. Every prediction shows which historical entries it's reasoning from."
+    "computed_at": "2026-06-22T04:12:19.135511+00:00",
+    "method": "deterministic rule-based \u2014 not AI-generated"
   },
-  "predictions": []
+  "predictions": [
+    {
+      "id": "pred_us_mastercard_interchange",
+      "market": "US",
+      "network": "Mastercard",
+      "category": "interchange",
+      "status": "due",
+      "reasoning": "US Mastercard interchange has changed 2 time(s) on record, averaging one change every 366 days. It has been 537 days since the last change \u2014 overdue by historical pattern.",
+      "evidence_ids": [
+        "seed_us_001",
+        "seed_us_002"
+      ],
+      "computed_at": "2026-06-22T04:12:19.134425+00:00"
+    },
+    {
+      "id": "pred_uk_both_interchange",
+      "market": "UK",
+      "network": "Both",
+      "category": "interchange",
+      "status": "pending",
+      "reasoning": "An open government consultation was logged for UK Both interchange (UK Payment Systems Regulator \u2014 Card Acquiring Market Review, 2024-03-01) with no resulting rule change captured since. Historically, consultations like this often precede a rule change.",
+      "evidence_ids": [
+        "seed_uk_001",
+        "seed_uk_002"
+      ],
+      "computed_at": "2026-06-22T04:12:19.135059+00:00"
+    },
+    {
+      "id": "pred_sg_both_interchange",
+      "market": "SG",
+      "network": "Both",
+      "category": "interchange",
+      "status": "pending",
+      "reasoning": "An open government consultation was logged for SG Both interchange (MAS Written Reply to Parliamentary Questions on Visa and Mastercard Fees, 2026-03-03) with no resulting rule change captured since. Historically, consultations like this often precede a rule change.",
+      "evidence_ids": [
+        "seed_sg_001"
+      ],
+      "computed_at": "2026-06-22T04:12:19.135338+00:00"
+    }
+  ]
 }
