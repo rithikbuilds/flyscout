@@ -863,6 +863,91 @@ function updateTrendSummary(filtered) {
   ).join('');
 }
 
+// ── LIVE CHANGE OVERLAY ENGINE ───────────────────────────────────
+// Extracts numeric rate changes from the live CHANGES array and
+// overlays them as scatter markers on the baseline chart lines.
+// This means every auto-detected rate change appears on the chart
+// automatically — no manual chart update needed.
+
+const RATE_REGEX = /(\d{1,2}\.\d{1,3})\s*%/;
+
+function extractRate(str) {
+  if (!str) return null;
+  const m = RATE_REGEX.exec(str);
+  return m ? parseFloat(m[1]) : null;
+}
+
+// Map a detected change date to the closest label index in RATE_LABELS_ALL
+function dateToLabelIndex(isoDate) {
+  try {
+    const d = new Date(isoDate);
+    const yr = d.getFullYear();
+    const mo = d.getMonth(); // 0-based
+    // RATE_LABELS_ALL starts Jan 2024 (2024-01 = index 0)
+    const base = new Date('2024-01-01');
+    const months = (yr - base.getFullYear()) * 12 + mo - base.getMonth();
+    return Math.max(0, Math.min(months, RATE_LABELS_ALL.length - 1));
+  } catch { return null; }
+}
+
+// Build overlay datasets from live CHANGES that have extractable rate numbers
+// Each overlay point sits on the same Y as the new_value rate, at the right month
+function buildOverlayDatasets(filteredBaselines, labels, cutoffIndex) {
+  if (trendView === 'events') return []; // no overlay for bar chart
+
+  const overlays = [];
+
+  // For each detected change with numeric old+new values
+  CHANGES.forEach(c => {
+    const newRate = extractRate(c.new_value);
+    if (newRate === null) return; // skip if no extractable number
+    const oldRate = extractRate(c.old_value);
+
+    // Find the matching baseline dataset(s) by market + category
+    const matchingBaselines = filteredBaselines.filter(b => {
+      const mktMatch = b.mkt === c.market || b.mkt === 'Both';
+      const catMatch = trendView === 'credit'
+        ? c.category === 'interchange' || c.category === 'regulatory'
+        : c.category === 'interchange' || c.category === 'regulatory';
+      return mktMatch && catMatch;
+    });
+
+    const labelIdx = dateToLabelIndex(c.detected_at || c.effective_date);
+    if (labelIdx === null) return;
+
+    // Adjust for the period cutoff (chart only shows a slice of labels)
+    const adjustedIdx = labelIdx - cutoffIndex;
+    if (adjustedIdx < 0 || adjustedIdx >= labels.length) return;
+
+    // Build a scatter point at the detected rate value
+    const pointData = new Array(labels.length).fill(null);
+    pointData[adjustedIdx] = newRate;
+
+    // Pick colour based on direction: green = rate decreased (good), red = increased
+    const isIncrease = oldRate !== null && newRate > oldRate;
+    const pointColor = isIncrease ? '#DC2626' : '#16A34A';
+
+    const label = `${c.market} detected: ${oldRate !== null ? oldRate.toFixed(2)+'% → ' : ''}${newRate.toFixed(2)}%`;
+    const tooltipDetail = `${c.title}\n${c.detected_at ? c.detected_at.slice(0,10) : ''} · ${c.source_name}`;
+
+    overlays.push({
+      type: 'scatter',
+      label,
+      data: pointData.map((v, i) => v !== null ? { x: labels[i], y: v } : null).filter(Boolean),
+      backgroundColor: pointColor,
+      borderColor: '#fff',
+      borderWidth: 2,
+      pointRadius: 8,
+      pointHoverRadius: 10,
+      pointStyle: 'rectRot', // diamond shape — distinct from baseline dots
+      _tooltipDetail: tooltipDetail,
+      _isOverlay: true,
+    });
+  });
+
+  return overlays;
+}
+
 function buildRateChart() {
   const canvas  = document.getElementById('rateChart');
   const legEl   = document.getElementById('chart-legend');
@@ -888,36 +973,53 @@ function buildRateChart() {
   canvas.style.display = '';
   emptyEl.style.display = 'none';
 
+  const n = RATE_LABELS_ALL.length;
+  const cutoffIndex = trendPeriod === '3m' ? n-3 : trendPeriod === '6m' ? n-6
+                    : trendPeriod === '1y' ? n-12 : trendPeriod === '2y' ? n-24 : 0;
   const { labels, datasets } = applyPeriod(filtered);
   const isBar = datasets.some(d => d.isBar);
 
+  // Build live overlay markers from detected changes
+  const overlayDatasets = isBar ? [] : buildOverlayDatasets(filtered, labels, cutoffIndex);
+  const hasOverlays = overlayDatasets.length > 0;
+
+  const allDatasets = [
+    ...datasets.map(d => ({
+      label: d.label,
+      data: d.data,
+      borderColor: d.color,
+      backgroundColor: isBar ? d.color + 'CC' : 'transparent',
+      tension: 0.3,
+      pointRadius: isBar ? 0 : (filtered.length <= 3 ? 4 : 2),
+      pointHoverRadius: 5,
+      borderWidth: isBar ? 0 : 2,
+      fill: false,
+    })),
+    ...overlayDatasets,
+  ];
+
   rateChartInst = new Chart(canvas.getContext('2d'), {
     type: isBar ? 'bar' : 'line',
-    data: {
-      labels,
-      datasets: datasets.map(d => ({
-        label: d.label,
-        data: d.data,
-        borderColor: d.color,
-        backgroundColor: isBar ? d.color + 'CC' : 'transparent',
-        tension: 0.3,
-        pointRadius: isBar ? 0 : (filtered.length <= 3 ? 4 : 2),
-        pointHoverRadius: 5,
-        borderWidth: isBar ? 0 : 2,
-        fill: false,
-      }))
-    },
+    data: { labels, datasets: allDatasets },
     options: {
       responsive: true,
-      interaction: { mode:'index', intersect:false },
+      interaction: { mode: 'nearest', intersect: true },
       plugins: {
         legend: { display: false },
         tooltip: {
           callbacks: {
             label: ctx => {
-              const v = ctx.parsed.y;
-              return ` ${ctx.dataset.label}: ${isBar ? v + ' event(s)' : v.toFixed(2) + '%'}`;
-            }
+              const ds = ctx.dataset;
+              const v  = ctx.parsed.y;
+              if (ds._isOverlay) {
+                return [
+                  ` 🔴 Detected change: ${v.toFixed(2)}%`,
+                  ` ${ds._tooltipDetail || ''}`,
+                ];
+              }
+              return ` ${ds.label}: ${isBar ? v + ' event(s)' : v.toFixed(2) + '%'}`;
+            },
+            title: ctx => ctx[0]?.label || '',
           }
         }
       },
@@ -929,14 +1031,28 @@ function buildRateChart() {
     }
   });
 
+  // Legend — baselines first, then overlay note if any detected changes exist
   if (legEl) {
-    legEl.innerHTML = datasets.map(d =>
+    const baseItems = datasets.map(d =>
       `<div style="display:flex;align-items:center;gap:6px;font-size:10.5px;color:var(--text-muted)">
         <div style="width:14px;height:${isBar?8:3}px;border-radius:2px;background:${d.color};flex-shrink:0"></div>
         <span>${d.label}</span>
       </div>`).join('');
+
+    const overlayNote = hasOverlays
+      ? `<div style="display:flex;align-items:center;gap:6px;font-size:10.5px;color:var(--text-muted);border-left:2px solid var(--border);padding-left:10px;margin-left:6px">
+          <div style="display:flex;gap:4px">
+            <div style="width:10px;height:10px;background:#DC2626;transform:rotate(45deg);flex-shrink:0"></div>
+            <div style="width:10px;height:10px;background:#16A34A;transform:rotate(45deg);flex-shrink:0"></div>
+          </div>
+          <span>Live detected change (red = increase, green = decrease)</span>
+        </div>`
+      : `<div style="font-size:10.5px;color:var(--text-faint);border-left:2px solid var(--border);padding-left:10px;margin-left:6px">No numeric rate changes detected yet — markers appear automatically when detected</div>`;
+
+    legEl.innerHTML = baseItems + overlayNote;
   }
 }
+
 
 function renderEventTimeline() {
   const el      = document.getElementById('evt-timeline');
