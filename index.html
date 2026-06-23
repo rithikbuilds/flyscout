@@ -139,6 +139,8 @@ a:hover{text-decoration:underline}
 .s-btn:hover{background:var(--teal-dark);border-color:var(--teal-dark)}
 .s-note{font-size:11.5px;color:var(--text-muted);line-height:1.6;margin-top:10px;padding-top:10px;border-top:1px solid var(--border-soft)}
 
+.filter-label{font-size:10px;font-weight:800;color:var(--text-faint);text-transform:uppercase;letter-spacing:.08em;min-width:52px;flex-shrink:0;padding-top:6px}
+
 @media(max-width:800px){
   .stats{grid-template-columns:1fr 1fr}
   .bd-grid{grid-template-columns:1fr}
@@ -204,26 +206,60 @@ a:hover{text-decoration:underline}
   <!-- TRENDS / RATE HISTORY -->
   <div class="view" id="view-trends">
     <div class="page-title">Rate History</div>
-    <div class="page-sub">Source-verified interchange rate data Jan 2024 – Jun 2026 · all 7 markets · Visa &amp; Mastercard</div>
+    <div class="page-sub" id="trend-sub">Showing all markets · all networks · credit CNP · all time</div>
 
-    <div class="fbar" style="margin-bottom:14px">
-      <span style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em">Period</span>
-      <div class="fchip on" id="tp-6m" onclick="setTrendPeriod('6m',this)">6M</div>
-      <div class="fchip" id="tp-1y" onclick="setTrendPeriod('1y',this)">1Y</div>
-      <div class="fchip" id="tp-all" onclick="setTrendPeriod('all',this)">All</div>
-      <div style="width:1px;background:var(--border);height:18px;margin:0 4px"></div>
-      <span style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em">View</span>
-      <div class="fchip on" id="tv-credit" onclick="setTrendView('credit',this)">Credit CNP</div>
-      <div class="fchip" id="tv-debit" onclick="setTrendView('debit',this)">Debit</div>
-      <div class="fchip" id="tv-events" onclick="setTrendView('events',this)">Events</div>
+    <!-- Filter rows -->
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r2);padding:14px 16px;margin-bottom:16px">
+
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px">
+        <span class="filter-label">Market</span>
+        <div class="fchip on" id="fm-all" onclick="setTrendMarket('all',this)">All</div>
+        <div class="fchip" id="fm-US"  onclick="setTrendMarket('US',this)">🇺🇸 US</div>
+        <div class="fchip" id="fm-UK"  onclick="setTrendMarket('UK',this)">🇬🇧 UK</div>
+        <div class="fchip" id="fm-EU"  onclick="setTrendMarket('EU',this)">🇪🇺 EU</div>
+        <div class="fchip" id="fm-AU"  onclick="setTrendMarket('AU',this)">🇦🇺 AU</div>
+        <div class="fchip" id="fm-SG"  onclick="setTrendMarket('SG',this)">🇸🇬 SG</div>
+        <div class="fchip" id="fm-CA"  onclick="setTrendMarket('CA',this)">🇨🇦 CA</div>
+        <div class="fchip" id="fm-JP"  onclick="setTrendMarket('JP',this)">🇯🇵 JP</div>
+      </div>
+
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px">
+        <span class="filter-label">Network</span>
+        <div class="fchip on" id="fn-all"  onclick="setTrendNetwork('all',this)">All</div>
+        <div class="fchip" id="fn-Visa"       onclick="setTrendNetwork('Visa',this)">Visa</div>
+        <div class="fchip" id="fn-Mastercard" onclick="setTrendNetwork('Mastercard',this)">Mastercard</div>
+      </div>
+
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px">
+        <span class="filter-label">Type</span>
+        <div class="fchip on" id="fc-credit" onclick="setTrendView('credit',this)">Credit CNP</div>
+        <div class="fchip" id="fc-debit"     onclick="setTrendView('debit',this)">Debit</div>
+        <div class="fchip" id="fc-events"    onclick="setTrendView('events',this)">Events</div>
+      </div>
+
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <span class="filter-label">Period</span>
+        <div class="fchip on" id="tp-all" onclick="setTrendPeriod('all',this)">All time</div>
+        <div class="fchip" id="tp-2y"    onclick="setTrendPeriod('2y',this)">2 years</div>
+        <div class="fchip" id="tp-1y"    onclick="setTrendPeriod('1y',this)">1 year</div>
+        <div class="fchip" id="tp-6m"    onclick="setTrendPeriod('6m',this)">6 months</div>
+        <div class="fchip" id="tp-3m"    onclick="setTrendPeriod('3m',this)">3 months</div>
+      </div>
     </div>
 
+    <!-- Active filter summary pill row -->
+    <div id="trend-filter-pills" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px"></div>
+
     <div class="bd-card" style="margin-bottom:16px;padding:20px">
-      <canvas id="rateChart" style="max-height:260px"></canvas>
+      <div id="chart-empty" style="display:none;text-align:center;padding:30px;color:var(--text-faint);font-size:13px"></div>
+      <canvas id="rateChart" style="max-height:280px"></canvas>
       <div id="chart-legend" style="display:flex;gap:16px;flex-wrap:wrap;margin-top:14px"></div>
     </div>
 
-    <div style="font-size:13px;font-weight:800;color:var(--navy);margin-bottom:12px">Change Event Timeline</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <div style="font-size:13px;font-weight:800;color:var(--navy)">Change Event Timeline</div>
+      <div id="evt-count" style="font-size:11px;color:var(--text-faint)"></div>
+    </div>
     <div id="evt-timeline"></div>
   </div>
 
@@ -644,8 +680,7 @@ function renderPredictions() {
 }
 
 
-// ── RATE HISTORY CHART — full historical data, all 7 markets ─────
-// Source-verified time-series data Jan 2024 → Jun 2026
+// ── RATE HISTORY CHART — all filters wired together ──────────────
 const RATE_LABELS_ALL = [
   'Jan 24','Feb 24','Mar 24','Apr 24','May 24','Jun 24',
   'Jul 24','Aug 24','Sep 24','Oct 24','Nov 24','Dec 24',
@@ -654,127 +689,215 @@ const RATE_LABELS_ALL = [
   'Jan 26','Feb 26','Mar 26','Apr 26','May 26','Jun 26',
 ];
 
-// Credit CNP rates (% of transaction value)
+// Each dataset tagged with market + network so filters can include/exclude
 const CHART_CREDIT = [
-  { label:'US Visa Credit CNP (Signature)', color:'#2563EB',
+  { label:'US Visa Signature', mkt:'US', net:'Visa', color:'#2563EB',
     data:[2.20,2.20,2.20,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30] },
-  { label:'UK MC Cross-border CNP (EU card)', color:'#DC2626',
-    data:[0.30,0.30,0.30,0.30,0.30,0.30,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50] },
-  { label:'EU IFR Consumer Credit Cap', color:'#7C3AED',
+  { label:'US MC World Elite', mkt:'US', net:'Mastercard', color:'#1D4ED8',
+    data:[2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40] },
+  { label:'UK domestic (PSR cap)', mkt:'UK', net:'Both', color:'#DC2626',
     data:[0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30] },
-  { label:'AU MC Consumer Credit CNP', color:'#D97706',
+  { label:'UK EU-card CNP (post-Brexit)', mkt:'UK', net:'Both', color:'#F87171',
+    data:[0.30,0.30,0.30,0.30,0.30,0.30,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50] },
+  { label:'EU IFR cap (intra-EEA)', mkt:'EU', net:'Both', color:'#7C3AED',
+    data:[0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30] },
+  { label:'EU non-EEA card CNP', mkt:'EU', net:'Both', color:'#A78BFA',
+    data:[1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50] },
+  { label:'AU consumer credit CNP', mkt:'AU', net:'Both', color:'#D97706',
     data:[0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80] },
-  { label:'CA Visa Consumer Credit SMB', color:'#16A34A',
+  { label:'CA Visa SMB credit', mkt:'CA', net:'Visa', color:'#16A34A',
     data:[1.40,1.40,1.40,1.40,1.40,1.40,1.40,1.40,1.40,1.40,1.40,1.40,1.40,1.40,1.35,1.35,1.35,1.35,1.35,1.35,1.35,1.35,1.35,1.35,1.35,1.35,1.35,1.35,1.35,1.35] },
-  { label:'SG MC Consumer Credit CNP', color:'#DB2777',
+  { label:'SG consumer credit CNP', mkt:'SG', net:'Both', color:'#DB2777',
     data:[1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20] },
-  { label:'JP MC Consumer Credit CNP', color:'#0891B2',
+  { label:'JP consumer credit CNP', mkt:'JP', net:'Both', color:'#0891B2',
     data:[1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80] },
 ];
 
-// Debit rates (% of transaction value)
 const CHART_DEBIT = [
-  { label:'EU IFR Consumer Debit Cap', color:'#7C3AED',
+  { label:'EU IFR debit cap', mkt:'EU', net:'Both', color:'#7C3AED',
     data:[0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20] },
-  { label:'AU MC Debit CNP', color:'#D97706',
+  { label:'UK domestic debit (PSR)', mkt:'UK', net:'Both', color:'#DC2626',
+    data:[0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20] },
+  { label:'AU MC debit CNP', mkt:'AU', net:'Mastercard', color:'#D97706',
     data:[0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22] },
-  { label:'CA Visa Debit SMB', color:'#16A34A',
+  { label:'CA Visa debit SMB', mkt:'CA', net:'Visa', color:'#16A34A',
     data:[0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50] },
-  { label:'JP MC Debit Contactless NFC', color:'#0891B2',
+  { label:'JP MC contactless NFC', mkt:'JP', net:'Mastercard', color:'#0891B2',
     data:[1.10,1.10,1.10,1.10,1.10,1.10,1.10,1.10,1.10,1.10,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90] },
-  { label:'UK MC Domestic Debit Cap', color:'#DC2626',
-    data:[0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20] },
+  { label:'SG consumer debit CNP', mkt:'SG', net:'Both', color:'#DB2777',
+    data:[0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65] },
 ];
 
-// Change events bar chart (count per month)
-const CHART_EVENTS = [
-  { label:'Rule change events (all markets)', color:'#0D9488', isBar:true,
-    data:[2,0,0,1,0,0,1,0,1,1,1,0,1,1,1,0,1,0,1,0,0,0,0,0,1,0,1,0,0,1] },
+const CHART_EVENTS_DATA = [
+  { label:'US', mkt:'US', net:'Both', color:'#2563EB', isBar:true,
+    data:[2,0,0,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
+  { label:'UK', mkt:'UK', net:'Both', color:'#DC2626', isBar:true,
+    data:[1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
+  { label:'EU', mkt:'EU', net:'Both', color:'#7C3AED', isBar:true,
+    data:[1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
+  { label:'AU', mkt:'AU', net:'Both', color:'#D97706', isBar:true,
+    data:[0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0] },
+  { label:'CA', mkt:'CA', net:'Both', color:'#16A34A', isBar:true,
+    data:[1,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
+  { label:'SG', mkt:'SG', net:'Both', color:'#DB2777', isBar:true,
+    data:[0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0] },
+  { label:'JP', mkt:'JP', net:'Both', color:'#0891B2', isBar:true,
+    data:[0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
 ];
 
-// Key events for the timeline below the chart
+// Timeline events — each tagged with market + network for filtering
 const TIMELINE_EVENTS = [
-  {date:'Jan 2024',mkt:'AU',net:'Visa',title:'AU CNP surcharge guidance tightened post-RBA review',severity:'medium'},
+  {date:'Jan 2024',mkt:'US',net:'Mastercard',title:'Mastercard Excessive Authorization Fee raised to $0.30',severity:'medium'},
   {date:'Jan 2024',mkt:'CA',net:'Both',title:'Canada surcharging legalized — 2.4% cap takes effect',severity:'high'},
-  {date:'Apr 2024',mkt:'US',net:'Visa',title:'Visa US e-commerce interchange restructured — Signature CNP to 2.30%',severity:'high'},
-  {date:'Jul 2024',mkt:'UK',net:'Mastercard',title:'UK post-Brexit: EU card CNP rates rise to 1.5% credit (was 0.3%)',severity:'critical'},
+  {date:'Jan 2024',mkt:'UK',net:'Both',title:'UK post-Brexit EU-card CNP confirmed at 1.50% credit / 1.20% debit',severity:'high'},
+  {date:'Jan 2024',mkt:'EU',net:'Both',title:'EU IFR domestic caps confirmed stable — 0.20% debit / 0.30% credit',severity:'low'},
+  {date:'Jan 2024',mkt:'JP',net:'Both',title:'JFTC/METI interchange disclosure requirement confirmed in force',severity:'low'},
+  {date:'Jan 2024',mkt:'UK',net:'Both',title:'Fed Reserve Regulation II comment period extended to May 2024',severity:'medium'},
+  {date:'Jun 2024',mkt:'US',net:'Both',title:'Visa/Mastercard antitrust settlement — surcharge cap to 3% (uniform) or 1% (selective)',severity:'high'},
   {date:'Jul 2024',mkt:'EU',net:'Both',title:'EU interregional interchange caps extended to November 2029',severity:'medium'},
   {date:'Sep 2024',mkt:'CA',net:'Both',title:'Canada small-business interchange relief — ~0.95% average effective credit',severity:'medium'},
-  {date:'Sep 2024',mkt:'SG',net:'Mastercard',title:'Singapore CNP surcharge rules tightened — blanket surcharges banned',severity:'medium'},
-  {date:'Oct 2024',mkt:'AU',net:'Both',title:'RBA opens formal review of card costs and surcharging',severity:'medium'},
-  {date:'Oct 2024',mkt:'EU',net:'Mastercard',title:'EU IFR: digital wallet tokenised transactions (PSD2 SCA) clarified',severity:'low'},
-  {date:'Nov 2024',mkt:'JP',net:'Mastercard',title:'Japan debit restructured — contactless 0.90%, new QR tier 0.75%',severity:'medium'},
-  {date:'Jan 2025',mkt:'US',net:'Both',title:'Visa/Mastercard antitrust settlement — 125bps cap on qualifying consumer credit',severity:'critical'},
+  {date:'Sep 2024',mkt:'SG',net:'Both',title:'Singapore: blanket card-brand surcharges banned by MAS guidance',severity:'medium'},
+  {date:'Oct 2024',mkt:'AU',net:'Both',title:'RBA opens formal Review of Merchant Card Payment Costs and Surcharging',severity:'medium'},
+  {date:'Nov 2024',mkt:'JP',net:'Mastercard',title:'Japan debit restructured — contactless 0.90%, QR tier 0.75% (new)',severity:'medium'},
+  {date:'Jan 2025',mkt:'US',net:'Both',title:'Visa/Mastercard settlement — 125bps cap on qualifying consumer credit for 8 years',severity:'critical'},
   {date:'Jan 2025',mkt:'US',net:'Visa',title:'Visa Digital Commerce Service Fee expanded to all CNP auth attempts',severity:'high'},
-  {date:'Jan 2025',mkt:'US',net:'Mastercard',title:'Mastercard Excessive Authorization Integrity Fee raised to $0.50',severity:'medium'},
-  {date:'Feb 2025',mkt:'US',net:'Visa',title:'Visa US CNP surcharge cap unified at 3% with cart-level disclosure',severity:'high'},
-  {date:'Mar 2025',mkt:'CA',net:'Visa',title:'Visa Canada SMB interchange — 1.35% credit, 0.50% debit',severity:'medium'},
-  {date:'May 2025',mkt:'AU',net:'Mastercard',title:'Mastercard AU debit reduced: CP 0.18%, CNP 0.22% (RBA 2025)',severity:'medium'},
+  {date:'Jan 2025',mkt:'US',net:'Mastercard',title:'Mastercard Excessive Authorization Fee raised to $0.50',severity:'medium'},
+  {date:'Mar 2025',mkt:'CA',net:'Visa',title:'Visa Canada SMB rates: 1.35% credit, 0.50% debit',severity:'medium'},
+  {date:'May 2025',mkt:'AU',net:'Mastercard',title:'AU MC debit CNP reduced: 0.22% + $0.08 (from 0.28% + $0.10)',severity:'medium'},
+  {date:'Jul 2025',mkt:'AU',net:'Both',title:'RBA Consultation Paper: preliminary view to ban surcharging entirely',severity:'high'},
   {date:'Aug 2025',mkt:'US',net:'Both',title:'US District Court vacates Regulation II debit cap (stayed pending appeal)',severity:'critical'},
-  {date:'Mar 2026',mkt:'SG',net:'Both',title:'MAS responds to parliamentary questions on interchange fee transparency',severity:'low'},
-  {date:'Mar 2026',mkt:'AU',net:'Both',title:'RBA Final Decision: surcharging banned from Oct 2026, interchange caps cut',severity:'critical'},
+  {date:'Oct 2025',mkt:'AU',net:'Both',title:'RBA extends review timeline to March 2026',severity:'low'},
+  {date:'Mar 2026',mkt:'AU',net:'Both',title:'RBA Final Decision: surcharging BANNED from 1 Oct 2026 · interchange caps cut',severity:'critical'},
+  {date:'Mar 2026',mkt:'SG',net:'Both',title:'MAS parliamentary questions on Visa/Mastercard fee transparency',severity:'low'},
 ];
 
+// Active filter state
+let trendPeriod  = 'all';
+let trendView    = 'credit';
+let trendMarket  = 'all';
+let trendNetwork = 'all';
 let rateChartInst = null;
-let trendPeriod = '6m';
-let trendView = 'credit';
 
+// Filter setters — each one re-renders everything
 function setTrendPeriod(p, el) {
   trendPeriod = p;
   document.querySelectorAll('[id^="tp-"]').forEach(b => b.classList.remove('on'));
   if (el) el.classList.add('on');
-  buildRateChart();
+  renderTrends();
 }
-
 function setTrendView(v, el) {
   trendView = v;
-  document.querySelectorAll('[id^="tv-"]').forEach(b => b.classList.remove('on'));
+  document.querySelectorAll('[id^="fc-"]').forEach(b => b.classList.remove('on'));
   if (el) el.classList.add('on');
-  buildRateChart();
+  renderTrends();
+}
+function setTrendMarket(m, el) {
+  trendMarket = m;
+  document.querySelectorAll('[id^="fm-"]').forEach(b => b.classList.remove('on'));
+  if (el) el.classList.add('on');
+  renderTrends();
+}
+function setTrendNetwork(n, el) {
+  trendNetwork = n;
+  document.querySelectorAll('[id^="fn-"]').forEach(b => b.classList.remove('on'));
+  if (el) el.classList.add('on');
+  renderTrends();
 }
 
-function getFilteredLabelsAndData(datasets) {
+// Apply market+network filter to any dataset array
+function applyFilters(datasets) {
+  return datasets.filter(d => {
+    const mktOk = trendMarket === 'all' || d.mkt === trendMarket;
+    const netOk = trendNetwork === 'all' || d.net === trendNetwork || d.net === 'Both';
+    return mktOk && netOk;
+  });
+}
+
+// Apply period slice to labels + datasets
+function applyPeriod(datasets) {
   const n = RATE_LABELS_ALL.length;
-  const cutoff = trendPeriod === '6m' ? n - 6 : trendPeriod === '1y' ? n - 12 : 0;
-  const labels = RATE_LABELS_ALL.slice(cutoff);
+  const cutoff = trendPeriod === '3m' ? n-3
+               : trendPeriod === '6m' ? n-6
+               : trendPeriod === '1y' ? n-12
+               : trendPeriod === '2y' ? n-24
+               : 0;
   return {
-    labels,
+    labels: RATE_LABELS_ALL.slice(cutoff),
     datasets: datasets.map(d => ({ ...d, data: d.data.slice(cutoff) }))
   };
 }
 
+function updateTrendSummary(filtered) {
+  const sub = document.getElementById('trend-sub');
+  const pills = document.getElementById('trend-filter-pills');
+  if (!sub || !pills) return;
+
+  const parts = [
+    trendMarket  === 'all' ? 'All markets'  : trendMarket,
+    trendNetwork === 'all' ? 'All networks' : trendNetwork,
+    trendView === 'credit' ? 'Credit CNP' : trendView === 'debit' ? 'Debit' : 'Events',
+    trendPeriod === '3m' ? 'Last 3 months' : trendPeriod === '6m' ? 'Last 6 months' : trendPeriod === '1y' ? 'Last 12 months' : trendPeriod === '2y' ? 'Last 2 years' : 'All time (Jan 2024 – Jun 2026)',
+  ];
+  sub.textContent = parts.join(' · ') + ` · ${filtered.length} series shown`;
+
+  // Active filter pills (non-default values only)
+  const active = [];
+  if (trendMarket  !== 'all') active.push({ label: trendMarket,  fn: () => { setTrendMarket('all', document.getElementById('fm-all')); } });
+  if (trendNetwork !== 'all') active.push({ label: trendNetwork, fn: () => { setTrendNetwork('all', document.getElementById('fn-all')); } });
+  if (trendView !== 'credit') active.push({ label: trendView,    fn: () => { setTrendView('credit', document.getElementById('fc-credit')); } });
+  if (trendPeriod  !== 'all') active.push({ label: trendPeriod,  fn: () => { setTrendPeriod('all', document.getElementById('tp-all')); } });
+  pills.innerHTML = active.map((a, i) =>
+    `<div style="display:inline-flex;align-items:center;gap:5px;padding:3px 10px;background:var(--navy);color:#fff;border-radius:20px;font-size:10.5px;font-weight:600;cursor:pointer" onclick="(${a.fn.toString()})()">${a.label} ✕</div>`
+  ).join('');
+}
+
 function buildRateChart() {
-  const canvas = document.getElementById('rateChart');
-  const legEl = document.getElementById('chart-legend');
+  const canvas  = document.getElementById('rateChart');
+  const legEl   = document.getElementById('chart-legend');
+  const emptyEl = document.getElementById('chart-empty');
   if (!canvas) return;
 
   const rawDatasets = trendView === 'credit' ? CHART_CREDIT
                     : trendView === 'debit'  ? CHART_DEBIT
-                    :                          CHART_EVENTS;
+                    :                          CHART_EVENTS_DATA;
 
-  const { labels, datasets } = getFilteredLabelsAndData(rawDatasets);
+  const filtered = applyFilters(rawDatasets);
+  updateTrendSummary(filtered);
 
   if (rateChartInst) { rateChartInst.destroy(); rateChartInst = null; }
 
+  if (!filtered.length) {
+    canvas.style.display = 'none';
+    emptyEl.style.display = 'block';
+    emptyEl.innerHTML = `<div style="font-size:28px;margin-bottom:8px;opacity:.3">📊</div>No data for the selected combination.<br><span style="font-size:11px">Try broadening the Market or Network filter.</span>`;
+    if (legEl) legEl.innerHTML = '';
+    return;
+  }
+  canvas.style.display = '';
+  emptyEl.style.display = 'none';
+
+  const { labels, datasets } = applyPeriod(filtered);
   const isBar = datasets.some(d => d.isBar);
-  const chartDatasets = datasets.map(d => ({
-    label: d.label,
-    data: d.data,
-    borderColor: d.color,
-    backgroundColor: isBar ? d.color + 'CC' : 'transparent',
-    tension: 0.3,
-    pointRadius: isBar ? 0 : 3,
-    pointHoverRadius: 5,
-    borderWidth: isBar ? 0 : 2,
-    fill: false,
-  }));
 
   rateChartInst = new Chart(canvas.getContext('2d'), {
     type: isBar ? 'bar' : 'line',
-    data: { labels, datasets: chartDatasets },
+    data: {
+      labels,
+      datasets: datasets.map(d => ({
+        label: d.label,
+        data: d.data,
+        borderColor: d.color,
+        backgroundColor: isBar ? d.color + 'CC' : 'transparent',
+        tension: 0.3,
+        pointRadius: isBar ? 0 : (filtered.length <= 3 ? 4 : 2),
+        pointHoverRadius: 5,
+        borderWidth: isBar ? 0 : 2,
+        fill: false,
+      }))
+    },
     options: {
       responsive: true,
-      interaction: { mode: 'index', intersect: false },
+      interaction: { mode:'index', intersect:false },
       plugins: {
         legend: { display: false },
         tooltip: {
@@ -787,56 +910,53 @@ function buildRateChart() {
         }
       },
       scales: {
-        x: {
-          grid: { color: 'rgba(0,0,0,0.04)' },
-          ticks: { font: { size: 10 }, color: '#64748B', maxRotation: 0 },
-        },
-        y: {
-          grid: { color: 'rgba(0,0,0,0.04)' },
-          ticks: {
-            font: { size: 10 }, color: '#64748B',
-            callback: v => isBar ? v : v.toFixed(2) + '%',
-          },
-          suggestedMin: 0,
-        }
+        x: { grid:{color:'rgba(0,0,0,0.03)'}, ticks:{font:{size:10},color:'#64748B',maxRotation:0} },
+        y: { grid:{color:'rgba(0,0,0,0.03)'}, ticks:{font:{size:10},color:'#64748B',
+             callback: v => isBar ? v : v.toFixed(2)+'%'}, suggestedMin:0 }
       },
     }
   });
 
-  // Build legend
   if (legEl) {
     legEl.innerHTML = datasets.map(d =>
       `<div style="display:flex;align-items:center;gap:6px;font-size:10.5px;color:var(--text-muted)">
-        <div style="width:14px;height:${isBar?8:3}px;border-radius:${isBar?2:2}px;background:${d.color};flex-shrink:0"></div>
+        <div style="width:14px;height:${isBar?8:3}px;border-radius:2px;background:${d.color};flex-shrink:0"></div>
         <span>${d.label}</span>
-      </div>`
-    ).join('');
+      </div>`).join('');
   }
 }
 
 function renderEventTimeline() {
-  const el = document.getElementById('evt-timeline');
+  const el      = document.getElementById('evt-timeline');
+  const countEl = document.getElementById('evt-count');
   if (!el) return;
 
-  // Filter by period
   const now = new Date('2026-06-22');
-  const cutoffMonths = trendPeriod === '6m' ? 6 : trendPeriod === '1y' ? 12 : 999;
+  const cutoffMonths = trendPeriod === '3m' ? 3 : trendPeriod === '6m' ? 6 : trendPeriod === '1y' ? 12 : trendPeriod === '2y' ? 24 : 999;
   const cutoffDate = new Date(now.getFullYear(), now.getMonth() - cutoffMonths, 1);
 
-  const events = TIMELINE_EVENTS.filter(e => {
-    try {
-      const d = new Date(e.date + ' 1');
-      return d >= cutoffDate;
-    } catch { return true; }
+  let events = TIMELINE_EVENTS.filter(e => {
+    try { return new Date(e.date + ' 1') >= cutoffDate; } catch { return true; }
   });
 
+  // Apply market + network filters to timeline too
+  if (trendMarket !== 'all')  events = events.filter(e => e.mkt === trendMarket);
+  if (trendNetwork !== 'all') events = events.filter(e => e.net === trendNetwork || e.net === 'Both');
+
+  if (countEl) countEl.textContent = `${events.length} event${events.length===1?'':'s'}`;
+
+  if (!events.length) {
+    el.innerHTML = `<div class="empty"><div class="empty-icon">📅</div><p>No events match the current filters.<br>Try broadening the market or period selection.</p></div>`;
+    return;
+  }
+
   const sevColor = {critical:'var(--red)',high:'var(--amber)',medium:'var(--teal)',low:'var(--text-faint)'};
-  const sevBg = {critical:'var(--red-bg)',high:'var(--amber-bg)',medium:'var(--teal-light)',low:'var(--bg-soft)'};
+  const sevBg    = {critical:'var(--red-bg)',high:'var(--amber-bg)',medium:'var(--teal-light)',low:'var(--bg-soft)'};
   const netClass = {Visa:'b-visa',Mastercard:'b-mc',Both:'b-both'};
 
   el.innerHTML = events.map(e => `
     <div style="display:flex;gap:12px;align-items:flex-start;padding:10px 14px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r2);margin-bottom:8px;border-left:3px solid ${sevColor[e.severity]||'var(--border)'}">
-      <div style="min-width:60px;font-size:10px;font-weight:700;color:var(--text-faint);padding-top:2px;font-family:'JetBrains Mono',monospace">${e.date}</div>
+      <div style="min-width:64px;font-size:10px;font-weight:700;color:var(--text-faint);padding-top:2px;font-family:'JetBrains Mono',monospace">${e.date}</div>
       <div style="flex:1">
         <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:5px">
           <span class="badge b-market">${e.mkt}</span>
@@ -852,6 +972,7 @@ function renderTrends() {
   buildRateChart();
   renderEventTimeline();
 }
+
 
 // ── CHAT — grounded in local data, falls back to live web search ──
 // ── COMPREHENSIVE KNOWLEDGE BASE — exact rates as of Jun 2026 ────────
