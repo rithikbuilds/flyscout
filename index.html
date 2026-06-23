@@ -183,7 +183,7 @@ a:hover{text-decoration:underline}
     <div class="stats">
       <div class="stat-card"><div class="stat-val" id="st-total">—</div><div class="stat-label">Rule changes tracked</div><div class="stat-sub">Since Jan 2024</div></div>
       <div class="stat-card"><div class="stat-val" id="st-month">—</div><div class="stat-label">Changes this month</div><div class="stat-sub" id="st-month-sub">—</div></div>
-      <div class="stat-card"><div class="stat-val" id="st-lastcheck">—</div><div class="stat-label">Last automated check</div><div class="stat-sub">Runs 3x daily via GitHub Action</div></div>
+      <div class="stat-card"><div class="stat-val" id="st-lastcheck">—</div><div class="stat-label">Last automated check</div><div class="stat-sub" id="st-lastcheck-sub">Runs 3x daily via GitHub Actions</div></div>
       <div class="stat-card"><div class="stat-val" id="st-predictions">—</div><div class="stat-label">Flywire corridors needing action</div><div class="stat-sub">Critical + high urgency</div></div>
     </div>
 
@@ -421,8 +421,20 @@ function renderDashboard() {
   document.getElementById('st-month').textContent = monthChanges.length;
   document.getElementById('st-month-sub').textContent = total ? `of ${total} total` : '—';
 
-  const lastCheck = META.last_updated;
-  document.getElementById('st-lastcheck').textContent = lastCheck ? timeAgo(lastCheck) : 'Not yet run';
+  // Last automated check — only show a real timestamp if the script has
+  // actually run. Seed data has auto_detected:false so we can tell the
+  // difference between "script ran" and "just the bootstrap seed file".
+  const hasRealRun = CHANGES.some(c => c.auto_detected === true);
+  const lastCheckEl = document.getElementById('st-lastcheck');
+  const lastCheckSub = document.getElementById('st-lastcheck-sub');
+  if (hasRealRun && META.last_updated) {
+    lastCheckEl.textContent = timeAgo(META.last_updated);
+    if (lastCheckSub) lastCheckSub.textContent = 'Runs 3x daily via GitHub Actions';
+  } else {
+    lastCheckEl.textContent = 'Not yet';
+    lastCheckEl.style.fontSize = '16px';
+    if (lastCheckSub) lastCheckSub.textContent = 'Awaiting first GitHub Actions run — go to Actions tab → Run workflow';
+  }
 
   const flagged = FLYWIRE_PREDICTIONS.filter(p => p.urgency === 'critical' || p.urgency === 'high');
   document.getElementById('st-predictions').textContent = flagged.length;
@@ -931,42 +943,83 @@ function renderEventTimeline() {
   const countEl = document.getElementById('evt-count');
   if (!el) return;
 
+  // Built entirely from live CHANGES data — same source as Change Log.
+  // Trends and Change Log are always in sync automatically.
   const now = new Date('2026-06-22');
-  const cutoffMonths = trendPeriod === '3m' ? 3 : trendPeriod === '6m' ? 6 : trendPeriod === '1y' ? 12 : trendPeriod === '2y' ? 24 : 999;
+  const cutoffMonths = trendPeriod === '3m' ? 3 : trendPeriod === '6m' ? 6
+                     : trendPeriod === '1y' ? 12 : trendPeriod === '2y' ? 24 : 999;
   const cutoffDate = new Date(now.getFullYear(), now.getMonth() - cutoffMonths, 1);
 
-  let events = TIMELINE_EVENTS.filter(e => {
-    try { return new Date(e.date + ' 1') >= cutoffDate; } catch { return true; }
+  let events = CHANGES.filter(c => {
+    const d = new Date(c.detected_at || c.effective_date || '2024-01-01');
+    return d >= cutoffDate;
   });
 
-  // Apply market + network filters to timeline too
-  if (trendMarket !== 'all')  events = events.filter(e => e.mkt === trendMarket);
-  if (trendNetwork !== 'all') events = events.filter(e => e.net === trendNetwork || e.net === 'Both');
+  if (trendMarket  !== 'all') events = events.filter(c => c.market === trendMarket);
+  if (trendNetwork !== 'all') events = events.filter(c =>
+    c.network === trendNetwork || c.network === 'Both' || c.network === 'Regulator');
+
+  events = [...events].sort((a, b) =>
+    new Date(b.detected_at || b.effective_date) - new Date(a.detected_at || a.effective_date));
 
   if (countEl) countEl.textContent = `${events.length} event${events.length===1?'':'s'}`;
 
   if (!events.length) {
-    el.innerHTML = `<div class="empty"><div class="empty-icon">📅</div><p>No events match the current filters.<br>Try broadening the market or period selection.</p></div>`;
+    el.innerHTML = `<div class="empty"><div class="empty-icon">📅</div><p>No events match the current filters.<br>Try broadening the market, network, or period.</p></div>`;
     return;
   }
 
-  const sevColor = {critical:'var(--red)',high:'var(--amber)',medium:'var(--teal)',low:'var(--text-faint)'};
-  const sevBg    = {critical:'var(--red-bg)',high:'var(--amber-bg)',medium:'var(--teal-light)',low:'var(--bg-soft)'};
-  const netClass = {Visa:'b-visa',Mastercard:'b-mc',Both:'b-both'};
+  const triggerColor = {
+    regulatory_order:      'var(--red)',
+    network_policy_update: 'var(--amber)',
+    government_consultation:'var(--blue)',
+    scheme_review:         'var(--teal)',
+    internal_capture:      'var(--text-faint)',
+  };
+  const triggerBg = {
+    regulatory_order:      'var(--red-bg)',
+    network_policy_update: 'var(--amber-bg)',
+    government_consultation:'var(--blue-bg)',
+    scheme_review:         'var(--teal-light)',
+    internal_capture:      'var(--bg-soft)',
+  };
+  const triggerLabel = {
+    regulatory_order:      '⚖️ Regulatory order',
+    network_policy_update: '📋 Network policy',
+    government_consultation:'💬 Consultation',
+    scheme_review:         '🔄 Scheme review',
+    internal_capture:      '📌 Captured',
+  };
+  const netClass = { Visa:'b-visa', Mastercard:'b-mc', Both:'b-both', Regulator:'b-both' };
 
-  el.innerHTML = events.map(e => `
-    <div style="display:flex;gap:12px;align-items:flex-start;padding:10px 14px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r2);margin-bottom:8px;border-left:3px solid ${sevColor[e.severity]||'var(--border)'}">
-      <div style="min-width:64px;font-size:10px;font-weight:700;color:var(--text-faint);padding-top:2px;font-family:'JetBrains Mono',monospace">${e.date}</div>
+  el.innerHTML = events.map(c => {
+    const trigger = c.trigger || 'internal_capture';
+    const color = triggerColor[trigger] || 'var(--border)';
+    const bg    = triggerBg[trigger]    || 'var(--bg-soft)';
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const d = new Date(c.detected_at || c.effective_date || '2024-01-01');
+    const dateStr = months[d.getMonth()] + ' ' + d.getFullYear();
+    const isLive = c.auto_detected === true;
+    return `
+    <div style="display:flex;gap:12px;align-items:flex-start;padding:11px 14px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r2);margin-bottom:8px;border-left:3px solid ${color}">
+      <div style="min-width:64px;font-size:10px;font-weight:700;color:var(--text-faint);padding-top:2px;font-family:'JetBrains Mono',monospace">${dateStr}</div>
       <div style="flex:1">
         <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:5px">
-          <span class="badge b-market">${e.mkt}</span>
-          <span class="badge ${netClass[e.net]||'b-both'}">${e.net}</span>
-          <span class="badge" style="background:${sevBg[e.severity]};color:${sevColor[e.severity]};border:1px solid ${sevColor[e.severity]}33">${e.severity}</span>
+          <span class="badge b-market">${c.market}</span>
+          <span class="badge ${netClass[c.network]||'b-both'}">${c.network}</span>
+          <span class="badge ${c.category==='surcharge'?'b-surcharge':'b-interchange'}">${c.category}</span>
+          ${c.cnp ? '<span class="badge b-cnp">CNP</span>' : ''}
+          <span class="badge" style="background:${bg};color:${color};border:1px solid ${color}33">${triggerLabel[trigger]||trigger}</span>
+          ${isLive ? '<span class="badge" style="background:var(--green-bg);color:var(--green);border:1px solid #BBF7D0">● live</span>' : '<span class="badge b-seed">seed</span>'}
         </div>
-        <div style="font-size:12px;color:var(--text);line-height:1.5">${e.title}</div>
+        <div style="font-size:12px;font-weight:600;color:var(--navy);margin-bottom:3px">${c.title}</div>
+        ${(c.old_value||c.new_value) ? `<div style="font-size:11px;color:var(--text-muted);margin-bottom:3px">${c.old_value||'—'} → <strong>${c.new_value||'—'}</strong></div>` : ''}
+        <a href="${c.source_url}" target="_blank" rel="noopener" style="font-size:10.5px;font-weight:600;color:var(--teal-dark)">${c.source_name} →</a>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
+
 
 function renderTrends() {
   buildRateChart();
