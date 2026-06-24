@@ -312,22 +312,54 @@ a:hover{text-decoration:underline}
 // ── DATA LOADING ─────────────────────────────────────────────────
 let CHANGES = [];
 let PREDICTIONS = [];
+let LIVE_RATES = {};
 let META = {};
+let FLYWIRE_PREDICTIONS = []; // populated from predictions.json below
 
 async function loadData() {
   try {
-    const [changesRes, predsRes] = await Promise.all([
+    const [changesRes, predsRes, ratesRes] = await Promise.all([
       fetch('data/rule-changes.json'),
       fetch('data/predictions.json'),
+      fetch('data/rates.json'),
     ]);
     const changesData = await changesRes.json();
-    const predsData = await predsRes.json();
-    CHANGES = changesData.changes || [];
-    PREDICTIONS = predsData.predictions || [];
-    META = changesData._meta || {};
+    const predsData   = await predsRes.json();
+    const ratesData   = ratesRes.ok ? await ratesRes.json() : {};
+
+    CHANGES  = changesData.changes || [];
+    META     = changesData._meta   || {};
+    LIVE_RATES = ratesData.rates   || {};
+
+    // Populate FLYWIRE_PREDICTIONS from live predictions.json
+    // Falls back to empty array if file doesn't have the full Flywire structure yet
+    const rawPreds = predsData.predictions || [];
+    if (rawPreds.length && rawPreds[0].corridor) {
+      // New Flywire-specific structure — use directly
+      FLYWIRE_PREDICTIONS = rawPreds;
+    } else {
+      // Old generic structure — keep hardcoded fallback defined below
+      FLYWIRE_PREDICTIONS = FLYWIRE_PREDICTIONS_FALLBACK;
+    }
+
+    // Enrich CURRENT_RATES with live detected rates where available
+    Object.entries(LIVE_RATES).forEach(([mkt, networks]) => {
+      Object.entries(networks).forEach(([net, cats]) => {
+        Object.entries(cats).forEach(([cat, info]) => {
+          if (CURRENT_RATES[mkt]) {
+            const key = cat + (info.cnp ? '_cnp' : '');
+            if (!CURRENT_RATES[mkt][key]) CURRENT_RATES[mkt][key] = {};
+            CURRENT_RATES[mkt][key]['Live detected'] = `${info.value} (detected ${info.detected_at.slice(0,10)})`;
+            CURRENT_RATES[mkt].live_detected_at = info.detected_at;
+          }
+        });
+      });
+    });
+
   } catch (e) {
     console.warn('Could not load data files — running with empty dataset', e);
     CHANGES = []; PREDICTIONS = []; META = {};
+    FLYWIRE_PREDICTIONS = FLYWIRE_PREDICTIONS_FALLBACK;
   }
   renderAll();
 }
@@ -530,7 +562,7 @@ function renderChangeLog() {
 // across 7 markets. Every prediction shows corridor impact, Flywire
 // action required, and which tracked regulatory evidence it's from.
 
-const FLYWIRE_PREDICTIONS = [
+const FLYWIRE_PREDICTIONS_FALLBACK = [
   {
     id: 'fw_au_surcharge_ban',
     urgency: 'critical',
