@@ -1,0 +1,75 @@
+{
+  "_meta": {
+    "computed_at": "2026-06-24T10:23:10.581277+00:00",
+    "description": "Latest detected rates per market/network/category, extracted automatically from rule-changes.json. Only entries with extractable percentage values are included.",
+    "entry_count": 5
+  },
+  "rates": {
+    "UK": {
+      "Both": {
+        "interchange": {
+          "value": "1.15% debit / 1.5% credit",
+          "previous": "0.2% debit / 0.3% credit (EU IFR cap)",
+          "detected_at": "2024-01-01T00:00:00Z",
+          "effective_date": "2021-10-01",
+          "source_name": "The Future of Interchange Fees: 2026 — Clearly Payments",
+          "source_url": "https://www.clearlypayments.com/blog/the-future-of-interchange-fees-2026-and-beyond/",
+          "cnp": true,
+          "change_id": "seed_uk_001"
+        }
+      }
+    },
+    "EU": {
+      "Both": {
+        "interchange": {
+          "value": "Extended to November 2029: 0.20% debit / 0.30% credit (physical); 1.15% debit / 1.50% credit (CNP)",
+          "previous": "Caps due to expire November 2024",
+          "detected_at": "2024-07-08T00:00:00Z",
+          "effective_date": "2024-07-08",
+          "source_name": "Visa and Mastercard extend fee caps on non-EU cards until 2029 — FStech",
+          "source_url": "https://www.fstech.co.uk/fst/Visa_Mastercard_Extend_Fee_Caps_EEA.php",
+          "cnp": true,
+          "change_id": "seed_eu_002"
+        }
+      }
+    },
+    "AU": {
+      "Both": {
+        "surcharge": {
+          "value": "Proposed: surcharging banned on eftpos/Mastercard/Visa; domestic credit cap reduced to 0.3%",
+          "previous": "Surcharging permitted on cost-of-acceptance basis",
+          "detected_at": "2025-07-15T00:00:00Z",
+          "effective_date": "2025-07-15",
+          "source_name": "RBA Media Release — Consultation Paper on Card Payments",
+          "source_url": "https://www.rba.gov.au/media-releases/2025/mr-25-19.html",
+          "cnp": true,
+          "change_id": "seed_au_002"
+        }
+      }
+    },
+    "CA": {
+      "Both": {
+        "surcharge": {
+          "value": "Surcharging permitted on credit cards, capped at 2.4% (ex-Quebec; CNP included)",
+          "previous": "Surcharging prohibited on credit cards",
+          "detected_at": "2024-01-01T00:00:00Z",
+          "effective_date": "2022-10-06",
+          "source_name": "Mastercard Canada — Merchant Surcharge Rules",
+          "source_url": "https://www.mastercard.com/ca/en/business/support/merchant-surcharge-rules.html",
+          "cnp": true,
+          "change_id": "seed_ca_001"
+        },
+        "interchange": {
+          "value": "~0.95% average effective credit interchange (eligible small merchants)",
+          "previous": "Standard rates (average ~1.4% for Canadian credit cards)",
+          "detected_at": "2024-10-01T00:00:00Z",
+          "effective_date": "2024-10-01",
+          "source_name": "The Future of Interchange Fees: 2026 — Clearly Payments",
+          "source_url": "https://www.clearlypayments.com/blog/the-future-of-interchange-fees-2026-and-beyond/",
+          "cnp": false,
+          "change_id": "seed_ca_003"
+        }
+      }
+    }
+  }
+}

@@ -1,7 +1,7 @@
 {
   "_meta": {
-    "computed_at": "2026-06-23T19:13:42.760933+00:00",
-    "method": "Flywire-specific rule-based engine",
+    "computed_at": "2026-06-24T10:23:10.581460+00:00",
+    "method": "Flywire-specific rule-based engine — corridor/impact/action from FLYWIRE_INTEL templates, urgency/confidence/ETA derived from change log trigger types and effective dates",
     "count": 9
   },
   "predictions": [
@@ -24,7 +24,7 @@
         "seed_au_003",
         "seed_au_004"
       ],
-      "computed_at": "2026-06-23T19:13:42.758786+00:00"
+      "computed_at": "2026-06-24T10:23:10.581410+00:00"
     },
     {
       "id": "fw_us_interchange_regu",
@@ -45,7 +45,7 @@
         "seed_us_003",
         "seed_us_006"
       ],
-      "computed_at": "2026-06-23T19:13:42.756691+00:00"
+      "computed_at": "2026-06-24T10:23:10.581339+00:00"
     },
     {
       "id": "fw_us_surcharge_regu",
@@ -65,7 +65,7 @@
       "evidence_ids": [
         "seed_us_004"
       ],
-      "computed_at": "2026-06-23T19:13:42.757818+00:00"
+      "computed_at": "2026-06-24T10:23:10.581360+00:00"
     },
     {
       "id": "fw_uk_interchange_gove",
@@ -86,7 +86,7 @@
         "seed_uk_001",
         "seed_uk_002"
       ],
-      "computed_at": "2026-06-23T19:13:42.758107+00:00"
+      "computed_at": "2026-06-24T10:23:10.581374+00:00"
     },
     {
       "id": "fw_eu_interchange_regu",
@@ -107,7 +107,7 @@
         "seed_eu_001",
         "seed_eu_002"
       ],
-      "computed_at": "2026-06-23T19:13:42.758441+00:00"
+      "computed_at": "2026-06-24T10:23:10.581391+00:00"
     },
     {
       "id": "fw_ca_surcharge_netw",
@@ -128,7 +128,7 @@
         "seed_ca_001",
         "seed_ca_002"
       ],
-      "computed_at": "2026-06-23T19:13:42.759054+00:00"
+      "computed_at": "2026-06-24T10:23:10.581421+00:00"
     },
     {
       "id": "fw_ca_interchange_netw",
@@ -148,7 +148,7 @@
       "evidence_ids": [
         "seed_ca_003"
       ],
-      "computed_at": "2026-06-23T19:13:42.759448+00:00"
+      "computed_at": "2026-06-24T10:23:10.581430+00:00"
     },
     {
       "id": "fw_jp_interchange_regu",
@@ -168,7 +168,7 @@
       "evidence_ids": [
         "seed_jp_001"
       ],
-      "computed_at": "2026-06-23T19:13:42.760170+00:00"
+      "computed_at": "2026-06-24T10:23:10.581452+00:00"
     },
     {
       "id": "fw_sg_interchange_gove",
@@ -188,7 +188,7 @@
       "evidence_ids": [
         "seed_sg_001"
       ],
-      "computed_at": "2026-06-23T19:13:42.759785+00:00"
+      "computed_at": "2026-06-24T10:23:10.581439+00:00"
     }
   ]
 }
