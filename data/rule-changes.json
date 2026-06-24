@@ -11,7 +11,7 @@
       "CA",
       "JP"
     ],
-    "last_updated": "2026-06-24T10:23:10.581060+00:00"
+    "last_updated": "2026-06-24T22:45:56.323897+00:00"
   },
   "changes": [
     {
@@ -393,6 +393,66 @@
       "new_snippet": "Japan's METI required card networks to disclose interchange fees in September 2022 to ensure fair competitive conditions.",
       "reviewed": true,
       "auto_detected": false
+    },
+    {
+      "id": "chg_us_visa_ic_1782341147",
+      "market": "US",
+      "network": "Visa",
+      "category": "interchange",
+      "cnp": true,
+      "title": "Visa USA Interchange Reimbursement Fees updated",
+      "summary": "Content change detected on Visa USA Interchange Reimbursement Fees. Review source — no specific rate pattern extracted.",
+      "old_value": null,
+      "new_value": null,
+      "trigger": "regulatory_order",
+      "effective_date": null,
+      "detected_at": "2026-06-24T22:45:47.821268+00:00",
+      "source_name": "Visa USA Interchange Reimbursement Fees",
+      "source_url": "https://usa.visa.com/support/consumer/visa-rules.html",
+      "old_snippet": "Visa Rules and policies | support & guidelines | Visa Skip to Main Visa connects consumers, merchants, financial institutions, and fintechs through a secure, global network. Visa Rules and Policy governs safe and reliable commerce for all stakeholders. Visa Inc. is committed to p",
+      "new_snippet": "Skip to Main Visa connects consumers, merchants, financial institutions, and fintechs through a secure, global network. Visa Rules and Policy governs safe and reliable commerce for all stakeholders. Visa Inc. is committed to providing our partners and interested parties with grea",
+      "reviewed": false,
+      "auto_detected": true
+    },
+    {
+      "id": "chg_eu_eba_1782341150",
+      "market": "EU",
+      "network": "Regulator",
+      "category": "interchange",
+      "cnp": true,
+      "title": "EBA — Payment Services & Interchange updated",
+      "summary": "Content change detected on EBA — Payment Services & Interchange. Review source — no specific rate pattern extracted.",
+      "old_value": null,
+      "new_value": null,
+      "trigger": "regulatory_order",
+      "effective_date": null,
+      "detected_at": "2026-06-24T22:45:50.351287+00:00",
+      "source_name": "EBA — Payment Services & Interchange",
+      "source_url": "https://www.eba.europa.eu/regulation-and-policy/payment-services-and-electronic-money",
+      "old_snippet": "Payment services and electronic money | European Banking Authority Skip to main content Payment services and electronic money The EBA contributes to making retail payments in the EU secure, convenient, innovative and competitive. To that end, the EBA develops requirements aimed a",
+      "new_snippet": "Payment services and electronic money | European Banking Authority Skip to main content Payment services and electronic money The EBA contributes to making retail payments in the EU secure, convenient, innovative and competitive. To that end, the EBA develops requirements aimed a",
+      "reviewed": false,
+      "auto_detected": true
+    },
+    {
+      "id": "chg_sg_mas_1782341152",
+      "market": "SG",
+      "network": "Regulator",
+      "category": "interchange",
+      "cnp": true,
+      "title": "MAS — Payments Regulation updated",
+      "summary": "Content change detected on MAS — Payments Regulation. Review source — no specific rate pattern extracted.",
+      "old_value": null,
+      "new_value": null,
+      "trigger": "internal_capture",
+      "effective_date": null,
+      "detected_at": "2026-06-24T22:45:52.149453+00:00",
+      "source_name": "MAS — Payments Regulation",
+      "source_url": "https://www.mas.gov.sg/regulation/payments",
+      "old_snippet": "Maintenance Sorry, this service is currently unavailable. Please try accessing the page using a different device or internet browser, or by clearing your browser cache. If the issue continues, kindly reach out to us at contact us and provide the ID number 0.9394d817.1782296588.37",
+      "new_snippet": "Maintenance Sorry, this service is currently unavailable. Please try accessing the page using a different device or internet browser, or by clearing your browser cache. If the issue continues, kindly reach out to us at contact us and provide the ID number 0.280c3417.1782341151.1a",
+      "reviewed": false,
+      "auto_detected": true
     }
   ]
 }
