@@ -1,18 +1,12 @@
 name: FlyScout Rule Check
 
-# Runs the detection script on a schedule. GitHub executes this for you —
-# nothing to install, nothing to run locally, nothing to keep alive.
-#
-# Schedule below runs 3x/day (every 8 hours). Adjust the cron expression to
-# change frequency. You can also trigger a run manually from the Actions tab
-# (workflow_dispatch).
 on:
   schedule:
-    - cron: "0 2,10,18 * * *"   # 02:00, 10:00, 18:00 UTC daily
-  workflow_dispatch: {}          # lets you click "Run workflow" manually in GitHub
+    - cron: "0 2,10,18 * * *"
+  workflow_dispatch: {}
 
 permissions:
-  contents: write   # needed so the workflow can commit updated data/*.json back to the repo
+  contents: write
 
 jobs:
   check-rules:
