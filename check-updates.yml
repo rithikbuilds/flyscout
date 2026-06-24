@@ -38,6 +38,6 @@ jobs:
         run: |
           git config user.name "flyscout-bot"
           git config user.email "actions@github.com"
-          git add data/rule-changes.json data/predictions.json data/snapshots.json
+          git add data/rule-changes.json data/predictions.json data/rates.json data/snapshots.json
           git diff --cached --quiet || git commit -m "FlyScout: automated rule check $(date -u +%Y-%m-%dT%H:%M:%SZ)"
           git push
