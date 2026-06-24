@@ -1,46 +1,194 @@
 {
   "_meta": {
-    "computed_at": "2026-06-22T04:12:19.135511+00:00",
-    "method": "deterministic rule-based \u2014 not AI-generated"
+    "computed_at": "2026-06-23T19:13:42.760933+00:00",
+    "method": "Flywire-specific rule-based engine",
+    "count": 9
   },
   "predictions": [
     {
-      "id": "pred_us_mastercard_interchange",
+      "id": "fw_au_surcharge_regu",
+      "market": "AU",
+      "network": "Both",
+      "category": "surcharge",
+      "status": "confirmed",
+      "urgency": "critical",
+      "confidence": 100,
+      "title": "AU surcharge: Surcharging permitted (cost-of-acceptance); no foreign-card cap → Surcharging banned from 1 Oct 2026; domestic interchange caps cut; foreign-card cap from 1 Apr 2027",
+      "eta": "2026-03-31 — in force",
+      "corridor": "International students → AU universities (Visa/MC CNP)",
+      "impact": "Flywire cannot pass card acceptance costs to payers at AU institutions via surcharge from 1 Oct 2026 (RBA final decision). Domestic interchange caps also cut from same date. Foreign-card interchange cap follows 1 Apr 2027 (cost saving for international student home-country cards).",
+      "action": "1. Audit all AU merchant agreements — identify where Flywire currently passes surcharges.\n2. Model AU card acceptance costs under new lower interchange caps.\n3. Decide: absorb into spread, increase base pricing, or negotiate acquirer rate reduction.\n4. Notify AU institutional clients of any pricing changes before 1 Oct 2026.",
+      "evidence": "No surcharging clarity until 2026 — SmartCompany (2025-10-24) → RBA Conclusions Paper — Merchant Card Payment Costs and Surcharging (2026-03-31)",
+      "evidence_url": "https://www.rba.gov.au/media-releases/2026/mr-26-10.html",
+      "evidence_ids": [
+        "seed_au_003",
+        "seed_au_004"
+      ],
+      "computed_at": "2026-06-23T19:13:42.758786+00:00"
+    },
+    {
+      "id": "fw_us_interchange_regu",
       "market": "US",
       "network": "Mastercard",
       "category": "interchange",
-      "status": "due",
-      "reasoning": "US Mastercard interchange has changed 2 time(s) on record, averaging one change every 366 days. It has been 537 days since the last change \u2014 overdue by historical pattern.",
+      "status": "confirmed",
+      "urgency": "high",
+      "confidence": 80,
+      "title": "US interchange: Regulation II cap: 21¢ + 5bps + 1¢ fraud adj (legally settled) → Vacated by court order — stayed pending Eighth Circuit appeal (cap remains in effect)",
+      "eta": "2025-08-06 — in force",
+      "corridor": "US domestic payments — education, healthcare, travel (Visa/MC CNP)",
+      "impact": "US has the highest CNP credit interchange globally (2.30–2.40% Visa Signature/Infinite). Reg II debit cap vacated by court (Aug 2025, stayed pending 8th Circuit appeal) — if upheld, US debit costs could rise 2–4x from current 21¢+5bps. Antitrust settlement caps qualifying consumer credit at 125bps from Mar 2025.",
+      "action": "1. Identify what percentage of US volume is domestic debit — model 2x/4x cost scenarios.\n2. Verify whether Flywire's US institutional clients qualify for the 125bps antitrust cap.\n3. Monitor Eighth Circuit case docket — ruling timing determines urgency of debit cost action.\n4. Ensure US acquirer contracts allow interchange pass-through adjustment.",
+      "evidence": "Visa Interchange Rates — Merchant Cost Consulting (2025-01-01) → District Court Vacates Regulation II — Cooley (2025-08-06)",
+      "evidence_url": "https://www.cooley.com/news/insight/2025/2025-08-15-district-court-vacates-regulation-iis-debit-card-interchange-fee-standard",
       "evidence_ids": [
-        "seed_us_001",
-        "seed_us_002"
+        "seed_us_003",
+        "seed_us_006"
       ],
-      "computed_at": "2026-06-22T04:12:19.134425+00:00"
+      "computed_at": "2026-06-23T19:13:42.756691+00:00"
     },
     {
-      "id": "pred_uk_both_interchange",
+      "id": "fw_us_surcharge_regu",
+      "market": "US",
+      "network": "Both",
+      "category": "surcharge",
+      "status": "confirmed",
+      "urgency": "high",
+      "confidence": 85,
+      "title": "US surcharge: No interchange cap; 4% surcharge cap (uniform required) → 125bps cap on qualifying consumer credit; 3% surcharge cap (uniform) or 1% (selective)",
+      "eta": "2024-06-01 — in force",
+      "corridor": "US cross-border CNP — education and healthcare payments",
+      "impact": "Visa/Mastercard antitrust settlement changed US surcharge rules: 3% cap if applied uniformly across all card brands, 1% cap if applied selectively to Visa/MC only. Surcharging on debit/prepaid cards remains prohibited. Cart-level disclosure required.",
+      "action": "1. Review Flywire US surcharge model — confirm which cap applies based on current implementation.\n2. Verify cart-level disclosure compliance (required since Feb 2025).\n3. Confirm debit/prepaid cards are excluded from any surcharge.",
+      "evidence": "Visa/Mastercard Interchange Settlement — Davis Wright Tremaine (2024-06-01)",
+      "evidence_url": "https://www.dwt.com/blogs/financial-services-law-advisor/2024/06/visa-mastercard-interchange-fee-settlement-terms",
+      "evidence_ids": [
+        "seed_us_004"
+      ],
+      "computed_at": "2026-06-23T19:13:42.757818+00:00"
+    },
+    {
+      "id": "fw_uk_interchange_gove",
       "market": "UK",
       "network": "Both",
       "category": "interchange",
-      "status": "pending",
-      "reasoning": "An open government consultation was logged for UK Both interchange (UK Payment Systems Regulator \u2014 Card Acquiring Market Review, 2024-03-01) with no resulting rule change captured since. Historically, consultations like this often precede a rule change.",
+      "status": "open_consultation",
+      "urgency": "high",
+      "confidence": 55,
+      "title": "UK PSR publishes market review into card-acquiring services",
+      "eta": "TBC — awaiting regulatory decision",
+      "corridor": "EU-issued cards → UK university merchants (CNP)",
+      "impact": "Post-Brexit: EU-issued cards at UK merchants cost up to 1.50% credit / 1.20% debit CNP (was 0.30%/0.20% under EU IFR). Surcharging banned in UK (Consumer Rights Act 2018) so Flywire/institution absorbs the full cross-border cost. PSR market review may re-cap toward 0.30% — a 120bps saving on EU student flows to UK universities.",
+      "action": "1. Quantify total EU-issued card CNP volume at UK merchants over last 12 months.\n2. Model the margin impact of a 0.30% re-cap scenario vs current 1.50%.\n3. Track PSR card-acquiring market review — submit response if consultation opens.\n4. Avoid locking UK institutional pricing contracts beyond Q2 2026 without a PSR review clause.",
+      "evidence": "The Future of Interchange Fees: 2026 — Clearly Payments (2024-01-01) → UK Payment Systems Regulator — Card Acquiring Market Review (2024-03-01)",
+      "evidence_url": "https://www.psr.org.uk/our-work/card-acquiring/",
       "evidence_ids": [
         "seed_uk_001",
         "seed_uk_002"
       ],
-      "computed_at": "2026-06-22T04:12:19.135059+00:00"
+      "computed_at": "2026-06-23T19:13:42.758107+00:00"
     },
     {
-      "id": "pred_sg_both_interchange",
+      "id": "fw_eu_interchange_regu",
+      "market": "EU",
+      "network": "Both",
+      "category": "interchange",
+      "status": "confirmed",
+      "urgency": "medium",
+      "confidence": 70,
+      "title": "EU interchange: Caps due to expire November 2024 → Extended to November 2029: 0.20% debit / 0.30% credit (physical); 1.15% debit / 1.50% credit (CNP)",
+      "eta": "2024-07-08 — in force",
+      "corridor": "EU domestic and cross-border CNP — education and healthcare",
+      "impact": "EU IFR caps consumer credit CNP at 0.30% (cheapest market globally for Flywire). Non-EEA cards (e.g. US/AU student paying EU university) cost 1.50% credit CNP — capped until Nov 2029 by voluntary Visa/MC commitment (confirmed Jul 2024).",
+      "action": "1. Low urgency — EU caps stable and extended to 2029.\n2. Ensure EU acquirer contracts correctly apply IFR rates to consumer cards.\n3. Flag commercial/corporate card volumes — these are NOT covered by IFR caps.\n4. Monitor EU Parliament for proposed IFR debit cap reduction (0.20%→0.15%).",
+      "evidence": "EU Interchange Fee Regulation (EU) 2015/751 (2024-01-01) → Visa and Mastercard extend fee caps on non-EU cards until 2029 — FStech (2024-07-08)",
+      "evidence_url": "https://www.fstech.co.uk/fst/Visa_Mastercard_Extend_Fee_Caps_EEA.php",
+      "evidence_ids": [
+        "seed_eu_001",
+        "seed_eu_002"
+      ],
+      "computed_at": "2026-06-23T19:13:42.758441+00:00"
+    },
+    {
+      "id": "fw_ca_surcharge_netw",
+      "market": "CA",
+      "network": "Visa",
+      "category": "surcharge",
+      "status": "monitoring",
+      "urgency": "medium",
+      "confidence": 55,
+      "title": "CA surcharge: 30 days notice required to both Visa AND acquirer → 30 days notice to acquirer only (Visa notification no longer required)",
+      "eta": "TBC",
+      "corridor": "CA domestic CNP — education payments (credit cards only; Quebec exempt)",
+      "impact": "Credit card surcharging legal since Oct 2022 at 2.4% cap. Quebec institutions cannot surcharge (Consumer Protection Act). Debit/prepaid excluded.",
+      "action": "1. Verify Quebec institutions are excluded from Flywire's CA surcharge model.\n2. Confirm debit/prepaid cards are not surcharged in Canada.\n3. Ensure 30-day acquirer advance notice requirement is met before any surcharge changes.",
+      "evidence": "Mastercard Canada — Merchant Surcharge Rules (2024-01-01) → Updates to Visa Surcharge Rules in Canada — Nuvei (2024-01-01)",
+      "evidence_url": "https://support.paya.com/visa-updates/updates-to-visas-surcharge-rules-in-canada-the-us-and-us-territories",
+      "evidence_ids": [
+        "seed_ca_001",
+        "seed_ca_002"
+      ],
+      "computed_at": "2026-06-23T19:13:42.759054+00:00"
+    },
+    {
+      "id": "fw_ca_interchange_netw",
+      "market": "CA",
+      "network": "Both",
+      "category": "interchange",
+      "status": "monitoring",
+      "urgency": "medium",
+      "confidence": 55,
+      "title": "CA interchange: Standard rates (average ~1.4% for Canadian credit cards) → ~0.95% average effective credit interchange (eligible small merchants)",
+      "eta": "TBC",
+      "corridor": "CA domestic CNP — education payments",
+      "impact": "SMB interchange relief targets ~0.95% average effective credit interchange for eligible merchants. Visa SMB credit 1.35%, debit 0.50% (from Mar 2025). Flywire's CA institutional clients may qualify for SMB rates.",
+      "action": "1. Confirm which CA institutions qualify for Visa/MC SMB interchange rates.\n2. Update CA pricing models to reflect Mar 2025 rate reduction (1.40%→1.35% credit).\n3. Flag for annual CA pricing review.",
+      "evidence": "The Future of Interchange Fees: 2026 — Clearly Payments (2024-10-01)",
+      "evidence_url": "https://www.clearlypayments.com/blog/the-future-of-interchange-fees-2026-and-beyond/",
+      "evidence_ids": [
+        "seed_ca_003"
+      ],
+      "computed_at": "2026-06-23T19:13:42.759448+00:00"
+    },
+    {
+      "id": "fw_jp_interchange_regu",
+      "market": "JP",
+      "network": "Both",
+      "category": "interchange",
+      "status": "confirmed",
+      "urgency": "medium",
+      "confidence": 60,
+      "title": "JP interchange: No interchange fee disclosure requirement → Interchange fee disclosure required",
+      "eta": "2022-09-01 — in force",
+      "corridor": "JP domestic CNP — education payments",
+      "impact": "Japan debit restructured Nov 2024: contactless NFC 0.90%, new QR tier 0.75%. JFTC/METI interchange disclosure requirement in force since Sep 2022. Cashless ratio reached 42.8% in 2024 (exceeded 40% target).",
+      "action": "1. Update JP pricing models to reflect Nov 2024 debit restructuring.\n2. Monitor METI cashless policy for any further rate mandates.\n3. Low urgency — no further Visa/MC JP rule changes confirmed since Jan 2024.",
+      "evidence": "Payments Regulation in Asia — CMSPI (2024-01-01)",
+      "evidence_url": "https://cmspi.com/app/uploads/2024/08/Payments-Regulation-in-Asia-CMSPI-Whitepaper-Exec-Summary-1.pdf",
+      "evidence_ids": [
+        "seed_jp_001"
+      ],
+      "computed_at": "2026-06-23T19:13:42.760170+00:00"
+    },
+    {
+      "id": "fw_sg_interchange_gove",
       "market": "SG",
       "network": "Both",
       "category": "interchange",
-      "status": "pending",
-      "reasoning": "An open government consultation was logged for SG Both interchange (MAS Written Reply to Parliamentary Questions on Visa and Mastercard Fees, 2026-03-03) with no resulting rule change captured since. Historically, consultations like this often precede a rule change.",
+      "status": "open_consultation",
+      "urgency": "low",
+      "confidence": 20,
+      "title": "MAS confirms no interchange caps in Singapore; parliamentary fee scrutiny",
+      "eta": "TBC — awaiting regulatory decision",
+      "corridor": "SG domestic and cross-border CNP — education and healthcare",
+      "impact": "No government interchange caps in Singapore — rates set by Visa/Mastercard alone. MAS parliamentary scrutiny increasing (Mar 2026). Surcharging allowed at cost of acceptance; blanket brand surcharges banned Sep 2024.",
+      "action": "1. Monitor MAS consultation publications — no imminent rule change confirmed.\n2. Ensure Flywire's SG surcharge model is cost-of-acceptance only (no blanket brand surcharges).\n3. Pre-transaction disclosure required for any surcharge.",
+      "evidence": "MAS Written Reply to Parliamentary Questions on Visa and Mastercard Fees (2026-03-03)",
+      "evidence_url": "https://www.mas.gov.sg/news/parliamentary-replies/2026/written-reply-to-parliamentary-question-on-visa-and-mastercard-fees",
       "evidence_ids": [
         "seed_sg_001"
       ],
-      "computed_at": "2026-06-22T04:12:19.135338+00:00"
+      "computed_at": "2026-06-23T19:13:42.759785+00:00"
     }
   ]
 }
