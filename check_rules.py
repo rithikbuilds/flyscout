@@ -42,48 +42,95 @@ log = logging.getLogger("flyscout")
 # ── SOURCE REGISTRY ─────────────────────────────────────────────────────
 SOURCES = [
     # US
+    # ── UNITED STATES ──────────────────────────────────────────────────
+    # Visa US: merchant fees hub page — links to annual PDF and contains
+    # rate-related text. The PDF itself can't be hashed reliably.
     {"id":"us_visa_ic",  "market":"US","network":"Visa",       "category":"interchange","cnp":False,
-     "name":"Visa USA Interchange Reimbursement Fees",
-     "url":"https://usa.visa.com/support/consumer/visa-rules.html"},
+     "name":"Visa USA Interchange — Merchant Fees Hub",
+     "url":"https://usa.visa.com/support/small-business/regulations-fees.html"},
+    # Mastercard US: official interchange rates hub — updated semiannually,
+    # contains rate explanation text and links to current rate schedules.
     {"id":"us_mc_ic",    "market":"US","network":"Mastercard", "category":"interchange","cnp":False,
-     "name":"Mastercard US Interchange Programs & Rates",
-     "url":"https://www.mastercard.us/en-us/business/overview/merchant-acquiring/interchange.html"},
-    # UK
-    {"id":"uk_psr",      "market":"UK","network":"Regulator",  "category":"regulatory", "cnp":True,
-     "name":"UK Payment Systems Regulator — Card Acquiring",
-     "url":"https://www.psr.org.uk/our-work/card-acquiring/"},
+     "name":"Mastercard US Interchange Rates Hub",
+     "url":"https://www.mastercard.com/us/en/business/support/merchant-interchange-rates.html"},
+    # Federal Reserve — Regulation II debit interchange cap page.
+    # Monitored separately because Reg II is a regulatory source, not a network source.
+    {"id":"us_fed_reg2", "market":"US","network":"Regulator",  "category":"interchange","cnp":False,
+     "name":"Federal Reserve — Regulation II Debit Interchange",
+     "url":"https://www.federalreserve.gov/paymentsystems/regii-about.htm"},
+
+    # ── UNITED KINGDOM ─────────────────────────────────────────────────
+    # PSR scheme and processing fees market review — actively updated with
+    # remedy consultations and directions as of 2024-2025.
+    {"id":"uk_psr_scheme","market":"UK","network":"Regulator", "category":"regulatory", "cnp":True,
+     "name":"UK PSR — Card Scheme and Processing Fees Market Review",
+     "url":"https://www.psr.org.uk/our-work/market-reviews/market-review-into-card-scheme-and-processing-fees/"},
+    # PSR UK-EEA cross-border interchange review — the most relevant page
+    # for tracking post-Brexit CNP rate developments.
+    {"id":"uk_psr_xborder","market":"UK","network":"Regulator","category":"interchange","cnp":True,
+     "name":"UK PSR — UK-EEA Cross-Border Interchange Review",
+     "url":"https://www.psr.org.uk/our-work/market-reviews/market-review-of-uk-eea-consumer-cross-border-interchange-fees/"},
+    # Mastercard UK/Europe interchange hub — contains the IFR rate tables
+    # and publishes any changes promptly per Mastercard's own statement.
     {"id":"uk_mc_ic",    "market":"UK","network":"Mastercard", "category":"interchange","cnp":False,
-     "name":"Mastercard UK Interchange Rates",
-     "url":"https://www.mastercard.co.uk/en-gb/business/overview/merchant-acquiring/interchange-rates.html"},
-    # EU
+     "name":"Mastercard UK/Europe Interchange Hub",
+     "url":"https://www.mastercard.co.uk/en-gb/business/support/merchant-interchange-rates.html"},
+
+    # ── EUROPEAN UNION ─────────────────────────────────────────────────
+    # EBA payment services page — monitors for new PSD2/IFR regulatory
+    # documents and opinions. Triggered on new publications.
     {"id":"eu_eba",      "market":"EU","network":"Regulator",  "category":"regulatory", "cnp":False,
-     "name":"EBA — Payment Services & Interchange",
+     "name":"EBA — Payment Services & IFR Regulation",
      "url":"https://www.eba.europa.eu/regulation-and-policy/payment-services-and-electronic-money"},
-    {"id":"eu_visa_ic",  "market":"EU","network":"Visa",       "category":"interchange","cnp":False,
-     "name":"Visa Europe Interchange Fees",
-     "url":"https://www.visaeurope.com/making-payments/interchange/"},
-    # AU
+    # Mastercard Europe interchange hub — the correct Visa Europe page
+    # (visaeurope.com/making-payments/interchange/) was returning board
+    # member bios; replaced with Mastercard's stable EU hub instead.
+    {"id":"eu_mc_ic",    "market":"EU","network":"Mastercard", "category":"interchange","cnp":False,
+     "name":"Mastercard Europe Interchange Hub",
+     "url":"https://www.mastercard.com/europe/en/business/merchant-interchange-rates3.html"},
+
+    # ── AUSTRALIA ──────────────────────────────────────────────────────
+    # RBA card payments regulation hub — the primary source for all
+    # Australian interchange and surcharging rule changes.
     {"id":"au_rba",      "market":"AU","network":"Regulator",  "category":"regulatory", "cnp":True,
      "name":"RBA — Card Payments Regulation & Surcharging",
      "url":"https://www.rba.gov.au/payments-and-infrastructure/payments-system/card-payments-regulation/"},
-    {"id":"au_mc_ic",    "market":"AU","network":"Mastercard", "category":"interchange","cnp":False,
-     "name":"Mastercard Australia Interchange Schedule",
-     "url":"https://www.mastercard.com.au/en-au/business/overview/merchant-acquiring.html"},
-    # SG
+    # RBA 2026 review conclusions page — specifically tracks the
+    # Oct 2026 surcharge ban and interchange cap changes.
+    {"id":"au_rba_2026", "market":"AU","network":"Regulator",  "category":"regulatory", "cnp":True,
+     "name":"RBA — 2026 Review of Merchant Card Payment Costs",
+     "url":"https://www.rba.gov.au/payments-and-infrastructure/review-of-retail-payments-regulation/2026-03/"},
+
+    # ── SINGAPORE ──────────────────────────────────────────────────────
+    # MAS payment services regulation page. Note: MAS periodically serves
+    # a maintenance page — the script logs fetch failures gracefully and
+    # skips rather than recording a false positive.
     {"id":"sg_mas",      "market":"SG","network":"Regulator",  "category":"regulatory", "cnp":True,
-     "name":"MAS — Payments Regulation",
-     "url":"https://www.mas.gov.sg/regulation/payments"},
-    # CA
+     "name":"MAS — Payment Services Regulation",
+     "url":"https://www.mas.gov.sg/regulation/payment-services"},
+
+    # ── CANADA ─────────────────────────────────────────────────────────
+    # FCAC payment cards page — tracks Code of Conduct updates and
+    # any government-level interchange announcements.
     {"id":"ca_fcac",     "market":"CA","network":"Regulator",  "category":"regulatory", "cnp":True,
-     "name":"FCAC — Payment Card Code of Conduct",
+     "name":"FCAC — Payment Card Network Code of Conduct",
      "url":"https://www.canada.ca/en/financial-consumer-agency/programs/payment-cards.html"},
+    # Visa Canada interchange hub — contains surcharge rules and rate info.
     {"id":"ca_visa_ic",  "market":"CA","network":"Visa",       "category":"interchange","cnp":False,
-     "name":"Visa Canada Interchange Rates",
+     "name":"Visa Canada — Interchange & Surcharge Rules",
      "url":"https://www.visa.ca/en_ca/about-visa/interchange/"},
-    # JP
+    # Mastercard Canada surcharge rules — tracks the 2.4% cap and any updates.
+    {"id":"ca_mc_sc",    "market":"CA","network":"Mastercard", "category":"surcharge",  "cnp":True,
+     "name":"Mastercard Canada — Merchant Surcharge Rules",
+     "url":"https://www.mastercard.com/ca/en/business/support/merchant-surcharge-rules.html"},
+
+    # ── JAPAN ──────────────────────────────────────────────────────────
+    # Japan FSA payment services policy — tracks regulatory developments
+    # including any interchange disclosure or reform announcements.
     {"id":"jp_fsa",      "market":"JP","network":"Regulator",  "category":"regulatory", "cnp":False,
      "name":"Japan FSA — Payment Services Policy",
      "url":"https://www.fsa.go.jp/en/policy/payserv/index.html"},
+
 ]
 
 
