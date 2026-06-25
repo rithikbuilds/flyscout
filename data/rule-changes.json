@@ -11,7 +11,7 @@
       "CA",
       "JP"
     ],
-    "last_updated": "2026-06-25T11:59:28.992343+00:00"
+    "last_updated": "2026-06-25T23:02:02.096495+00:00"
   },
   "changes": [
     {
@@ -471,6 +471,26 @@
       "source_url": "https://www.mas.gov.sg/regulation/payment-services",
       "old_snippet": "Maintenance Sorry, this service is currently unavailable. Please try accessing the page using a different device or internet browser, or by clearing your browser cache. If the issue continues, kindly reach out to us at contact us and provide the ID number 0.51deda17.1782357350.1e",
       "new_snippet": "Maintenance Sorry, this service is currently unavailable. Please try accessing the page using a different device or internet browser, or by clearing your browser cache. If the issue continues, kindly reach out to us at contact us and provide the ID number 0.136bdc17.1782388765.25",
+      "reviewed": false,
+      "auto_detected": true
+    },
+    {
+      "id": "chg_sg_mas_1782428518",
+      "market": "SG",
+      "network": "Regulator",
+      "category": "interchange",
+      "cnp": true,
+      "title": "MAS — Payment Services Regulation updated",
+      "summary": "Content change detected on MAS — Payment Services Regulation. Review source — no specific rate pattern extracted.",
+      "old_value": null,
+      "new_value": null,
+      "trigger": "internal_capture",
+      "effective_date": null,
+      "detected_at": "2026-06-25T23:01:58.066054+00:00",
+      "source_name": "MAS — Payment Services Regulation",
+      "source_url": "https://www.mas.gov.sg/regulation/payment-services",
+      "old_snippet": "Maintenance Sorry, this service is currently unavailable. Please try accessing the page using a different device or internet browser, or by clearing your browser cache. If the issue continues, kindly reach out to us at contact us and provide the ID number 0.136bdc17.1782388765.25",
+      "new_snippet": "Maintenance Sorry, this service is currently unavailable. Please try accessing the page using a different device or internet browser, or by clearing your browser cache. If the issue continues, kindly reach out to us at contact us and provide the ID number 0.280c3417.1782428517.1e",
       "reviewed": false,
       "auto_detected": true
     }

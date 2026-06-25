@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "computed_at": "2026-06-25T11:59:28.992630+00:00",
+    "computed_at": "2026-06-25T23:02:02.096946+00:00",
     "method": "Flywire-specific rule-based engine — corridor/impact/action from FLYWIRE_INTEL templates, urgency/confidence/ETA derived from change log trigger types and effective dates",
     "count": 9
   },
@@ -24,12 +24,12 @@
         "seed_au_003",
         "seed_au_004"
       ],
-      "computed_at": "2026-06-25T11:59:28.992577+00:00"
+      "computed_at": "2026-06-25T23:02:02.096896+00:00"
     },
     {
       "id": "fw_us_interchange_regu",
       "market": "US",
-      "network": "Mastercard",
+      "network": "Visa",
       "category": "interchange",
       "status": "confirmed",
       "urgency": "high",
@@ -45,7 +45,7 @@
         "seed_us_006",
         "chg_us_visa_ic_1782341147"
       ],
-      "computed_at": "2026-06-25T11:59:28.992498+00:00"
+      "computed_at": "2026-06-25T23:02:02.096816+00:00"
     },
     {
       "id": "fw_us_surcharge_regu",
@@ -65,7 +65,7 @@
       "evidence_ids": [
         "seed_us_004"
       ],
-      "computed_at": "2026-06-25T11:59:28.992519+00:00"
+      "computed_at": "2026-06-25T23:02:02.096837+00:00"
     },
     {
       "id": "fw_uk_interchange_gove",
@@ -86,7 +86,7 @@
         "seed_uk_001",
         "seed_uk_002"
       ],
-      "computed_at": "2026-06-25T11:59:28.992534+00:00"
+      "computed_at": "2026-06-25T23:02:02.096851+00:00"
     },
     {
       "id": "fw_eu_interchange_regu",
@@ -107,12 +107,12 @@
         "seed_eu_002",
         "chg_eu_eba_1782341150"
       ],
-      "computed_at": "2026-06-25T11:59:28.992550+00:00"
+      "computed_at": "2026-06-25T23:02:02.096877+00:00"
     },
     {
       "id": "fw_ca_surcharge_netw",
       "market": "CA",
-      "network": "Both",
+      "network": "Visa",
       "category": "surcharge",
       "status": "monitoring",
       "urgency": "medium",
@@ -128,7 +128,7 @@
         "seed_ca_001",
         "seed_ca_002"
       ],
-      "computed_at": "2026-06-25T11:59:28.992588+00:00"
+      "computed_at": "2026-06-25T23:02:02.096907+00:00"
     },
     {
       "id": "fw_ca_interchange_netw",
@@ -148,7 +148,7 @@
       "evidence_ids": [
         "seed_ca_003"
       ],
-      "computed_at": "2026-06-25T11:59:28.992597+00:00"
+      "computed_at": "2026-06-25T23:02:02.096915+00:00"
     },
     {
       "id": "fw_jp_interchange_regu",
@@ -168,7 +168,7 @@
       "evidence_ids": [
         "seed_jp_001"
       ],
-      "computed_at": "2026-06-25T11:59:28.992622+00:00"
+      "computed_at": "2026-06-25T23:02:02.096939+00:00"
     },
     {
       "id": "fw_sg_interchange_inte",
@@ -183,13 +183,13 @@
       "corridor": "SG domestic and cross-border CNP — education and healthcare",
       "impact": "No government interchange caps in Singapore — rates set by Visa/Mastercard alone. MAS parliamentary scrutiny increasing (Mar 2026). Surcharging allowed at cost of acceptance; blanket brand surcharges banned Sep 2024.",
       "action": "1. Monitor MAS consultation publications — no imminent rule change confirmed.\n2. Ensure Flywire's SG surcharge model is cost-of-acceptance only (no blanket brand surcharges).\n3. Pre-transaction disclosure required for any surcharge.",
-      "evidence": "MAS — Payments Regulation (2026-06-24) → MAS — Payment Services Regulation (2026-06-25)",
+      "evidence": "MAS — Payment Services Regulation (2026-06-25) → MAS — Payment Services Regulation (2026-06-25)",
       "evidence_url": "https://www.mas.gov.sg/regulation/payment-services",
       "evidence_ids": [
-        "chg_sg_mas_1782341152",
-        "chg_sg_mas_1782388766"
+        "chg_sg_mas_1782388766",
+        "chg_sg_mas_1782428518"
       ],
-      "computed_at": "2026-06-25T11:59:28.992608+00:00"
+      "computed_at": "2026-06-25T23:02:02.096927+00:00"
     }
   ]
 }
