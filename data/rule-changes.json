@@ -11,7 +11,7 @@
       "CA",
       "JP"
     ],
-    "last_updated": "2026-06-26T15:48:51.582504+00:00"
+    "last_updated": "2026-06-26T17:19:04.289711+00:00"
   },
   "changes": [
     {
@@ -511,6 +511,46 @@
       "source_url": "https://www.fsa.go.jp/en/recent.html",
       "old_snippet": "Past Releases : Financial Services Agency HOME Tweet Past Releases May 2026 June 25 Updated:Speeches (Vice Minister for International Affairs) June 22 FSA Weekly Review No.692 June 22, 2026 June 19 Overview of financial results of major insurance companies as of March 31, 2026 In",
       "new_snippet": "Past Releases : Financial Services Agency HOME Tweet Past Releases May 2026 June 26 Publication of \"FSA Analytical Notes (2026.6) vol.2: Analysis of Margin Dynamics in OTC Derivatives Market during Periods of High Volatility\" in Japanese Press Conference by KATAYAMA Satsuki, Mini",
+      "reviewed": false,
+      "auto_detected": true
+    },
+    {
+      "id": "chg_us_mc_ic_1782494331",
+      "market": "US",
+      "network": "Mastercard",
+      "category": "interchange",
+      "cnp": true,
+      "title": "Mastercard US Interchange Rates — Merchant Cost Consulting updated",
+      "summary": "Content change detected on Mastercard US Interchange Rates — Merchant Cost Consulting. Rate values changed.",
+      "old_value": "0.05%, 0.25%, 0.30%, 0.35%",
+      "new_value": "0.05%, 0.25%, 0.30%, 0.35%",
+      "trigger": "network_policy_update",
+      "effective_date": null,
+      "detected_at": "2026-06-26T17:18:51.491290+00:00",
+      "source_name": "Mastercard US Interchange Rates — Merchant Cost Consulting",
+      "source_url": "https://merchantcostconsulting.com/lower-credit-card-processing-fees/mastercard-interchange-rates/",
+      "old_snippet": "Mastercard Interchange Rates (2026) Skip to main content Skip to footer Credit Card Merchant Fees Mastercard Interchange Rates (2026) by Colin O'Keefe | Published: October 11, 2025 SHARE Mastercard Interchange Rates (2026) Mastercard is one of the four major credit card networks.",
+      "new_snippet": "erchange level in October 2025, including: Refund authorizations required for CNP transactions (effective October 1st). 0.05% increase to Interregional Consumer Rate III transactions (effective October 18th). New Commercial B2B program codes. Read more about these Fall 2025 inter",
+      "reviewed": false,
+      "auto_detected": true
+    },
+    {
+      "id": "chg_ca_govt_ic_1782494343",
+      "market": "CA",
+      "network": "Both",
+      "category": "interchange",
+      "cnp": false,
+      "title": "FCAC — Annual Report & Payment Card News updated",
+      "summary": "Content change detected on FCAC — Annual Report & Payment Card News. Review source — no specific rate pattern extracted.",
+      "old_value": null,
+      "new_value": null,
+      "trigger": "internal_capture",
+      "effective_date": null,
+      "detected_at": "2026-06-26T17:19:03.831427+00:00",
+      "source_name": "FCAC — Annual Report & Payment Card News",
+      "source_url": "https://www.canada.ca/en/financial-consumer-agency/corporate/planning/annual-reports.html",
+      "old_snippet": "Annual reports: Financial Consumer Agency of Canada - Canada.ca Annual reports FCAC's annual reports present the performance results and major initiatives of the Agency through the fiscal year from April 1 to March 31. 2024 to 2025 Annual report 2024 to 2025 Financial statements ",
+      "new_snippet": "Annual reports: Financial Consumer Agency of Canada - Canada.ca Annual reports FCAC's annual reports present the performance results and major initiatives of the Agency through the fiscal year from April 1 to March 31. 2024 to 2025 Annual report 2024 to 2025 Financial statements ",
       "reviewed": false,
       "auto_detected": true
     }

@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "computed_at": "2026-06-26T15:48:51.583162+00:00",
+    "computed_at": "2026-06-26T17:19:04.517062+00:00",
     "method": "Flywire-specific rule-based engine — corridor/impact/action from FLYWIRE_INTEL templates, urgency/confidence/ETA derived from change log trigger types and effective dates",
     "count": 9
   },
@@ -24,28 +24,7 @@
         "seed_au_003",
         "seed_au_004"
       ],
-      "computed_at": "2026-06-26T15:48:51.583076+00:00"
-    },
-    {
-      "id": "fw_us_interchange_regu",
-      "market": "US",
-      "network": "Visa",
-      "category": "interchange",
-      "status": "confirmed",
-      "urgency": "high",
-      "confidence": 80,
-      "title": "Visa USA Interchange Reimbursement Fees updated",
-      "eta": "2025-08-06 — in force",
-      "corridor": "US domestic payments — education, healthcare, travel (Visa/MC CNP)",
-      "impact": "US has the highest CNP credit interchange globally (2.30–2.40% Visa Signature/Infinite). Reg II debit cap vacated by court (Aug 2025, stayed pending 8th Circuit appeal) — if upheld, US debit costs could rise 2–4x from current 21¢+5bps. Antitrust settlement caps qualifying consumer credit at 125bps from Mar 2025.",
-      "action": "1. Identify what percentage of US volume is domestic debit — model 2x/4x cost scenarios.\n2. Verify whether Flywire's US institutional clients qualify for the 125bps antitrust cap.\n3. Monitor Eighth Circuit case docket — ruling timing determines urgency of debit cost action.\n4. Ensure US acquirer contracts allow interchange pass-through adjustment.",
-      "evidence": "District Court Vacates Regulation II — Cooley (2025-08-06) → Visa USA Interchange Reimbursement Fees (2026-06-24)",
-      "evidence_url": "https://usa.visa.com/support/consumer/visa-rules.html",
-      "evidence_ids": [
-        "seed_us_006",
-        "chg_us_visa_ic_1782341147"
-      ],
-      "computed_at": "2026-06-26T15:48:51.582971+00:00"
+      "computed_at": "2026-06-26T17:19:04.421660+00:00"
     },
     {
       "id": "fw_us_surcharge_regu",
@@ -65,7 +44,7 @@
       "evidence_ids": [
         "seed_us_004"
       ],
-      "computed_at": "2026-06-26T15:48:51.583000+00:00"
+      "computed_at": "2026-06-26T17:19:04.421576+00:00"
     },
     {
       "id": "fw_uk_interchange_gove",
@@ -86,7 +65,28 @@
         "seed_uk_001",
         "seed_uk_002"
       ],
-      "computed_at": "2026-06-26T15:48:51.583021+00:00"
+      "computed_at": "2026-06-26T17:19:04.421604+00:00"
+    },
+    {
+      "id": "fw_us_interchange_netw",
+      "market": "US",
+      "network": "Mastercard",
+      "category": "interchange",
+      "status": "monitoring",
+      "urgency": "medium",
+      "confidence": 60,
+      "title": "US interchange: 0.05%, 0.25%, 0.30%, 0.35% → 0.05%, 0.25%, 0.30%, 0.35%",
+      "eta": "2025-08-06 — in force",
+      "corridor": "US domestic payments — education, healthcare, travel (Visa/MC CNP)",
+      "impact": "US has the highest CNP credit interchange globally (2.30–2.40% Visa Signature/Infinite). Reg II debit cap vacated by court (Aug 2025, stayed pending 8th Circuit appeal) — if upheld, US debit costs could rise 2–4x from current 21¢+5bps. Antitrust settlement caps qualifying consumer credit at 125bps from Mar 2025.",
+      "action": "1. Identify what percentage of US volume is domestic debit — model 2x/4x cost scenarios.\n2. Verify whether Flywire's US institutional clients qualify for the 125bps antitrust cap.\n3. Monitor Eighth Circuit case docket — ruling timing determines urgency of debit cost action.\n4. Ensure US acquirer contracts allow interchange pass-through adjustment.",
+      "evidence": "Visa USA Interchange Reimbursement Fees (2026-06-24) → Mastercard US Interchange Rates — Merchant Cost Consulting (2026-06-26)",
+      "evidence_url": "https://merchantcostconsulting.com/lower-credit-card-processing-fees/mastercard-interchange-rates/",
+      "evidence_ids": [
+        "chg_us_visa_ic_1782341147",
+        "chg_us_mc_ic_1782494331"
+      ],
+      "computed_at": "2026-06-26T17:19:04.290023+00:00"
     },
     {
       "id": "fw_eu_interchange_regu",
@@ -107,7 +107,7 @@
         "seed_eu_002",
         "chg_eu_eba_1782341150"
       ],
-      "computed_at": "2026-06-26T15:48:51.583047+00:00"
+      "computed_at": "2026-06-26T17:19:04.421626+00:00"
     },
     {
       "id": "fw_ca_surcharge_netw",
@@ -128,27 +128,28 @@
         "seed_ca_001",
         "seed_ca_002"
       ],
-      "computed_at": "2026-06-26T15:48:51.583093+00:00"
+      "computed_at": "2026-06-26T17:19:04.421677+00:00"
     },
     {
-      "id": "fw_ca_interchange_netw",
+      "id": "fw_ca_interchange_inte",
       "market": "CA",
       "network": "Both",
       "category": "interchange",
       "status": "monitoring",
-      "urgency": "medium",
-      "confidence": 55,
-      "title": "CA interchange: Standard rates (average ~1.4% for Canadian credit cards) → ~0.95% average effective credit interchange (eligible small merchants)",
+      "urgency": "low",
+      "confidence": 20,
+      "title": "FCAC — Annual Report & Payment Card News updated",
       "eta": "TBC",
       "corridor": "CA domestic CNP — education payments",
       "impact": "SMB interchange relief targets ~0.95% average effective credit interchange for eligible merchants. Visa SMB credit 1.35%, debit 0.50% (from Mar 2025). Flywire's CA institutional clients may qualify for SMB rates.",
       "action": "1. Confirm which CA institutions qualify for Visa/MC SMB interchange rates.\n2. Update CA pricing models to reflect Mar 2025 rate reduction (1.40%→1.35% credit).\n3. Flag for annual CA pricing review.",
-      "evidence": "The Future of Interchange Fees: 2026 — Clearly Payments (2024-10-01)",
-      "evidence_url": "https://www.clearlypayments.com/blog/the-future-of-interchange-fees-2026-and-beyond/",
+      "evidence": "The Future of Interchange Fees: 2026 — Clearly Payments (2024-10-01) → FCAC — Annual Report & Payment Card News (2026-06-26)",
+      "evidence_url": "https://www.canada.ca/en/financial-consumer-agency/corporate/planning/annual-reports.html",
       "evidence_ids": [
-        "seed_ca_003"
+        "seed_ca_003",
+        "chg_ca_govt_ic_1782494343"
       ],
-      "computed_at": "2026-06-26T15:48:51.583107+00:00"
+      "computed_at": "2026-06-26T17:19:04.421693+00:00"
     },
     {
       "id": "fw_sg_interchange_inte",
@@ -169,12 +170,12 @@
         "chg_sg_mas_1782388766",
         "chg_sg_mas_1782428518"
       ],
-      "computed_at": "2026-06-26T15:48:51.583127+00:00"
+      "computed_at": "2026-06-26T17:19:04.516997+00:00"
     },
     {
       "id": "fw_jp_interchange_gove",
       "market": "JP",
-      "network": "Both",
+      "network": "Regulator",
       "category": "interchange",
       "status": "open_consultation",
       "urgency": "low",
@@ -190,7 +191,7 @@
         "seed_jp_001",
         "chg_jp_fsa_1782474629"
       ],
-      "computed_at": "2026-06-26T15:48:51.583151+00:00"
+      "computed_at": "2026-06-26T17:19:04.517043+00:00"
     }
   ]
 }
