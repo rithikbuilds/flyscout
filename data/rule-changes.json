@@ -11,7 +11,7 @@
       "CA",
       "JP"
     ],
-    "last_updated": "2026-06-26T03:45:14.086999+00:00"
+    "last_updated": "2026-06-26T11:50:29.396621+00:00"
   },
   "changes": [
     {
@@ -491,6 +491,26 @@
       "source_url": "https://www.mas.gov.sg/regulation/payment-services",
       "old_snippet": "Maintenance Sorry, this service is currently unavailable. Please try accessing the page using a different device or internet browser, or by clearing your browser cache. If the issue continues, kindly reach out to us at contact us and provide the ID number 0.136bdc17.1782388765.25",
       "new_snippet": "Maintenance Sorry, this service is currently unavailable. Please try accessing the page using a different device or internet browser, or by clearing your browser cache. If the issue continues, kindly reach out to us at contact us and provide the ID number 0.280c3417.1782428517.1e",
+      "reviewed": false,
+      "auto_detected": true
+    },
+    {
+      "id": "chg_jp_fsa_1782474629",
+      "market": "JP",
+      "network": "Regulator",
+      "category": "interchange",
+      "cnp": false,
+      "title": "Japan FSA — Recent Releases (incl. Payment Services) updated",
+      "summary": "Content change detected on Japan FSA — Recent Releases (incl. Payment Services). Review source — no specific rate pattern extracted.",
+      "old_value": null,
+      "new_value": null,
+      "trigger": "government_consultation",
+      "effective_date": null,
+      "detected_at": "2026-06-26T11:50:29.395399+00:00",
+      "source_name": "Japan FSA — Recent Releases (incl. Payment Services)",
+      "source_url": "https://www.fsa.go.jp/en/recent.html",
+      "old_snippet": "Past Releases : Financial Services Agency HOME Tweet Past Releases May 2026 June 25 Updated:Speeches (Vice Minister for International Affairs) June 22 FSA Weekly Review No.692 June 22, 2026 June 19 Overview of financial results of major insurance companies as of March 31, 2026 In",
+      "new_snippet": "Past Releases : Financial Services Agency HOME Tweet Past Releases May 2026 June 26 Publication of \"FSA Analytical Notes (2026.6) vol.2: Analysis of Margin Dynamics in OTC Derivatives Market during Periods of High Volatility\" in Japanese Press Conference by KATAYAMA Satsuki, Mini",
       "reviewed": false,
       "auto_detected": true
     }
