@@ -43,93 +43,92 @@ log = logging.getLogger("flyscout")
 SOURCES = [
     # US
     # ── UNITED STATES ──────────────────────────────────────────────────
-    # Visa US: merchant fees hub page — links to annual PDF and contains
-    # rate-related text. The PDF itself can't be hashed reliably.
+    # Visa US merchant fees hub — contains download link for the annual
+    # interchange PDF and surcharge rule text. Confirmed accessible Jun 2026.
     {"id":"us_visa_ic",  "market":"US","network":"Visa",       "category":"interchange","cnp":False,
      "name":"Visa USA Interchange — Merchant Fees Hub",
      "url":"https://usa.visa.com/support/small-business/regulations-fees.html"},
-    # Mastercard US: official interchange rates hub — updated semiannually,
-    # contains rate explanation text and links to current rate schedules.
+    # Mastercard.com blocks GitHub Actions IPs with 403. Using Merchant Cost
+    # Consulting instead — the industry source used for our seed data entries,
+    # publicly accessible, and promptly updated when Mastercard publishes new
+    # rate schedules. Documents both rate history and effective dates.
     {"id":"us_mc_ic",    "market":"US","network":"Mastercard", "category":"interchange","cnp":False,
-     "name":"Mastercard US Interchange Rates Hub",
-     "url":"https://www.mastercard.com/us/en/business/support/merchant-interchange-rates.html"},
-    # Federal Reserve — Regulation II debit interchange cap page.
-    # Monitored separately because Reg II is a regulatory source, not a network source.
+     "name":"Mastercard US Interchange Rates — Merchant Cost Consulting",
+     "url":"https://merchantcostconsulting.com/lower-credit-card-processing-fees/mastercard-interchange-rates/"},
+    # Federal Reserve Regulation II hub — confirmed accessible, tracks the
+    # debit cap and routing rules. Last updated May 2024, will change when
+    # new regulatory actions occur (Eighth Circuit ruling, new rulemaking).
     {"id":"us_fed_reg2", "market":"US","network":"Regulator",  "category":"interchange","cnp":False,
      "name":"Federal Reserve — Regulation II Debit Interchange",
      "url":"https://www.federalreserve.gov/paymentsystems/regii-about.htm"},
 
     # ── UNITED KINGDOM ─────────────────────────────────────────────────
-    # PSR scheme and processing fees market review — actively updated with
-    # remedy consultations and directions as of 2024-2025.
+    # PSR card scheme and processing fees market review — confirmed working,
+    # "Last updated: May 2026", actively updated with new consultation documents.
     {"id":"uk_psr_scheme","market":"UK","network":"Regulator", "category":"regulatory", "cnp":True,
      "name":"UK PSR — Card Scheme and Processing Fees Market Review",
      "url":"https://www.psr.org.uk/our-work/market-reviews/market-review-into-card-scheme-and-processing-fees/"},
-    # PSR UK-EEA cross-border interchange review — the most relevant page
-    # for tracking post-Brexit CNP rate developments.
+    # PSR UK-EEA cross-border interchange market review — fixed URL (404 was
+    # due to wrong path; correct path omits "consumer" and "fees").
     {"id":"uk_psr_xborder","market":"UK","network":"Regulator","category":"interchange","cnp":True,
-     "name":"UK PSR — UK-EEA Cross-Border Interchange Review",
-     "url":"https://www.psr.org.uk/our-work/market-reviews/market-review-of-uk-eea-consumer-cross-border-interchange-fees/"},
-    # Mastercard UK/Europe interchange hub — contains the IFR rate tables
-    # and publishes any changes promptly per Mastercard's own statement.
-    {"id":"uk_mc_ic",    "market":"UK","network":"Mastercard", "category":"interchange","cnp":False,
-     "name":"Mastercard UK/Europe Interchange Hub",
-     "url":"https://www.mastercard.co.uk/en-gb/business/support/merchant-interchange-rates.html"},
+     "name":"UK PSR — UK-EEA Cross-Border Interchange Market Review",
+     "url":"https://www.psr.org.uk/our-work/market-reviews/market-review-into-cross-border-interchange-fees/"},
 
     # ── EUROPEAN UNION ─────────────────────────────────────────────────
-    # EBA payment services page — monitors for new PSD2/IFR regulatory
-    # documents and opinions. Triggered on new publications.
+    # EBA payment services page — confirmed working. Monitors for new
+    # IFR-related opinions, technical standards, and guidelines.
     {"id":"eu_eba",      "market":"EU","network":"Regulator",  "category":"regulatory", "cnp":False,
      "name":"EBA — Payment Services & IFR Regulation",
      "url":"https://www.eba.europa.eu/regulation-and-policy/payment-services-and-electronic-money"},
-    # Mastercard Europe interchange hub — the correct Visa Europe page
-    # (visaeurope.com/making-payments/interchange/) was returning board
-    # member bios; replaced with Mastercard's stable EU hub instead.
-    {"id":"eu_mc_ic",    "market":"EU","network":"Mastercard", "category":"interchange","cnp":False,
-     "name":"Mastercard Europe Interchange Hub",
-     "url":"https://www.mastercard.com/europe/en/business/merchant-interchange-rates3.html"},
 
     # ── AUSTRALIA ──────────────────────────────────────────────────────
-    # RBA card payments regulation hub — the primary source for all
-    # Australian interchange and surcharging rule changes.
+    # RBA retail payments regulation review hub — broader landing page for
+    # all RBA payment regulation work; fixed from the 404 /payments-system/
+    # card-payments-regulation/ path which no longer exists.
     {"id":"au_rba",      "market":"AU","network":"Regulator",  "category":"regulatory", "cnp":True,
-     "name":"RBA — Card Payments Regulation & Surcharging",
-     "url":"https://www.rba.gov.au/payments-and-infrastructure/payments-system/card-payments-regulation/"},
-    # RBA 2026 review conclusions page — specifically tracks the
-    # Oct 2026 surcharge ban and interchange cap changes.
+     "name":"RBA — Review of Retail Payments Regulation (Hub)",
+     "url":"https://www.rba.gov.au/payments-and-infrastructure/review-of-retail-payments-regulation/"},
+    # RBA 2026 conclusions page — confirmed working, richest content source
+    # in the entire set. Tracks the Oct 2026 surcharge ban and interchange
+    # cap changes. Will update when RBA publishes implementation details.
     {"id":"au_rba_2026", "market":"AU","network":"Regulator",  "category":"regulatory", "cnp":True,
-     "name":"RBA — 2026 Review of Merchant Card Payment Costs",
+     "name":"RBA — 2026 Review: Merchant Card Payment Costs Conclusions",
      "url":"https://www.rba.gov.au/payments-and-infrastructure/review-of-retail-payments-regulation/2026-03/"},
 
     # ── SINGAPORE ──────────────────────────────────────────────────────
-    # MAS payment services regulation page. Note: MAS periodically serves
-    # a maintenance page — the script logs fetch failures gracefully and
-    # skips rather than recording a false positive.
+    # MAS payment services regulation. Note: MAS periodically returns
+    # maintenance pages — these are now detected and skipped safely.
+    # Baseline will be established once the site is fully operational.
     {"id":"sg_mas",      "market":"SG","network":"Regulator",  "category":"regulatory", "cnp":True,
      "name":"MAS — Payment Services Regulation",
      "url":"https://www.mas.gov.sg/regulation/payment-services"},
+    # MAS media releases — accessible alternative for SG regulatory news
+    # while the main regulation page remains intermittently unavailable.
+    {"id":"sg_mas_news", "market":"SG","network":"Regulator",  "category":"regulatory", "cnp":True,
+     "name":"MAS — Media Releases (Payment Services)",
+     "url":"https://www.mas.gov.sg/news/media-releases"},
 
     # ── CANADA ─────────────────────────────────────────────────────────
-    # FCAC payment cards page — tracks Code of Conduct updates and
-    # any government-level interchange announcements.
+    # FCAC Code of Conduct for the Payment Card Industry — active page,
+    # confirmed accessible. Fixed from the 404 /programs/payment-cards.html
+    # path. This page will update when the Code is revised.
     {"id":"ca_fcac",     "market":"CA","network":"Regulator",  "category":"regulatory", "cnp":True,
-     "name":"FCAC — Payment Card Network Code of Conduct",
-     "url":"https://www.canada.ca/en/financial-consumer-agency/programs/payment-cards.html"},
-    # Visa Canada interchange hub — contains surcharge rules and rate info.
-    {"id":"ca_visa_ic",  "market":"CA","network":"Visa",       "category":"interchange","cnp":False,
-     "name":"Visa Canada — Interchange & Surcharge Rules",
-     "url":"https://www.visa.ca/en_ca/about-visa/interchange/"},
-    # Mastercard Canada surcharge rules — tracks the 2.4% cap and any updates.
-    {"id":"ca_mc_sc",    "market":"CA","network":"Mastercard", "category":"surcharge",  "cnp":True,
-     "name":"Mastercard Canada — Merchant Surcharge Rules",
-     "url":"https://www.mastercard.com/ca/en/business/support/merchant-surcharge-rules.html"},
+     "name":"FCAC — Code of Conduct for the Payment Card Industry",
+     "url":"https://www.canada.ca/en/financial-consumer-agency/services/industry/laws-regulations/credit-debit-code-conduct.html"},
+    # Government of Canada interchange news — tracks official Government
+    # announcements on Visa/Mastercard fee agreements and reforms.
+    # Using the FCAC annual reports page which lists all recent activity.
+    {"id":"ca_govt_ic",  "market":"CA","network":"Both",       "category":"interchange","cnp":False,
+     "name":"FCAC — Annual Report & Payment Card News",
+     "url":"https://www.canada.ca/en/financial-consumer-agency/corporate/planning/annual-reports.html"},
 
     # ── JAPAN ──────────────────────────────────────────────────────────
-    # Japan FSA payment services policy — tracks regulatory developments
-    # including any interchange disclosure or reform announcements.
+    # FSA recent releases — the /policy/payserv/index.html path returned
+    # 404; using the FSA's main recent.html page which lists all regulatory
+    # developments including payment services updates.
     {"id":"jp_fsa",      "market":"JP","network":"Regulator",  "category":"regulatory", "cnp":False,
-     "name":"Japan FSA — Payment Services Policy",
-     "url":"https://www.fsa.go.jp/en/policy/payserv/index.html"},
+     "name":"Japan FSA — Recent Releases (incl. Payment Services)",
+     "url":"https://www.fsa.go.jp/en/recent.html"},
 
 ]
 
@@ -494,6 +493,33 @@ def send_prediction_alert(pred):
 
 
 # ── CHANGE DETECTION ─────────────────────────────────────────────────────
+# Patterns that indicate a transient/maintenance page rather than real content.
+# If the fetched page matches any of these, skip hash comparison entirely —
+# do not update the snapshot, do not fire an alert.
+MAINTENANCE_PATTERNS = [
+    r"sorry,?\s+this\s+service\s+is\s+currently\s+unavailable",
+    r"this\s+page\s+is\s+(temporarily\s+)?unavailable",
+    r"maintenance\s+mode",
+    r"we.ll\s+be\s+back\s+soon",
+    r"service\s+is\s+down\s+for\s+maintenance",
+    r"temporarily\s+offline",
+    r"site\s+is\s+undergoing\s+maintenance",
+    r"please\s+try\s+again\s+later",
+    r"503\s+service\s+unavailable",
+]
+MAINTENANCE_RE = re.compile("|".join(MAINTENANCE_PATTERNS), re.IGNORECASE)
+
+# Minimum useful content length. Pages shorter than this are almost certainly
+# error pages, redirects to login walls, or CDN blocks — not real content.
+MIN_CONTENT_LENGTH = 500
+
+def is_maintenance_page(text):
+    """Return True if the page looks like a maintenance/error page."""
+    if len(text) < MIN_CONTENT_LENGTH:
+        return True
+    return bool(MAINTENANCE_RE.search(text[:2000]))
+
+
 def check_source(source, snapshots, changes_store):
     sid = source["id"]
     try:
@@ -503,15 +529,32 @@ def check_source(source, snapshots, changes_store):
         log.warning("[%s] fetch failed: %s", sid, e)
         return None
 
+    # Skip maintenance/error pages entirely — do not update the snapshot.
+    # This prevents false positives when a site is temporarily down and then
+    # comes back (which would look like two hash changes to the comparator).
+    if is_maintenance_page(text):
+        log.warning("[%s] maintenance/error page detected (%d chars) — skipping, snapshot unchanged",
+                    sid, len(text))
+        return None
+
     h = content_hash(text)
     prev = snapshots.get(sid)
     snapshots[sid] = {"hash": h, "text": text[:8000], "checked_at": now_iso()}
 
     if prev is None:
-        log.info("[%s] baseline established", sid)
+        log.info("[%s] baseline established (%d chars)", sid, len(text))
         return None
     if prev["hash"] == h:
         log.info("[%s] no change", sid)
+        return None
+
+    # Additional false-positive guard: if the rate patterns are identical
+    # between old and new content, the "change" is likely layout/nav noise.
+    old_rates = set(extract_rates(prev.get("text", "")))
+    new_rates = set(extract_rates(text))
+    if old_rates and new_rates and old_rates == new_rates:
+        log.info("[%s] hash changed but rate patterns identical %s — likely layout change, skipping",
+                 sid, old_rates)
         return None
 
     category = classify_category(text, source["category"] if source["category"] != "regulatory" else None)
