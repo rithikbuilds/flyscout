@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "computed_at": "2026-06-26T15:41:16.330301+00:00",
+    "computed_at": "2026-06-26T15:48:51.583162+00:00",
     "method": "Flywire-specific rule-based engine — corridor/impact/action from FLYWIRE_INTEL templates, urgency/confidence/ETA derived from change log trigger types and effective dates",
     "count": 9
   },
@@ -24,7 +24,7 @@
         "seed_au_003",
         "seed_au_004"
       ],
-      "computed_at": "2026-06-26T15:41:16.330210+00:00"
+      "computed_at": "2026-06-26T15:48:51.583076+00:00"
     },
     {
       "id": "fw_us_interchange_regu",
@@ -45,7 +45,7 @@
         "seed_us_006",
         "chg_us_visa_ic_1782341147"
       ],
-      "computed_at": "2026-06-26T15:41:16.330086+00:00"
+      "computed_at": "2026-06-26T15:48:51.582971+00:00"
     },
     {
       "id": "fw_us_surcharge_regu",
@@ -65,7 +65,7 @@
       "evidence_ids": [
         "seed_us_004"
       ],
-      "computed_at": "2026-06-26T15:41:16.330123+00:00"
+      "computed_at": "2026-06-26T15:48:51.583000+00:00"
     },
     {
       "id": "fw_uk_interchange_gove",
@@ -86,7 +86,7 @@
         "seed_uk_001",
         "seed_uk_002"
       ],
-      "computed_at": "2026-06-26T15:41:16.330149+00:00"
+      "computed_at": "2026-06-26T15:48:51.583021+00:00"
     },
     {
       "id": "fw_eu_interchange_regu",
@@ -107,7 +107,7 @@
         "seed_eu_002",
         "chg_eu_eba_1782341150"
       ],
-      "computed_at": "2026-06-26T15:41:16.330179+00:00"
+      "computed_at": "2026-06-26T15:48:51.583047+00:00"
     },
     {
       "id": "fw_ca_surcharge_netw",
@@ -128,7 +128,7 @@
         "seed_ca_001",
         "seed_ca_002"
       ],
-      "computed_at": "2026-06-26T15:41:16.330227+00:00"
+      "computed_at": "2026-06-26T15:48:51.583093+00:00"
     },
     {
       "id": "fw_ca_interchange_netw",
@@ -148,7 +148,7 @@
       "evidence_ids": [
         "seed_ca_003"
       ],
-      "computed_at": "2026-06-26T15:41:16.330241+00:00"
+      "computed_at": "2026-06-26T15:48:51.583107+00:00"
     },
     {
       "id": "fw_sg_interchange_inte",
@@ -169,12 +169,12 @@
         "chg_sg_mas_1782388766",
         "chg_sg_mas_1782428518"
       ],
-      "computed_at": "2026-06-26T15:41:16.330260+00:00"
+      "computed_at": "2026-06-26T15:48:51.583127+00:00"
     },
     {
       "id": "fw_jp_interchange_gove",
       "market": "JP",
-      "network": "Regulator",
+      "network": "Both",
       "category": "interchange",
       "status": "open_consultation",
       "urgency": "low",
@@ -190,7 +190,7 @@
         "seed_jp_001",
         "chg_jp_fsa_1782474629"
       ],
-      "computed_at": "2026-06-26T15:41:16.330288+00:00"
+      "computed_at": "2026-06-26T15:48:51.583151+00:00"
     }
   ]
 }
