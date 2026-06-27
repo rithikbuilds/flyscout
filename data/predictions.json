@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "computed_at": "2026-06-26T21:56:13.111569+00:00",
+    "computed_at": "2026-06-27T05:24:07.802336+00:00",
     "method": "Flywire-specific rule-based engine — corridor/impact/action from FLYWIRE_INTEL templates, urgency/confidence/ETA derived from change log trigger types and effective dates",
     "count": 9
   },
@@ -24,7 +24,7 @@
         "seed_au_003",
         "seed_au_004"
       ],
-      "computed_at": "2026-06-26T21:56:13.111493+00:00"
+      "computed_at": "2026-06-27T05:24:07.802246+00:00"
     },
     {
       "id": "fw_us_surcharge_regu",
@@ -44,7 +44,7 @@
       "evidence_ids": [
         "seed_us_004"
       ],
-      "computed_at": "2026-06-26T21:56:13.111416+00:00"
+      "computed_at": "2026-06-27T05:24:07.802194+00:00"
     },
     {
       "id": "fw_uk_interchange_gove",
@@ -65,7 +65,7 @@
         "seed_uk_001",
         "seed_uk_002"
       ],
-      "computed_at": "2026-06-26T21:56:13.111439+00:00"
+      "computed_at": "2026-06-27T05:24:07.802208+00:00"
     },
     {
       "id": "fw_us_interchange_netw",
@@ -86,7 +86,7 @@
         "chg_us_visa_ic_1782341147",
         "chg_us_mc_ic_1782494331"
       ],
-      "computed_at": "2026-06-26T21:56:13.111379+00:00"
+      "computed_at": "2026-06-27T05:24:07.802173+00:00"
     },
     {
       "id": "fw_eu_interchange_regu",
@@ -107,12 +107,12 @@
         "seed_eu_002",
         "chg_eu_eba_1782341150"
       ],
-      "computed_at": "2026-06-26T21:56:13.111465+00:00"
+      "computed_at": "2026-06-27T05:24:07.802226+00:00"
     },
     {
       "id": "fw_ca_surcharge_netw",
       "market": "CA",
-      "network": "Visa",
+      "network": "Both",
       "category": "surcharge",
       "status": "monitoring",
       "urgency": "medium",
@@ -128,7 +128,7 @@
         "seed_ca_001",
         "seed_ca_002"
       ],
-      "computed_at": "2026-06-26T21:56:13.111509+00:00"
+      "computed_at": "2026-06-27T05:24:07.802257+00:00"
     },
     {
       "id": "fw_ca_interchange_inte",
@@ -149,7 +149,7 @@
         "seed_ca_003",
         "chg_ca_govt_ic_1782494343"
       ],
-      "computed_at": "2026-06-26T21:56:13.111528+00:00"
+      "computed_at": "2026-06-27T05:24:07.802293+00:00"
     },
     {
       "id": "fw_sg_interchange_inte",
@@ -170,7 +170,7 @@
         "chg_sg_mas_1782388766",
         "chg_sg_mas_1782428518"
       ],
-      "computed_at": "2026-06-26T21:56:13.111541+00:00"
+      "computed_at": "2026-06-27T05:24:07.802306+00:00"
     },
     {
       "id": "fw_jp_interchange_gove",
@@ -191,7 +191,7 @@
         "seed_jp_001",
         "chg_jp_fsa_1782474629"
       ],
-      "computed_at": "2026-06-26T21:56:13.111561+00:00"
+      "computed_at": "2026-06-27T05:24:07.802327+00:00"
     }
   ]
 }
