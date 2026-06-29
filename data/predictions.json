@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "computed_at": "2026-06-29T04:40:59.561400+00:00",
+    "computed_at": "2026-06-29T15:03:37.812204+00:00",
     "method": "Flywire-specific rule-based engine — corridor/impact/action from FLYWIRE_INTEL templates, urgency/confidence/ETA derived from change log trigger types and effective dates",
     "count": 10
   },
@@ -24,12 +24,12 @@
         "seed_au_003",
         "seed_au_004"
       ],
-      "computed_at": "2026-06-29T04:40:59.171831+00:00"
+      "computed_at": "2026-06-29T15:03:37.812139+00:00"
     },
     {
       "id": "fw_us_interchange_regu",
       "market": "US",
-      "network": "Both",
+      "network": "Mastercard",
       "category": "interchange",
       "status": "confirmed",
       "urgency": "high",
@@ -45,7 +45,7 @@
         "seed_us_003",
         "seed_us_006"
       ],
-      "computed_at": "2026-06-29T04:40:59.085358+00:00"
+      "computed_at": "2026-06-29T15:03:37.812071+00:00"
     },
     {
       "id": "fw_us_surcharge_regu",
@@ -65,7 +65,7 @@
       "evidence_ids": [
         "seed_us_004"
       ],
-      "computed_at": "2026-06-29T04:40:59.171733+00:00"
+      "computed_at": "2026-06-29T15:03:37.812090+00:00"
     },
     {
       "id": "fw_uk_interchange_gove",
@@ -86,7 +86,7 @@
         "seed_uk_001",
         "seed_uk_002"
       ],
-      "computed_at": "2026-06-29T04:40:59.171765+00:00"
+      "computed_at": "2026-06-29T15:03:37.812104+00:00"
     },
     {
       "id": "fw_au_interchange_regu",
@@ -106,7 +106,7 @@
       "evidence_ids": [
         "seed_known_au_debit_cnp"
       ],
-      "computed_at": "2026-06-29T04:40:59.485582+00:00"
+      "computed_at": "2026-06-29T15:03:37.812195+00:00"
     },
     {
       "id": "fw_eu_interchange_regu",
@@ -127,12 +127,12 @@
         "seed_eu_001",
         "seed_eu_002"
       ],
-      "computed_at": "2026-06-29T04:40:59.171798+00:00"
+      "computed_at": "2026-06-29T15:03:37.812120+00:00"
     },
     {
       "id": "fw_ca_surcharge_netw",
       "market": "CA",
-      "network": "Both",
+      "network": "Visa",
       "category": "surcharge",
       "status": "monitoring",
       "urgency": "medium",
@@ -148,7 +148,7 @@
         "seed_ca_001",
         "seed_ca_002"
       ],
-      "computed_at": "2026-06-29T04:40:59.171848+00:00"
+      "computed_at": "2026-06-29T15:03:37.812150+00:00"
     },
     {
       "id": "fw_ca_interchange_netw",
@@ -169,12 +169,12 @@
         "seed_known_ca_smb_credit",
         "seed_known_ca_smb_debit"
       ],
-      "computed_at": "2026-06-29T04:40:59.171866+00:00"
+      "computed_at": "2026-06-29T15:03:37.812160+00:00"
     },
     {
       "id": "fw_jp_interchange_netw",
       "market": "JP",
-      "network": "Both",
+      "network": "Mastercard",
       "category": "interchange",
       "status": "monitoring",
       "urgency": "medium",
@@ -190,7 +190,7 @@
         "seed_jp_001",
         "seed_known_jp_debit"
       ],
-      "computed_at": "2026-06-29T04:40:59.387353+00:00"
+      "computed_at": "2026-06-29T15:03:37.812183+00:00"
     },
     {
       "id": "fw_sg_interchange_gove",
@@ -210,7 +210,7 @@
       "evidence_ids": [
         "seed_sg_001"
       ],
-      "computed_at": "2026-06-29T04:40:59.311487+00:00"
+      "computed_at": "2026-06-29T15:03:37.812169+00:00"
     }
   ]
 }
