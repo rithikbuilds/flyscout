@@ -460,8 +460,22 @@ function renderDashboard() {
   const lastCheckEl = document.getElementById('st-lastcheck');
   const lastCheckSub = document.getElementById('st-lastcheck-sub');
   if (hasRealRun && META.last_updated) {
+    const diffHrs = (Date.now() - new Date(META.last_updated).getTime()) / 3600000;
     lastCheckEl.textContent = timeAgo(META.last_updated);
-    if (lastCheckSub) lastCheckSub.textContent = 'Runs 3x daily via GitHub Actions';
+    if (diffHrs > 12) {
+      // Overdue — something may be wrong with the scheduled run
+      lastCheckEl.style.color = 'var(--amber)';
+      if (lastCheckSub) {
+        lastCheckSub.textContent = '⚠ Check overdue — verify GitHub Actions is running';
+        lastCheckSub.style.color = 'var(--amber)';
+      }
+    } else {
+      lastCheckEl.style.color = '';
+      if (lastCheckSub) {
+        lastCheckSub.textContent = 'Runs 3x daily via GitHub Actions';
+        lastCheckSub.style.color = '';
+      }
+    }
   } else {
     lastCheckEl.textContent = 'Not yet';
     lastCheckEl.style.fontSize = '16px';
@@ -526,13 +540,23 @@ function renderChangeLog() {
   items = [...items].sort((a,b) => new Date(b.detected_at) - new Date(a.detected_at));
 
   if (!items.length) {
-    el.innerHTML = '<div class="empty"><div class="empty-icon">📭</div><p>No rule changes tracked yet for this filter.<br>The automated check runs 3x daily — check back soon, or trigger a manual run from the Actions tab.</p></div>';
+    const mktMsg = activeFilter !== 'all'
+      ? `No rule changes tracked yet for <strong>${activeFilter}</strong> — monitoring is active, check back after a few days or trigger a manual run from the Actions tab.`
+      : 'No rule changes tracked yet. The automated check runs 3x daily — check back soon, or trigger a manual run from the Actions tab.';
+    el.innerHTML = `<div class="empty"><div class="empty-icon">📭</div><p>${mktMsg}</p></div>`;
     return;
   }
 
   el.innerHTML = items.map(c => {
     const netClass = c.network === 'Visa' ? 'b-visa' : c.network === 'Mastercard' ? 'b-mc' : 'b-both';
     const catClass = c.category === 'surcharge' ? 'b-surcharge' : 'b-interchange';
+    const isAutoDetected = c.auto_detected === true;
+    const isReviewed    = c.reviewed === true;
+    const statusBadge   = c.auto_detected === false
+      ? '<span class="badge b-seed">seed</span>'
+      : isReviewed
+        ? '<span class="badge" style="background:var(--green-bg);color:var(--green);border:1px solid #BBF7D0">✓ verified</span>'
+        : '<span class="badge" style="background:var(--amber-bg);color:var(--amber);border:1px solid #FCD34D">⚠ unverified</span>';
     return `<div class="chg-card">
       <div class="chg-head">
         <span class="badge b-market">${c.market}</span>
@@ -540,7 +564,7 @@ function renderChangeLog() {
         <span class="badge ${catClass}">${c.category}</span>
         ${c.cnp ? '<span class="badge b-cnp">CNP</span>' : ''}
         <span class="badge b-trigger">${(c.trigger||'').replace(/_/g,' ')}</span>
-        ${c.auto_detected === false ? '<span class="badge b-seed">seed example</span>' : ''}
+        ${statusBadge}
         <span class="chg-date">${(c.detected_at||'').slice(0,10)}</span>
       </div>
       <div class="chg-title">${c.title}</div>
@@ -661,6 +685,21 @@ const FLYWIRE_PREDICTIONS_FALLBACK = [
   },
 ];
 
+function getPredActioned(id) {
+  try { return localStorage.getItem('fw_pred_actioned_' + id) || ''; } catch(e) { return ''; }
+}
+function toggleActioned(id) {
+  try {
+    const key = 'fw_pred_actioned_' + id;
+    if (localStorage.getItem(key)) {
+      localStorage.removeItem(key);
+    } else {
+      localStorage.setItem(key, new Date().toISOString());
+    }
+  } catch(e) {}
+  renderPredictions();
+}
+
 function renderPredictions() {
   const el = document.getElementById('pred-list');
   if (!el) return;
@@ -682,11 +721,18 @@ function renderPredictions() {
 
   el.innerHTML = FLYWIRE_PREDICTIONS.map(p => {
     const u = urgencyConfig[p.urgency] || urgencyConfig.low;
+    const actionedAt = getPredActioned(p.id);
+    const isActioned = !!actionedAt;
+    const actionedDate = actionedAt ? new Date(actionedAt).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' }) : '';
+
     return `
-    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r2);padding:18px 20px;margin-bottom:14px;border-left:4px solid ${u.left};box-shadow:var(--shadow)">
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r2);padding:18px 20px;margin-bottom:14px;border-left:4px solid ${isActioned ? 'var(--green)' : u.left};box-shadow:var(--shadow);${isActioned ? 'opacity:0.75' : ''}">
 
       <div style="display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap;margin-bottom:10px">
-        <span class="badge" style="background:${u.bg};color:${u.color};border:1px solid ${u.border}">${u.label}</span>
+        ${isActioned
+          ? `<span class="badge" style="background:var(--green-bg);color:var(--green);border:1px solid #BBF7D0">✓ Team actioned ${actionedDate}</span>`
+          : `<span class="badge" style="background:${u.bg};color:${u.color};border:1px solid ${u.border}">${u.label}</span>`
+        }
         <span class="badge b-market">${p.market}</span>
         <span class="badge ${netClass[p.network]||'b-both'}">${p.network}</span>
         <span class="badge b-interchange">${p.category}</span>
@@ -699,7 +745,7 @@ function renderPredictions() {
         <span>✈️</span><span>Flywire corridor: ${p.corridor}</span>
       </div>
 
-      <div style="background:var(--bg-soft);border-radius:var(--r);padding:10px 13px;margin-bottom:10px;border-left:3px solid ${u.left}">
+      <div style="background:var(--bg-soft);border-radius:var(--r);padding:10px 13px;margin-bottom:10px;border-left:3px solid ${isActioned ? 'var(--green)' : u.left}">
         <div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--text-faint);margin-bottom:4px">Business impact</div>
         <div style="font-size:12px;color:var(--text-muted);line-height:1.65">${p.impact}</div>
       </div>
@@ -718,7 +764,12 @@ function renderPredictions() {
           <a href="${p.evidence_url}" target="_blank" rel="noopener" style="font-size:10px;font-weight:600;color:var(--teal-dark)">View source →</a>
         </div>
       </div>
-      <div style="margin-top:8px;font-size:10px;color:var(--text-faint)">${statusLabel[p.status] || p.status}</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding-top:10px;border-top:1px solid var(--border-soft)">
+        <div style="font-size:10px;color:var(--text-faint)">${statusLabel[p.status] || p.status}</div>
+        <button onclick="toggleActioned('${p.id}')" style="padding:5px 12px;border-radius:20px;border:1px solid ${isActioned ? 'var(--green)' : 'var(--border)'};background:${isActioned ? 'var(--green-bg)' : 'var(--bg-soft)'};color:${isActioned ? 'var(--green)' : 'var(--text-muted)'};font-size:10.5px;font-weight:600;cursor:pointer">
+          ${isActioned ? '↩ Mark as pending' : '✓ Mark as actioned'}
+        </button>
+      </div>
     </div>`;
   }).join('');
 }
@@ -734,60 +785,116 @@ const RATE_LABELS_ALL = [
 ];
 
 // Each dataset tagged with market + network so filters can include/exclude
-const CHART_CREDIT = [
-  { label:'US Visa Signature', mkt:'US', net:'Visa', color:'#2563EB',
-    data:[2.20,2.20,2.20,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30,2.30] },
-  { label:'US MC World Elite', mkt:'US', net:'Mastercard', color:'#1D4ED8',
-    data:[2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40,2.40] },
-  { label:'UK domestic (PSR cap)', mkt:'UK', net:'Both', color:'#DC2626',
-    data:[0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30] },
-  { label:'UK EU-card CNP (post-Brexit)', mkt:'UK', net:'Both', color:'#F87171',
-    data:[0.30,0.30,0.30,0.30,0.30,0.30,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50] },
-  { label:'EU IFR cap (intra-EEA)', mkt:'EU', net:'Both', color:'#7C3AED',
-    data:[0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30,0.30] },
-  { label:'EU non-EEA card CNP', mkt:'EU', net:'Both', color:'#A78BFA',
-    data:[1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50,1.50] },
-  { label:'AU consumer credit CNP', mkt:'AU', net:'Both', color:'#D97706',
-    data:[0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80,0.80] },
-  { label:'CA Visa SMB credit', mkt:'CA', net:'Visa', color:'#16A34A',
-    data:[1.40,1.40,1.40,1.40,1.40,1.40,1.40,1.40,1.40,1.40,1.40,1.40,1.40,1.40,1.35,1.35,1.35,1.35,1.35,1.35,1.35,1.35,1.35,1.35,1.35,1.35,1.35,1.35,1.35,1.35] },
-  { label:'SG consumer credit CNP', mkt:'SG', net:'Both', color:'#DB2777',
-    data:[1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20,1.20] },
-  { label:'JP consumer credit CNP', mkt:'JP', net:'Both', color:'#0891B2',
-    data:[1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80,1.80] },
-];
+// ── DYNAMIC CHART ENGINE ─────────────────────────────────────────────
+// Instead of 30 hardcoded monthly numbers per series, we store only the
+// Jan 2024 starting rate. buildDynamicLines() then walks the CHANGES
+// array and steps the rate whenever a matching detected change has an
+// extractable number — making the chart lines self-updating.
 
-const CHART_DEBIT = [
-  { label:'EU IFR debit cap', mkt:'EU', net:'Both', color:'#7C3AED',
-    data:[0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20] },
-  { label:'UK domestic debit (PSR)', mkt:'UK', net:'Both', color:'#DC2626',
-    data:[0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20,0.20] },
-  { label:'AU MC debit CNP', mkt:'AU', net:'Mastercard', color:'#D97706',
-    data:[0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.28,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22,0.22] },
-  { label:'CA Visa debit SMB', mkt:'CA', net:'Visa', color:'#16A34A',
-    data:[0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50,0.50] },
-  { label:'JP MC contactless NFC', mkt:'JP', net:'Mastercard', color:'#0891B2',
-    data:[1.10,1.10,1.10,1.10,1.10,1.10,1.10,1.10,1.10,1.10,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90,0.90] },
-  { label:'SG consumer debit CNP', mkt:'SG', net:'Both', color:'#DB2777',
-    data:[0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65] },
-];
+const BASELINE_RATES = {
+  credit: [
+    { label:'US Visa Signature CNP',       mkt:'US', net:'Visa',       cat:'interchange', color:'#2563EB', startRate:2.20 },
+    { label:'US MC World Elite CNP',        mkt:'US', net:'Mastercard', cat:'interchange', color:'#1D4ED8', startRate:2.40 },
+    { label:'UK domestic credit (PSR)',     mkt:'UK', net:'Visa',       cat:'interchange', color:'#DC2626', startRate:0.30 },
+    { label:'UK EU-card CNP (post-Brexit)', mkt:'UK', net:'Both', cat:'interchange', color:'#F87171', startRate:0.30 },
+    { label:'EU IFR cap (intra-EEA)',       mkt:'EU', net:'Visa',       cat:'interchange', color:'#7C3AED', startRate:0.30 },
+    { label:'EU non-EEA card CNP',          mkt:'EU', net:'Mastercard', cat:'interchange', color:'#A78BFA', startRate:1.50 },
+    { label:'AU consumer credit CNP',       mkt:'AU', net:'Both',       cat:'interchange', color:'#D97706', startRate:0.80 },
+    { label:'CA Visa SMB credit',           mkt:'CA', net:'Visa',       cat:'interchange', color:'#16A34A', startRate:1.40 },
+    { label:'SG consumer credit CNP',       mkt:'SG', net:'Both',       cat:'interchange', color:'#DB2777', startRate:1.20 },
+    { label:'JP consumer credit CNP',       mkt:'JP', net:'Both',       cat:'interchange', color:'#0891B2', startRate:1.80 },
+  ],
+  debit: [
+    { label:'EU IFR debit cap',             mkt:'EU', net:'Both',       cat:'interchange', color:'#7C3AED', startRate:0.20 },
+    { label:'UK domestic debit (PSR)',      mkt:'UK', net:'Both',       cat:'interchange', color:'#DC2626', startRate:0.20 },
+    { label:'AU MC debit CNP',              mkt:'AU', net:'Mastercard', cat:'interchange', color:'#D97706', startRate:0.28 },
+    { label:'CA Visa debit SMB',            mkt:'CA', net:'Visa',       cat:'interchange', color:'#16A34A', startRate:0.65 },
+    { label:'JP MC contactless NFC',        mkt:'JP', net:'Mastercard', cat:'interchange', color:'#0891B2', startRate:1.10 },
+    { label:'SG consumer debit CNP',        mkt:'SG', net:'Both',       cat:'interchange', color:'#DB2777', startRate:0.65 },
+  ],
+};
 
-const CHART_EVENTS_DATA = [
-  { label:'US', mkt:'US', net:'Both', color:'#2563EB', isBar:true,
-    data:[2,0,0,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
-  { label:'UK', mkt:'UK', net:'Both', color:'#DC2626', isBar:true,
-    data:[1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
-  { label:'EU', mkt:'EU', net:'Both', color:'#7C3AED', isBar:true,
-    data:[1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
-  { label:'AU', mkt:'AU', net:'Both', color:'#D97706', isBar:true,
-    data:[0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0] },
-  { label:'CA', mkt:'CA', net:'Both', color:'#16A34A', isBar:true,
-    data:[1,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
-  { label:'SG', mkt:'SG', net:'Both', color:'#DB2777', isBar:true,
-    data:[0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0] },
-  { label:'JP', mkt:'JP', net:'Both', color:'#0891B2', isBar:true,
-    data:[0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] },
-];
+// KNOWN_RATE_STEPS removed — these historical rate steps are now stored
+// as seed entries in data/rule-changes.json (ids: seed_known_uk_brexit,
+// seed_known_ca_smb_credit, seed_known_ca_smb_debit, seed_known_au_debit_cnp,
+// seed_known_jp_debit, seed_known_us_visa_sig). The chart now derives all
+// rate steps from the single source of truth: rule-changes.json.
+
+function buildDynamicLines(baselines) {
+  const N = RATE_LABELS_ALL.length;
+
+  return baselines.map(b => {
+    // All rate change events come from CHANGES (rule-changes.json).
+    // This includes both seed entries (auto_detected:false) and
+    // auto-detected entries (auto_detected:true) — all treated equally.
+    const steps = [];
+
+    CHANGES
+      .filter(c => {
+        const mktOk = c.market === b.mkt;
+        const netOk = c.network === b.net || (c.network === 'Both' && b.net === 'Both');
+        const catOk = c.category === b.cat;
+        const hasRate = RATE_PATTERN.test(c.new_value || '');
+        if (!mktOk || !netOk || !catOk || !hasRate) return false;
+        // Skip entries whose effective_date predates the chart window (Jan 2024).
+        // Those changes are already reflected in the baseline startRate.
+        // Only effective_date is checked — if null, we fall back to detected_at
+        // which is always within the monitoring window.
+        if (c.effective_date && c.effective_date < '2024-01-01') return false;
+        return true;
+      })
+      .forEach(c => {
+        const rate = extractRate(c.new_value);
+        if (rate === null) return;
+        const dateToUse = (c.effective_date && c.effective_date >= '2024-01-01')
+          ? c.effective_date : c.detected_at;
+        const idx = dateToLabelIndex(dateToUse);
+        if (idx === null) return;
+
+        // Rate-continuity guard: if old_value is present and it differs from
+        // the baseline's current rate by more than 40%, this step likely belongs
+        // to a different product tier (e.g. debit vs credit). Skip it.
+        const oldRate = extractRate(c.old_value);
+        if (oldRate !== null) {
+          const currentAtIdx = steps.filter(s => s.idx <= idx).reduce((_, s) => s.rate, b.startRate);
+          if (Math.abs(oldRate - currentAtIdx) / currentAtIdx > 0.40) return;
+        }
+
+        steps.push({ idx, rate, source: c.auto_detected ? 'live' : 'seed', title: c.title });
+      });
+
+    steps.sort((a, z) => a.idx - z.idx);
+
+    let currentRate = b.startRate;
+    let stepPtr = 0;
+    const data = [];
+    for (let i = 0; i < N; i++) {
+      while (stepPtr < steps.length && steps[stepPtr].idx <= i) {
+        currentRate = steps[stepPtr].rate;
+        stepPtr++;
+      }
+      data.push(parseFloat(currentRate.toFixed(4)));
+    }
+
+    return { ...b, data };
+  });
+}
+
+// Events bar chart — computed dynamically from CHANGES per market per month
+function buildEventsData() {
+  const N = RATE_LABELS_ALL.length;
+  const marketColors = {US:'#2563EB',UK:'#DC2626',EU:'#7C3AED',AU:'#D97706',SG:'#DB2777',CA:'#16A34A',JP:'#0891B2'};
+  return MARKETS.map(mkt => {
+    const data = new Array(N).fill(0);
+    CHANGES.filter(c => c.market === mkt).forEach(c => {
+      const idx = dateToLabelIndex(c.detected_at || c.effective_date);
+      if (idx !== null && idx < N) data[idx]++;
+    });
+    return { label: mkt, mkt, net: 'Both', color: marketColors[mkt] || '#64748B', isBar: true, data };
+  }).filter(d => d.data.some(v => v > 0)); // hide markets with no events
+}
+
+
 
 // Timeline events — each tagged with market + network for filtering
 const TIMELINE_EVENTS = [
@@ -986,9 +1093,9 @@ function buildRateChart() {
   const emptyEl = document.getElementById('chart-empty');
   if (!canvas) return;
 
-  const rawDatasets = trendView === 'credit' ? CHART_CREDIT
-                    : trendView === 'debit'  ? CHART_DEBIT
-                    :                          CHART_EVENTS_DATA;
+  const rawDatasets = trendView === 'credit' ? buildDynamicLines(BASELINE_RATES.credit)
+                    : trendView === 'debit'  ? buildDynamicLines(BASELINE_RATES.debit)
+                    :                          buildEventsData();
 
   const filtered = applyFilters(rawDatasets);
   updateTrendSummary(filtered);
