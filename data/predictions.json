@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "computed_at": "2026-06-29T15:03:37.812204+00:00",
+    "computed_at": "2026-06-29T22:17:51.783177+00:00",
     "method": "Flywire-specific rule-based engine — corridor/impact/action from FLYWIRE_INTEL templates, urgency/confidence/ETA derived from change log trigger types and effective dates",
     "count": 10
   },
@@ -24,7 +24,7 @@
         "seed_au_003",
         "seed_au_004"
       ],
-      "computed_at": "2026-06-29T15:03:37.812139+00:00"
+      "computed_at": "2026-06-29T22:17:51.783084+00:00"
     },
     {
       "id": "fw_us_interchange_regu",
@@ -45,7 +45,7 @@
         "seed_us_003",
         "seed_us_006"
       ],
-      "computed_at": "2026-06-29T15:03:37.812071+00:00"
+      "computed_at": "2026-06-29T22:17:51.783016+00:00"
     },
     {
       "id": "fw_us_surcharge_regu",
@@ -65,7 +65,7 @@
       "evidence_ids": [
         "seed_us_004"
       ],
-      "computed_at": "2026-06-29T15:03:37.812090+00:00"
+      "computed_at": "2026-06-29T22:17:51.783036+00:00"
     },
     {
       "id": "fw_uk_interchange_gove",
@@ -86,7 +86,7 @@
         "seed_uk_001",
         "seed_uk_002"
       ],
-      "computed_at": "2026-06-29T15:03:37.812104+00:00"
+      "computed_at": "2026-06-29T22:17:51.783050+00:00"
     },
     {
       "id": "fw_au_interchange_regu",
@@ -106,7 +106,7 @@
       "evidence_ids": [
         "seed_known_au_debit_cnp"
       ],
-      "computed_at": "2026-06-29T15:03:37.812195+00:00"
+      "computed_at": "2026-06-29T22:17:51.783170+00:00"
     },
     {
       "id": "fw_eu_interchange_regu",
@@ -127,7 +127,7 @@
         "seed_eu_001",
         "seed_eu_002"
       ],
-      "computed_at": "2026-06-29T15:03:37.812120+00:00"
+      "computed_at": "2026-06-29T22:17:51.783066+00:00"
     },
     {
       "id": "fw_ca_surcharge_netw",
@@ -148,7 +148,7 @@
         "seed_ca_001",
         "seed_ca_002"
       ],
-      "computed_at": "2026-06-29T15:03:37.812150+00:00"
+      "computed_at": "2026-06-29T22:17:51.783095+00:00"
     },
     {
       "id": "fw_ca_interchange_netw",
@@ -169,7 +169,7 @@
         "seed_known_ca_smb_credit",
         "seed_known_ca_smb_debit"
       ],
-      "computed_at": "2026-06-29T15:03:37.812160+00:00"
+      "computed_at": "2026-06-29T22:17:51.783131+00:00"
     },
     {
       "id": "fw_jp_interchange_netw",
@@ -190,7 +190,7 @@
         "seed_jp_001",
         "seed_known_jp_debit"
       ],
-      "computed_at": "2026-06-29T15:03:37.812183+00:00"
+      "computed_at": "2026-06-29T22:17:51.783158+00:00"
     },
     {
       "id": "fw_sg_interchange_gove",
@@ -210,7 +210,7 @@
       "evidence_ids": [
         "seed_sg_001"
       ],
-      "computed_at": "2026-06-29T15:03:37.812169+00:00"
+      "computed_at": "2026-06-29T22:17:51.783143+00:00"
     }
   ]
 }
