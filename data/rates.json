@@ -1,8 +1,8 @@
 {
   "_meta": {
-    "computed_at": "2026-06-28T21:45:19.618495+00:00",
+    "computed_at": "2026-06-29T04:40:59.085296+00:00",
     "description": "Latest detected rates per market/network/category, extracted automatically from rule-changes.json. Only entries with extractable percentage values are included.",
-    "entry_count": 6
+    "entry_count": 9
   },
   "rates": {
     "UK": {
@@ -45,6 +45,18 @@
           "cnp": true,
           "change_id": "seed_au_002"
         }
+      },
+      "Mastercard": {
+        "interchange": {
+          "value": "0.22% + $0.08 (CNP)",
+          "previous": "0.28% + $0.10 (CNP)",
+          "detected_at": "2025-05-01T00:00:00Z",
+          "effective_date": "2025-05-01",
+          "source_name": "RBA — Card Payments Regulation & Surcharging",
+          "source_url": "https://www.rba.gov.au/payments-and-infrastructure/review-of-retail-payments-regulation/",
+          "cnp": true,
+          "change_id": "seed_known_au_debit_cnp"
+        }
       }
     },
     "CA": {
@@ -69,19 +81,45 @@
           "cnp": false,
           "change_id": "seed_ca_003"
         }
+      },
+      "Visa": {
+        "interchange": {
+          "value": "1.35%",
+          "previous": "1.40%",
+          "detected_at": "2025-03-01T00:00:00Z",
+          "effective_date": "2025-03-01",
+          "source_name": "The Future of Interchange Fees: 2026 — Clearly Payments",
+          "source_url": "https://www.clearlypayments.com/blog/the-future-of-interchange-fees-2026-and-beyond/",
+          "cnp": false,
+          "change_id": "seed_known_ca_smb_credit"
+        }
+      }
+    },
+    "JP": {
+      "Mastercard": {
+        "interchange": {
+          "value": "0.90% contactless NFC / 0.75% QR-code (new tier)",
+          "previous": "1.10% contactless NFC",
+          "detected_at": "2024-11-01T00:00:00Z",
+          "effective_date": "2024-11-01",
+          "source_name": "Payments Regulation in Asia — CMSPI",
+          "source_url": "https://cmspi.com/app/uploads/2024/08/Payments-Regulation-in-Asia-CMSPI-Whitepaper-Exec-Summary-1.pdf",
+          "cnp": false,
+          "change_id": "seed_known_jp_debit"
+        }
       }
     },
     "US": {
-      "Mastercard": {
+      "Visa": {
         "interchange": {
-          "value": "0.05%, 0.25%, 0.30%, 0.35%",
-          "previous": "0.05%, 0.25%, 0.30%, 0.35%",
-          "detected_at": "2026-06-26T17:18:51.491290+00:00",
-          "effective_date": null,
-          "source_name": "Mastercard US Interchange Rates — Merchant Cost Consulting",
-          "source_url": "https://merchantcostconsulting.com/lower-credit-card-processing-fees/mastercard-interchange-rates/",
+          "value": "2.30% + $0.10",
+          "previous": "2.20% + $0.10",
+          "detected_at": "2024-04-01T00:00:00Z",
+          "effective_date": "2024-04-01",
+          "source_name": "Visa USA Interchange — Merchant Fees Hub",
+          "source_url": "https://usa.visa.com/support/small-business/regulations-fees.html",
           "cnp": true,
-          "change_id": "chg_us_mc_ic_1782494331"
+          "change_id": "seed_known_us_visa_sig"
         }
       }
     }
