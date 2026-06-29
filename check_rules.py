@@ -96,16 +96,17 @@ SOURCES = [
      "url":"https://www.rba.gov.au/payments-and-infrastructure/review-of-retail-payments-regulation/2026-03/"},
 
     # ── SINGAPORE ──────────────────────────────────────────────────────
-    # MAS payment services regulation. Note: MAS periodically returns
-    # maintenance pages — these are now detected and skipped safely.
-    # Baseline will be established once the site is fully operational.
+    # MAS Parliamentary Replies — more stable than the main regulation page
+    # which has been returning maintenance pages since monitoring began.
+    # Contains genuine payment regulation content including interchange fee
+    # questions and surcharging policy responses from MAS to Parliament.
     {"id":"sg_mas",      "market":"SG","network":"Regulator",  "category":"regulatory", "cnp":True,
-     "name":"MAS — Payment Services Regulation",
-     "url":"https://www.mas.gov.sg/regulation/payment-services"},
-    # MAS media releases — accessible alternative for SG regulatory news
-    # while the main regulation page remains intermittently unavailable.
+     "name":"MAS — Parliamentary Replies (Payment Services)",
+     "url":"https://www.mas.gov.sg/news/parliamentary-replies"},
+    # MAS media releases — second SG source for broader coverage of
+    # payment system regulatory announcements.
     {"id":"sg_mas_news", "market":"SG","network":"Regulator",  "category":"regulatory", "cnp":True,
-     "name":"MAS — Media Releases (Payment Services)",
+     "name":"MAS — Media Releases",
      "url":"https://www.mas.gov.sg/news/media-releases"},
 
     # ── CANADA ─────────────────────────────────────────────────────────
@@ -581,9 +582,30 @@ def check_source(source, snapshots, changes_store):
         "old_snippet": (prev.get("text", "") or "")[:280],
         "new_snippet": new_snippet, "reviewed": False, "auto_detected": True,
     }
+
+    # Deduplication guard: if the same market+category was already detected
+    # within the last 24 hours, this is likely the same regulatory event
+    # appearing on multiple monitored sources. Log it but suppress the Slack
+    # alert to avoid duplicate notifications for the same development.
+    cutoff_24h = (datetime.now(timezone.utc) - timedelta(hours=24)).isoformat()
+    duplicate = any(
+        c.get("market") == change["market"]
+        and c.get("category") == change["category"]
+        and c.get("detected_at", "") >= cutoff_24h
+        and c.get("id") != change["id"]
+        for c in changes_store
+    )
+
     changes_store.append(change)
-    log.info("[%s] CHANGE DETECTED — %s/%s/%s trigger=%s", sid, change["market"], change["network"], category, trigger)
-    send_change_alert(change)
+    log.info("[%s] CHANGE DETECTED — %s/%s/%s trigger=%s%s",
+             sid, change["market"], change["network"], category, trigger,
+             " (duplicate suppressed)" if duplicate else "")
+
+    if not duplicate:
+        send_change_alert(change)
+    else:
+        log.info("[%s] Slack alert suppressed — same market+category detected within 24h", sid)
+
     return change
 
 
