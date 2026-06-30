@@ -342,23 +342,13 @@ async function loadData() {
       FLYWIRE_PREDICTIONS = FLYWIRE_PREDICTIONS_FALLBACK;
     }
 
-    // Enrich CURRENT_RATES with live detected rates where available
-    Object.entries(LIVE_RATES).forEach(([mkt, networks]) => {
-      Object.entries(networks).forEach(([net, cats]) => {
-        Object.entries(cats).forEach(([cat, info]) => {
-          if (CURRENT_RATES[mkt]) {
-            const key = cat + (info.cnp ? '_cnp' : '');
-            if (!CURRENT_RATES[mkt][key]) CURRENT_RATES[mkt][key] = {};
-            CURRENT_RATES[mkt][key]['Live detected'] = `${info.value} (detected ${info.detected_at.slice(0,10)})`;
-            CURRENT_RATES[mkt].live_detected_at = info.detected_at;
-          }
-        });
-      });
-    });
+    // LIVE_RATES is used directly by lookupRateAnswer() and buildRatesContext()
+    // — no enrichment step needed since there's no separate hardcoded object
+    // to merge into anymore. rates.json IS the rates source.
 
   } catch (e) {
     console.warn('Could not load data files — running with empty dataset', e);
-    CHANGES = []; PREDICTIONS = []; META = {};
+    CHANGES = []; PREDICTIONS = []; META = {}; LIVE_RATES = {};
     FLYWIRE_PREDICTIONS = FLYWIRE_PREDICTIONS_FALLBACK;
   }
   renderAll();
@@ -574,6 +564,19 @@ function renderChangeLog() {
         <div class="diff-box diff-new"><div class="diff-label">After</div>${c.new_value || '—'}</div>
       </div>` : ''}
       ${c.new_snippet ? `<div class="chg-snippet">"${c.new_snippet}"</div>` : ''}
+      ${c.impact_analysis ? `
+      <div style="background:var(--teal-light);border-radius:var(--r);padding:12px 14px;margin-bottom:10px;border-left:3px solid var(--teal)">
+        <div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--teal-dark);margin-bottom:6px">🤖 Auto-generated impact analysis</div>
+        <div style="font-size:12px;color:var(--text);line-height:1.6;margin-bottom:6px"><strong>What changed:</strong> ${c.impact_analysis.what_changed}</div>
+        <div style="font-size:12px;color:var(--text);line-height:1.6;margin-bottom:6px"><strong>Why it matters:</strong> ${c.impact_analysis.why_it_matters}</div>
+        <div style="font-size:12px;color:var(--text);line-height:1.6;margin-bottom:6px"><strong>Acquirer impact:</strong> ${c.impact_analysis.acquirer_impact}</div>
+        <div style="font-size:12px;color:var(--text);line-height:1.6;margin-bottom:8px"><strong>Cross-border impact:</strong> ${c.impact_analysis.cross_border_impact}</div>
+        ${c.impact_analysis.recommended_actions ? `
+        <div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--teal-dark);margin-bottom:4px">Recommended actions</div>
+        <ul style="margin:0;padding-left:18px;font-size:12px;color:var(--text);line-height:1.6">
+          ${c.impact_analysis.recommended_actions.map(a => `<li>${a}</li>`).join('')}
+        </ul>` : ''}
+      </div>` : ''}
       <div class="chg-foot"><span>${c.source_name}</span> · <a href="${c.source_url}" target="_blank" rel="noopener">View source →</a></div>
     </div>`;
   }).join('');
@@ -1289,145 +1292,131 @@ function renderTrends() {
 // the entire KB is injected into the system prompt so answers are grounded
 // in real data, not hallucinated.
 
-const CURRENT_RATES = {
-  US: {
-    label: '🇺🇸 United States',
-    credit_cnp: {
-      'Visa Infinite': '2.40% + $0.10', 'Visa Signature': '2.30% + $0.10',
-      'Visa Standard Consumer': '1.80% + $0.10', 'MC World Elite': '2.40% + $0.10',
-      'MC World': '2.20% + $0.10', 'MC Standard': '1.89% + $0.10',
-      note: 'Post Visa restructure Apr 2024 · Antitrust settlement caps qualifying consumer at 125bps from Mar 2025'
-    },
-    debit_cnp: {
-      'Regulated debit (Visa/MC)': '21¢ + 5bps (Regulation II — stayed pending Eighth Circuit appeal Aug 2025)',
-      note: 'Court vacated Reg II; cap in force while appeal proceeds'
-    },
-    surcharge: { allowed: true, cap: '3% (Feb 2025)', requirements: 'Cart-level disclosure · 30-day advance registration · Debit/prepaid excluded' },
-    flywire_note: 'Highest CNP credit interchange globally. US education & healthcare flows expensive. Watch Reg II appeal outcome — debit cost could 2-4x if vacatur upheld.'
-  },
-  UK: {
-    label: '🇬🇧 United Kingdom',
-    credit_cnp: {
-      'UK-issued card (domestic)': '0.30% (PSR cap)',
-      'EU-issued Mastercard (post-Brexit)': 'up to 1.50%',
-      'EU-issued Visa (post-Brexit)': 'up to 1.50%',
-      note: 'PSR cap on domestic. Cross-border EU cards uncapped since Oct 2021. Major cost divergence.'
-    },
-    debit_cnp: {
-      'UK-issued debit (domestic)': '0.20% (PSR cap)',
-      'EU-issued debit (cross-border)': 'up to 1.20%',
-    },
-    surcharge: { allowed: false, cap: 'Banned — Consumer Rights Act 2018', requirements: 'Consumer cards cannot be surcharged. Commercial cards permitted at cost.' },
-    flywire_note: 'Critical for Flywire: EU students paying UK universities pay with EU-issued cards → up to 1.50% credit interchange. No surcharging allowed so Flywire/institution absorbs it. PSR review underway — may re-cap.'
-  },
-  EU: {
-    label: '🇪🇺 European Union',
-    credit_cnp: {
-      'Consumer credit (domestic/intra-EEA)': '0.30% (IFR cap)',
-      'Commercial credit': 'Uncapped',
-      'Non-EEA card → EEA merchant (CNP)': '1.50% credit (capped to Nov 2029)',
-      note: 'IFR Regulation 2015/751. Interregional caps extended Jul 2024.'
-    },
-    debit_cnp: {
-      'Consumer debit (domestic/intra-EEA)': '0.20% (IFR cap)',
-      'Non-EEA card → EEA merchant (CNP)': '1.15% debit (capped to Nov 2029)',
-    },
-    surcharge: { allowed: false, cap: 'Banned on IFR-regulated consumer cards (PSD2 Art.62)', requirements: 'Commercial/corporate cards may be surcharged' },
-    flywire_note: 'Cheapest market for consumer credit CNP (0.30%). Flywire EU flows benefit from IFR caps. Non-EEA cards (e.g. US student paying EU uni) cost 1.50%.'
-  },
-  AU: {
-    label: '🇦🇺 Australia',
-    credit_cnp: {
-      'MC Consumer Credit CNP': '~0.80-1.20% (RBA regulated, varies by product)',
-      note: 'RBA caps domestic consumer credit. Foreign cards uncapped until Apr 2027.'
-    },
-    debit_cnp: {
-      'MC Debit CNP': '0.22% + $0.08 (from May 2025)',
-      'MC Debit CP': '0.18% + $0.05 (from May 2025)',
-      'Visa Debit CNP': 'Similar range to MC',
-      note: 'RBA 2025 review cut debit rates. Previous: 0.28%+$0.10 CNP.'
-    },
-    surcharge: {
-      allowed: true, cap: 'Cost of acceptance ONLY — until 1 Oct 2026, then BANNED',
-      requirements: 'ACCC enforced. Acquirer validates annually. WARNING: surcharging banned from 1 Oct 2026 (RBA final decision Mar 2026).'
-    },
-    flywire_note: '⚠️ URGENT: AU surcharge ban takes effect 1 Oct 2026 — 3 months away. Flywire must restructure pricing before then. Foreign-card cap also coming 1 Apr 2027 (cost saving for international students paying AU unis).'
-  },
-  SG: {
-    label: '🇸🇬 Singapore',
-    credit_cnp: {
-      'Visa/MC Consumer Credit': '~1.0–1.5% (no government cap)',
-      note: 'Network-set rates. No regulatory ceiling.'
-    },
-    debit_cnp: { 'Visa/MC Consumer Debit': '~0.5–0.8%' },
-    surcharge: { allowed: true, cap: 'Cost of acceptance (acquirer-validated)', requirements: 'No blanket card-brand surcharges (Sep 2024 rule). Pre-transaction disclosure required.' },
-    flywire_note: 'No interchange caps. Surcharging allowed at cost of acceptance, no blanket brand surcharges. MAS parliamentary scrutiny (Mar 2026) — watch for regulatory development.'
-  },
-  CA: {
-    label: '🇨🇦 Canada',
-    credit_cnp: {
-      'Visa SMB Consumer Credit (≤$300k vol)': '1.35%',
-      'Standard consumer credit': '~1.40–1.80%',
-      note: 'SMB rate (Mar 2025). Quebec prohibited from surcharging.'
-    },
-    debit_cnp: { 'Visa Debit SMB': '0.50%', 'Standard debit': '~0.65%' },
-    surcharge: { allowed: true, cap: '2.4% or effective discount rate (lower applies)', requirements: 'Credit cards only · Debit excluded · Quebec exempt · 30-day advance notice' },
-    flywire_note: 'CA students paying tuition: SMB interchange rates apply if institution qualifies. 2.4% surcharge cap allowed (credit only). Quebec surcharging banned.'
-  },
-  JP: {
-    label: '🇯🇵 Japan',
-    credit_cnp: { 'Visa/MC Consumer Credit CNP': '~1.5–2.0%' },
-    debit_cnp: {
-      'MC Contactless NFC': '0.90%',
-      'MC QR-code': '0.75%',
-      'MC Standard CP': '1.05%',
-      'MC Debit CNP': '1.20%',
-      note: 'Restructured Nov 2024 with new QR tier.'
-    },
-    surcharge: { allowed: true, cap: 'No government framework', requirements: 'Culturally uncommon. No legal cap.' },
-    flywire_note: 'Lower credit CNP costs than US. JP debit restructured with QR tier Nov 2024. JFTC/METI disclosure requirement from Sep 2022.'
+// ── STRUCTURED QUERY ENGINE — derives everything from rule-changes.json ──
+// Items 11, 13, 14: hardcoded CURRENT_RATES and RATE_ANSWERS removed entirely.
+// All rate answers and historical queries now come exclusively from CHANGES
+// (rule-changes.json) and LIVE_RATES (rates.json) — the single source of
+// truth. This means a rate answer is NEVER stale relative to detected data.
+
+const MARKET_CODES = ['US','UK','EU','AU','SG','CA','JP'];
+const MARKET_NAMES = { US:'United States', UK:'United Kingdom', EU:'European Union', AU:'Australia', SG:'Singapore', CA:'Canada', JP:'Japan' };
+const MARKET_FLAGS = { US:'🇺🇸', UK:'🇬🇧', EU:'🇪🇺', AU:'🇦🇺', SG:'🇸🇬', CA:'🇨🇦', JP:'🇯🇵' };
+const STOPWORDS = new Set(['the','and','are','was','were','for','with','what','which','this',
+  'that','has','have','had','not','but','you','your','our','can','will','when','who','why',
+  'how','did','does','about','any','all','out','get','got','from','into','more','most','some',
+  'than','then','them','they','their','there','here','where','been','being','also','just']);
+
+// Parse a natural-language question into structured filters wherever possible.
+// This is item 13 — structured field-level filtering instead of pure keyword
+// search, so "Visa interchange changes in Canada since Jan 2024" becomes
+// {network:'Visa', category:'interchange', market:'CA', since:'2024-01-01'}
+function parseQueryFilters(query) {
+  const q = query.toLowerCase();
+  const filters = {};
+
+  const market = MARKET_CODES.find(m => new RegExp('\\b' + m + '\\b', 'i').test(query)
+    || q.includes(MARKET_NAMES[m].toLowerCase()));
+  if (market) filters.market = market;
+
+  if (/\bvisa\b/.test(q) && !/\bmastercard\b/.test(q)) filters.network = 'Visa';
+  else if (/\bmastercard\b/.test(q) && !/\bvisa\b/.test(q)) filters.network = 'Mastercard';
+
+  if (/\binterchange\b/.test(q) && !/\bsurcharg/.test(q)) filters.category = 'interchange';
+  else if (/\bsurcharg/.test(q) && !/\binterchange\b/.test(q)) filters.category = 'surcharge';
+
+  if (/\bcnp\b|card.not.present|card-not-present/.test(q)) filters.cnp = true;
+
+  // Date range: "since January 2024", "since 2024", "after 2025"
+  const sinceMatch = q.match(/(?:since|after|from)\s+(?:january|jan|february|feb|march|mar|april|apr|may|june|jun|july|jul|august|aug|september|sep|october|oct|november|nov|december|dec)?\s*(\d{4})/i);
+  if (sinceMatch) filters.since = `${sinceMatch[1]}-01-01`;
+
+  return filters;
+}
+
+// Apply structured filters first, then fall back to keyword scoring for
+// anything not covered by a structured field — best of both approaches.
+function searchLocalData(query) {
+  const filters = parseQueryFilters(query);
+  const q = query.toLowerCase();
+  const terms = q.split(/\W+/).filter(t => t.length > 2 && !STOPWORDS.has(t) && !MARKET_CODES.includes(t.toUpperCase()));
+
+  let candidates = CHANGES;
+
+  // Structured filters narrow the candidate set precisely
+  if (filters.market)   candidates = candidates.filter(c => c.market === filters.market);
+  if (filters.network)  candidates = candidates.filter(c => c.network === filters.network || c.network === 'Both');
+  if (filters.category) candidates = candidates.filter(c => c.category === filters.category);
+  if (filters.cnp)       candidates = candidates.filter(c => c.cnp === true);
+  if (filters.since)     candidates = candidates.filter(c => (c.detected_at || c.effective_date || '') >= filters.since);
+
+  // If structured filters already narrowed meaningfully, return them directly
+  // (sorted newest first) without further keyword filtering — this is the
+  // "show me all X" / "compare Y and Z" case from item 13.
+  const hasStructuredFilter = Object.keys(filters).length > 0;
+  if (hasStructuredFilter) {
+    // IMPORTANT: a structured filter that legitimately matches zero entries
+    // must return an empty array — NOT fall through to a broad keyword
+    // search across all markets. Returning unrelated entries here would be
+    // exactly the kind of silent inaccuracy this query engine exists to
+    // prevent (e.g. "UK surcharge changes" falling back to AU/US results
+    // just because UK has no surcharge entries — UK bans surcharging
+    // entirely, so zero results is the correct, honest answer).
+    return [...candidates]
+      .sort((a, b) => new Date(b.detected_at || b.effective_date) - new Date(a.detected_at || a.effective_date))
+      .slice(0, 8);
   }
-};
 
-// Smart local answer engine — directly answers rate questions without Gemini
-const RATE_ANSWERS = [
-  { patterns: ['uk cnp', 'uk credit cnp', 'uk cross.?border', 'eu card uk', 'uk interchange', 'uk rate', 'united kingdom'],
-    answer: `**UK CNP Interchange (Jun 2026):**\n\n**UK-issued cards:** 0.30% credit / 0.20% debit (PSR cap — same as EU IFR)\n**EU-issued cards → UK merchant (post-Brexit, since Jul 2024):**\n- Consumer credit CNP: up to **1.50%** (was 0.30% under EU IFR)\n- Consumer debit CNP: up to **1.20%** (was 0.20%)\n\n**Flywire impact:** EU students paying UK universities cost up to 1.50% credit interchange. Surcharging banned (Consumer Rights Act) — institution/Flywire absorbs. PSR reviewing — may re-cap.` },
+  // Otherwise fall back to keyword relevance scoring across all changes
+  if (!terms.length) return [];
+  const scored = CHANGES.map(c => {
+    const haystack = `${c.network} ${c.category} ${c.title} ${c.summary} ${c.trigger}`.toLowerCase();
+    const matchedTerms = terms.filter(t => haystack.includes(t));
+    return { c, score: matchedTerms.length };
+  }).filter(s => s.score > 0);
+  scored.sort((a, b) => b.score - a.score);
+  return scored.slice(0, 5).map(s => s.c);
+}
 
-  { patterns: ['eu interchange', 'eu credit', 'eu debit', 'ifr cap', 'european', 'eu rate'],
-    answer: `**EU Interchange Caps (Jun 2026):**\n\n**Consumer credit CNP (intra-EEA):** 0.30% (IFR)\n**Consumer debit CNP (intra-EEA):** 0.20% (IFR)\n**Non-EEA card → EEA merchant CNP:** 1.50% credit / 1.15% debit (capped to Nov 2029)\n**Commercial cards:** Uncapped\n\nSurcharging on consumer cards: **banned** (PSD2 Art.62)\n\n**Flywire impact:** Cheapest market for consumer credit CNP. Non-EEA students (e.g. US/AU) paying EU universities cost 1.50%.` },
+// Derive a plain-English current-rate answer directly from LIVE_RATES
+// (rates.json, computed by check_rules.py from the change log) — never
+// from a hardcoded string. If LIVE_RATES has nothing for a market/category,
+// this returns null and the caller falls through to the change-log search.
+function lookupRateAnswer(query) {
+  const filters = parseQueryFilters(query);
+  if (!filters.market) return null;
 
-  { patterns: ['us cnp', 'us interchange', 'visa us', 'us credit', 'us rate', 'us visa', 'visa signature', 'visa infinite', 'mastercard us', 'united states rate'],
-    answer: `**US CNP Interchange (Jun 2026):**\n\n**Visa Credit CNP:**\n- Visa Infinite: **2.40% + $0.10**\n- Visa Signature: **2.30% + $0.10**\n- Standard Consumer: 1.80% + $0.10\n**Mastercard Credit CNP:**\n- MC World Elite: 2.40% + $0.10\n- MC World: 2.20% + $0.10\n**Debit (regulated):** 21¢ + 5bps (Reg II — stayed pending Eighth Circuit appeal)\n\nSurcharging: 3% cap (Feb 2025), cart-level disclosure required.\n\n**Flywire impact:** Highest credit CNP globally. Monitor Reg II appeal — debit cost could spike.` },
+  const mktRates = LIVE_RATES[filters.market];
+  if (!mktRates) return null;
 
-  { patterns: ['au cnp', 'australia interchange', 'australia surcharge', 'rba', 'au rate', 'au interchange', 'australia rate', 'happening.*australia', 'australia.*rate', 'australian'],
-    answer: `**Australia CNP (Jun 2026):**\n\n**MC Debit CNP:** 0.22% + $0.08 (from May 2025)\n**MC Debit CP:** 0.18% + $0.05\n**Consumer credit:** ~0.80–1.20% (RBA regulated)\n\n**Surcharging:** ⚠️ Currently allowed at cost of acceptance — **BANNED from 1 Oct 2026** (RBA Conclusions Paper, Mar 2026). Foreign-card cap added from 1 Apr 2027.\n\n**Flywire impact — urgent:** Repricing required before 1 Oct 2026. Audit AU merchant surcharge models now.` },
+  const flag = MARKET_FLAGS[filters.market] || '';
+  const lines = [`${flag} **${MARKET_NAMES[filters.market]} — current rates (from tracked data):**`, ''];
+  let foundAny = false;
 
-  { patterns: ['ca interchange', 'canada', 'canadian', 'ca rate', 'ca smb', 'canada smb'],
-    answer: `**Canada CNP (Jun 2026):**\n\n**Visa SMB Credit (≤$300k vol):** 1.35% (from Mar 2025)\n**Visa Debit SMB:** 0.50%\n**Standard consumer credit:** ~1.40–1.80%\n\nSurcharging: **2.4% cap** on credit cards since Oct 2022. Quebec: banned. Debit excluded.\n\n**Flywire impact:** CA education flows may qualify for SMB rates. Quebec institutions cannot pass card costs via surcharge.` },
+  Object.entries(mktRates).forEach(([network, cats]) => {
+    Object.entries(cats).forEach(([cat, info]) => {
+      if (filters.category && cat !== filters.category) return;
+      if (filters.network && network !== filters.network && network !== 'Both') return;
+      foundAny = true;
+      lines.push(`**${network} ${cat}${info.cnp ? ' (CNP)' : ''}:** ${info.value}` +
+        (info.previous ? ` (was ${info.previous})` : '') +
+        ` — detected ${info.detected_at.slice(0,10)}`);
+    });
+  });
 
-  { patterns: ['sg interchange', 'singapore rate', 'singapore cnp', 'mas interchange', 'sg rate'],
-    answer: `**Singapore CNP (Jun 2026):**\n\nNo government-mandated caps. Network-set rates:\n- Consumer credit CNP: ~1.0–1.5%\n- Consumer debit CNP: ~0.5–0.8%\n\nSurcharging: Allowed at cost of acceptance. Blanket card-brand surcharges **banned** (Sep 2024). Pre-transaction disclosure required.\n\n**Flywire impact:** MAS parliamentary scrutiny (Mar 2026). No imminent rule change but watch for regulatory formalization.` },
-
-  { patterns: ['jp interchange', 'japan rate', 'japan cnp', 'jp rate'],
-    answer: `**Japan CNP (Jun 2026):**\n\nMastercard domestic debit (restructured Nov 2024):\n- Contactless NFC: **0.90%**\n- QR-code: **0.75%** (new tier)\n- Standard CP: 1.05%\n- CNP debit: 1.20%\n- Consumer credit CNP: ~1.5–2.0%\n\nSurcharging: Technically allowed, no government cap. Culturally uncommon.` },
-
-  { patterns: ['surcharg', 'where.*surcharg', 'allowed.*surcharg', 'surcharg.*allowed', 'surcharg.*2026', 'who.*surcharg'],
-    answer: `**Surcharging by market (Jun 2026):**\n\n✅ **AU** — Allowed at cost of acceptance. **⚠️ BANNED from 1 Oct 2026**\n✅ **SG** — Allowed at cost of acceptance. No blanket brand surcharges.\n✅ **CA** — Allowed ≤2.4% on credit. Quebec exempt. Debit excluded.\n✅ **US** — Allowed ≤3% on credit CNP (Feb 2025). Cart disclosure required. Debit excluded.\n✅ **JP** — Technically allowed, no framework.\n🚫 **EU** — Banned on consumer cards (PSD2)\n🚫 **UK** — Banned on consumer cards (Consumer Rights Act 2018)\n\n**Flywire:** AU surcharge ban is most urgent action item.` },
-
-  { patterns: ['cnp.*cheapest', 'cheapest.*cnp', 'lowest.*interchange', 'best.*rate', 'compare.*rate', 'compare.*cnp', 'all.*market.*rate', 'all 7', 'across.*market'],
-    answer: `**CNP interchange comparison — all 7 markets (Jun 2026):**\n\n| Market | Consumer Credit CNP | Consumer Debit CNP |\n|--------|--------------------|-----------------|\n| 🇪🇺 EU | **0.30%** (IFR) | **0.20%** (IFR) |\n| 🇦🇺 AU | ~0.80–1.20% | 0.22% + $0.08 |\n| 🇨🇦 CA | 1.35% (SMB) | 0.50% (SMB) |\n| 🇸🇬 SG | ~1.0–1.5% | ~0.5–0.8% |\n| 🇬🇧 UK | 0.30% domestic / 1.50% EU cards | 0.20% / 1.20% |\n| 🇯🇵 JP | ~1.5–2.0% | 0.90% NFC / 0.75% QR |\n| 🇺🇸 US | 1.80–2.40% + $0.10 | 21¢ + 5bps |\n\n**Flywire lens:** Route volume through EU acquirers where possible. AU most competitive debit. US most expensive credit.` },
-
-  { patterns: ['flywire.*impact', 'impact.*flywire', 'our.*business', 'what.*mean.*us', 'affect.*flywire', 'flywire.*affect', 'latest.*change', 'recent.*change'],
-    answer: `**Top Flywire business impacts right now:**\n\n🔴 **AU surcharge ban — 1 Oct 2026 (3 months):** Must restructure AU merchant pricing before deadline.\n🟡 **UK post-Brexit rates (1.50% EU cards):** EU students paying UK unis cost 5x pre-Brexit. PSR review may re-cap — monitor.\n🟡 **US Reg II debit appeal:** If vacatur upheld, US debit costs could 2–4x.\n🟡 **US antitrust settlement:** 125bps cap on qualifying US consumer credit from Mar 2025.\n🔵 **AU foreign-card cap Apr 2027:** Cost saving for international students paying AU universities.\n\nSee Predictions tab for full details and recommended actions.` },
-];
+  if (!foundAny) return null;
+  lines.push('', `_Source: tracked change log — verified, not estimated._`);
+  return {
+    text: lines.join('\n'),
+    sources: [{ label: `FlyScout tracked data — ${filters.market}`, url: '#' }]
+  };
+}
 
 const QUICK_QUESTIONS = [
   "What is today's UK CNP interchange rate?",
   "How does the AU surcharge ban affect Flywire?",
-  "Compare CNP rates across all 7 markets",
-  "Where is surcharging allowed in 2026?",
-  "What is the US Visa Signature CNP rate?",
+  "What Visa interchange changes occurred in Canada since January 2024?",
+  "Compare Mastercard and Visa surcharge changes in the UK",
+  "Show all CNP-related changes in Australia",
   "What are the latest changes that impact Flywire?",
 ];
 
@@ -1437,72 +1426,40 @@ function renderQuickQs() {
 }
 function askQ(q) { document.getElementById('chat-inp').value = q; sendChat(); }
 
-// Smart local rate lookup — checks direct rate patterns before KB search
-function lookupRateAnswer(query) {
-  const q = query.toLowerCase();
-  for (const entry of RATE_ANSWERS) {
-    if (entry.patterns.some(p => new RegExp(p, 'i').test(q))) {
-      return { text: entry.answer, sources: [{ label: 'FlyScout Knowledge Base — verified Jun 2026', url: '#' }] };
-    }
-  }
-  return null;
-}
+// ── UNIFIED CONTEXT BUILDER — all data injected into every Gemini call ──
+// Past (all tracked changes) + Present (live rates derived from changes) +
+// Future (all Flywire predictions) — one source of truth, every time.
 
-// Build a full current-rates context block for Gemini
 function buildRatesContext() {
-  return Object.entries(CURRENT_RATES).map(([mkt, d]) =>
-    `${d.label}:\n` +
-    `  Credit CNP: ${JSON.stringify(d.credit_cnp)}\n` +
-    `  Debit CNP: ${JSON.stringify(d.debit_cnp)}\n` +
-    `  Surcharge: ${d.surcharge.allowed ? 'Allowed' : 'BANNED'} — ${d.surcharge.cap} — ${d.surcharge.requirements}\n` +
-    `  Flywire note: ${d.flywire_note}`
+  if (!Object.keys(LIVE_RATES).length) {
+    return 'No live rates computed yet — rates.json is empty. Refer to SECTION 1 (tracked changes) for the most recent known values per market.';
+  }
+  return Object.entries(LIVE_RATES).map(([mkt, networks]) =>
+    `${MARKET_FLAGS[mkt]||''} ${MARKET_NAMES[mkt]||mkt}:\n` +
+    Object.entries(networks).map(([net, cats]) =>
+      Object.entries(cats).map(([cat, info]) =>
+        `  ${net} ${cat}${info.cnp?' (CNP)':''}: ${info.value}` +
+        `${info.previous ? ' (was '+info.previous+')' : ''} — detected ${info.detected_at.slice(0,10)}, source: ${info.source_name}`
+      ).join('\n')
+    ).join('\n')
   ).join('\n\n');
 }
 
-const MARKET_CODES = ['US','UK','EU','AU','SG','CA','JP'];
-const STOPWORDS = new Set(['the','and','are','was','were','for','with','what','which','this',
-  'that','has','have','had','not','but','you','your','our','can','will','when','who','why',
-  'how','did','does','about','any','all','out','get','got','from','into','more','most','some',
-  'than','then','them','they','their','there','here','where','been','being','also','just']);
-
-function searchLocalData(query) {
-  const mentionedMarkets = MARKET_CODES.filter(m => new RegExp('\\b' + m + '\\b', 'i').test(query));
-  const q = query.toLowerCase();
-  const terms = q.split(/\W+/).filter(t => t.length > 2 && !STOPWORDS.has(t));
-  if (!terms.length && !mentionedMarkets.length) return [];
-  const scored = CHANGES.map(c => {
-    const haystack = `${c.network} ${c.category} ${c.title} ${c.summary} ${c.trigger}`.toLowerCase();
-    const matchedTerms = terms.filter(t => haystack.includes(t));
-    const marketBonus = mentionedMarkets.includes(c.market) ? 3 : 0;
-    return { c, score: matchedTerms.length + marketBonus };
-  }).filter(s => s.score > 0);
-  scored.sort((a, b) => b.score - a.score);
-  return scored.slice(0, 5).map(s => s.c);
-}
-
-// ── UNIFIED CONTEXT BUILDER — all data injected into every Gemini call ──
-// Past (all 19 tracked changes) + Present (current rates KB) +
-// Future (all 6 Flywire predictions) in one system prompt so Gemini
-// can answer any question accurately from one source of truth.
-
 function buildFullContext() {
-  // 1. All tracked historical changes
   const changesCtx = CHANGES.length
     ? CHANGES.map(c =>
-        `[${c.detected_at.slice(0,10)}] ${c.market}/${c.network}/${c.category}${c.cnp?' CNP':''}: ${c.title}\n` +
+        `[id:${c.id}] [${(c.detected_at||c.effective_date||'').slice(0,10)}] ${c.market}/${c.network}/${c.category}${c.cnp?' CNP':''}: ${c.title}\n` +
         `  Summary: ${c.summary}\n` +
         `  Change: ${c.old_value||'—'} → ${c.new_value||'—'}\n` +
-        `  Trigger: ${c.trigger} | Source: ${c.source_name} (${c.source_url})`
+        `  Trigger: ${c.trigger} | Reviewed: ${c.reviewed?'yes':'no — auto-detected, unverified'} | Source: ${c.source_name} (${c.source_url})`
       ).join('\n\n')
     : 'No changes loaded yet.';
 
-  // 2. Current rates (full KB)
   const ratesCtx = buildRatesContext();
 
-  // 3. All predictions with full detail
   const predsCtx = FLYWIRE_PREDICTIONS.map(p =>
     `[${p.urgency.toUpperCase()}] ${p.market} — ${p.title}\n` +
-    `  ETA: ${p.eta} | Status: ${p.status} | Confidence: ${p.confidence}%\n` +
+    `  ETA: ${p.eta} | Status: ${p.status} | Confidence: ${p.confidence}%${p.is_stale ? ' | ⚠ STALE — evidence >6mo old' : ''}\n` +
     `  Corridor: ${p.corridor}\n` +
     `  Impact: ${p.impact}\n` +
     `  Actions: ${p.action}\n` +
@@ -1510,13 +1467,14 @@ function buildFullContext() {
   ).join('\n\n');
 
   return `
-=== SECTION 1: TRACKED HISTORICAL CHANGES (${CHANGES.length} entries, Jan 2024 – Jun 2026) ===
+=== SECTION 1: TRACKED HISTORICAL CHANGES (${CHANGES.length} entries, Jan 2024 – present) ===
+Each entry has an [id:...] tag — cite this exact id when referencing a specific change.
 ${changesCtx}
 
-=== SECTION 2: CURRENT INTERCHANGE RATES AS OF JUNE 2026 ===
+=== SECTION 2: CURRENT RATES (derived live from Section 1 — never hand-typed) ===
 ${ratesCtx}
 
-=== SECTION 3: FLYWIRE PREDICTIONS (${FLYWIRE_PREDICTIONS.length} active, with full regulatory evidence) ===
+=== SECTION 3: FLYWIRE PREDICTIONS (${FLYWIRE_PREDICTIONS.length} active) ===
 ${predsCtx}`;
 }
 
@@ -1528,22 +1486,17 @@ async function callGeminiGrounded(query) {
 
 Flywire processes high-value cross-border CNP payments for education, healthcare, and travel across 7 markets: US, UK, EU, Australia, Singapore, Canada, Japan.
 
-You have access to a complete, source-verified internal database covering:
-- All tracked Visa/Mastercard interchange and surcharge rule changes since Jan 2024
-- Current rates for every market as of June 2026 (exact figures, not ranges where avoidable)
-- All active regulatory predictions with business impact and recommended actions for Flywire
-
-RULES YOU MUST FOLLOW:
-1. ALWAYS answer from the data below first — never say "I don't know" if the answer is in the data
-2. For PAST questions (what changed, when, why): cite the exact tracked change entry including date and source
-3. For PRESENT questions (what is the rate today, is X allowed): give the exact current figure from Section 2
-4. For FUTURE questions (what will change, what should we do): cite the specific prediction with confidence % and ETA
-5. For cross-cutting questions: combine all three sections in one answer
-6. NEVER invent a number — if a rate isn't in the data, say "not in our tracked data — verify via [source]"
-7. Always include the Flywire business impact — this team needs to act on your answers
-8. Format: lead with the direct answer, then context, then recommended action if relevant
-9. Use bold for rates, dates, and action items so answers are scannable on mobile
-10. If the question is about something genuinely outside this data, search the web and clearly label it "live web search — verify before using for compliance decisions"
+CRITICAL GROUNDING RULES — these override anything you know from training:
+1. The data below (Sections 1-3) is the ONLY source of truth. It comes directly from rule-changes.json, the same file the dashboard and Slack alerts use.
+2. If you state a specific rate, percentage, or rule, you MUST cite the [id:...] tag of the entry it came from. If you cannot find an [id:...] to cite, do not state the number — say "not in our tracked data."
+3. NEVER use your training knowledge to state a specific interchange rate, surcharge cap, or rule — even if you are confident it is correct. Rates change constantly and your training data is not live. Only Sections 1-3 below are current.
+4. If an entry has "Reviewed: no — auto-detected, unverified", mention this caveat when citing it.
+5. For PAST questions (what changed, when): cite the exact [id:...] entry with its date.
+6. For PRESENT questions (what is the rate now): use Section 2, which is derived live from Section 1 — never approximate.
+7. For FUTURE questions (what's coming, what should we do): cite the specific prediction with confidence % and ETA. If is_stale is true, mention that the evidence may be outdated and should be re-verified.
+8. For comparison/historical queries spanning multiple entries (e.g. "all Visa changes in Canada since 2024"): list each matching [id:...] entry with its date and value — do not summarize away the specifics.
+9. If something is genuinely outside Sections 1-3, you may search the live web — but you MUST clearly prefix that part of the answer with "🌐 Live web search (not in our tracked data — verify before relying on this):"
+10. Format with bold for rates/dates, keep answers scannable on mobile.
 
 ${buildFullContext()}`;
 
@@ -1552,7 +1505,7 @@ ${buildFullContext()}`;
   // BOTH this call and saveAndTestGeminiKey() — search this file for "generateContent".
   try {
     const resp = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/${'gemini-2.5-flash'}:generateContent?key=${key}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1570,7 +1523,6 @@ ${buildFullContext()}`;
     }
     const data = await resp.json();
     const candidate = (data.candidates || [])[0];
-    // Collect text across all parts (Gemini may split text + tool_use blocks)
     const text = (candidate?.content?.parts || [])
       .filter(p => p.text)
       .map(p => p.text)
@@ -1579,9 +1531,8 @@ ${buildFullContext()}`;
     const webSources = groundingChunks.map(g => ({
       label: g.web?.title || 'Web source', url: g.web?.uri || '#', web: true
     }));
-    // Add KB source always so user knows the internal data was used
     const allSources = [
-      { label: 'FlyScout KB — verified Jun 2026', url: '#', web: false },
+      { label: 'FlyScout tracked data (rule-changes.json)', url: '#', web: false },
       ...webSources
     ];
     return { text, sources: allSources, usedWebSearch: webSources.length > 0 };
@@ -1624,33 +1575,33 @@ async function sendChat() {
   }
 
   if (!result) {
+    const filters = parseQueryFilters(q);
     const localMatches = searchLocalData(q);
+    const hasStructured = Object.keys(filters).length > 0;
+
     if (localMatches.length) {
-      const mentionedMarkets = MARKET_CODES.filter(m => new RegExp('\\b' + m + '\\b', 'i').test(q));
-      const matchedMarkets = new Set(localMatches.map(c => c.market));
-      const missingMarkets = mentionedMarkets.filter(m => !matchedMarkets.has(m));
-      let txt = missingMarkets.length
-        ? `No tracked data for ${missingMarkets.join('/')} on this topic. Most relevant:\n\n`
-        : `From tracked change log:\n\n`;
+      let txt = `From tracked change log (${localMatches.length} match${localMatches.length===1?'':'es'}):\n\n`;
       localMatches.forEach(c => {
-        txt += `**${c.market} · ${c.network} · ${c.category}${c.cnp?' (CNP)':''}** — ${c.detected_at.slice(0,10)}\n${c.summary}`;
+        txt += `**${c.market} · ${c.network} · ${c.category}${c.cnp?' (CNP)':''}** — ${(c.detected_at||c.effective_date||'').slice(0,10)}${c.reviewed===false?' ⚠ unverified':''}\n${c.summary}`;
         if (c.old_value || c.new_value) txt += `\n→ ${c.old_value||'—'} became **${c.new_value||'—'}**`;
         txt += '\n\n';
       });
-      // Also surface any matching predictions
       const predMatches = FLYWIRE_PREDICTIONS.filter(p => {
         const hay = `${p.market} ${p.network} ${p.title} ${p.impact} ${p.corridor}`.toLowerCase();
         return q.toLowerCase().split(/\W+/).filter(t => t.length > 3).some(t => hay.includes(t));
       });
       if (predMatches.length) {
         txt += `**Related predictions:**\n`;
-        predMatches.forEach(p => {
-          txt += `• [${p.urgency.toUpperCase()}] ${p.title} — ${p.eta}\n`;
-        });
+        predMatches.forEach(p => { txt += `• [${p.urgency.toUpperCase()}] ${p.title} — ${p.eta}\n`; });
       }
+      result = { text: txt.trim(), sources: localMatches.map(c => ({ label: c.source_name, url: c.source_url })) };
+    } else if (hasStructured) {
+      // A real structured query (market/network/category/date) matched
+      // zero entries — report this honestly rather than guessing.
+      const filterDesc = Object.entries(filters).map(([k,v]) => `${k}=${v}`).join(', ');
       result = {
-        text: txt.trim(),
-        sources: localMatches.map(c => ({ label: c.source_name, url: c.source_url }))
+        text: `No tracked changes match that exact query (${filterDesc}).\n\nThis could mean: no such change has occurred since monitoring began, the rule genuinely doesn't apply in that market (e.g. UK and EU both ban surcharging entirely, so a "UK surcharge change" query correctly returns nothing), or it's outside the Jan 2024 tracking window.\n\nTry broadening the query, or check the Change Log tab directly for ${filters.market || 'all markets'}.`,
+        sources: []
       };
     }
   }
