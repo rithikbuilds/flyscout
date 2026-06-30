@@ -837,7 +837,7 @@ function buildDynamicLines(baselines) {
         const mktOk = c.market === b.mkt;
         const netOk = c.network === b.net || (c.network === 'Both' && b.net === 'Both');
         const catOk = c.category === b.cat;
-        const hasRate = RATE_PATTERN.test(c.new_value || '');
+        const hasRate = extractRate(c.new_value || '') !== null;
         if (!mktOk || !netOk || !catOk || !hasRate) return false;
         // Skip entries whose effective_date predates the chart window (Jan 2024).
         // Those changes are already reflected in the baseline startRate.
@@ -887,7 +887,7 @@ function buildDynamicLines(baselines) {
 function buildEventsData() {
   const N = RATE_LABELS_ALL.length;
   const marketColors = {US:'#2563EB',UK:'#DC2626',EU:'#7C3AED',AU:'#D97706',SG:'#DB2777',CA:'#16A34A',JP:'#0891B2'};
-  return MARKETS.map(mkt => {
+  return MARKET_CODES.map(mkt => {
     const data = new Array(N).fill(0);
     CHANGES.filter(c => c.market === mkt).forEach(c => {
       const idx = dateToLabelIndex(c.detected_at || c.effective_date);
