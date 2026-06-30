@@ -31,9 +31,12 @@ RATES_FILE     = os.path.join(DATA_DIR, "rates.json")
 SNAPSHOTS_FILE = os.path.join(DATA_DIR, "snapshots.json")
 
 SLACK_WEBHOOK_URL = os.environ.get("SLACK_WEBHOOK_URL", "")
+GEMINI_API_KEY    = os.environ.get("GEMINI_API_KEY", "")
+GEMINI_MODEL      = "gemini-2.5-flash"
 REQUEST_TIMEOUT   = 20
 USER_AGENT = "FlyScoutBot/1.0 (+card-network-rule-tracker; Flywire Cards Network team)"
 MARKETS = ["US", "UK", "EU", "AU", "SG", "CA", "JP"]
+SOURCE_FAILURE_ALERT_THRESHOLD = 5  # alert after this many consecutive fetch failures
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 log = logging.getLogger("flyscout")
@@ -130,6 +133,11 @@ SOURCES = [
     {"id":"jp_fsa",      "market":"JP","network":"Regulator",  "category":"regulatory", "cnp":False,
      "name":"Japan FSA — Recent Releases (incl. Payment Services)",
      "url":"https://www.fsa.go.jp/en/recent.html"},
+    # METI cashless payments policy — tracks Japan's cashless push which
+    # directly drives interchange and acceptance rule changes.
+    {"id":"jp_meti",     "market":"JP","network":"Regulator",  "category":"regulatory", "cnp":False,
+     "name":"METI — Cashless Payment Policy",
+     "url":"https://www.meti.go.jp/english/policy/mono_info_service/cashless/index.html"},
 
 ]
 
@@ -521,53 +529,127 @@ def is_maintenance_page(text):
     return bool(MAINTENANCE_RE.search(text[:2000]))
 
 
+def generate_impact_analysis(change, intel):
+    """
+    Calls Gemini to generate a structured impact analysis for a detected change.
+    Stored permanently in the change entry — generated once, read many times.
+    Returns None if GEMINI_API_KEY is not set or the call fails.
+    """
+    if not GEMINI_API_KEY:
+        log.info("No GEMINI_API_KEY — skipping impact analysis generation")
+        return None
+
+    prompt = f"""You are a card network specialist analysing a rule change for Flywire's Cards Network team.
+Flywire processes high-value cross-border card-not-present payments for education, healthcare, and travel.
+
+Detected change:
+- Market: {change['market']}
+- Network: {change['network']}
+- Category: {change['category']} {'(CNP)' if change.get('cnp') else ''}
+- Title: {change['title']}
+- Summary: {change['summary']}
+- Before: {change.get('old_value') or 'not specified'}
+- After: {change.get('new_value') or 'not specified'}
+- Trigger: {change.get('trigger', 'unknown')}
+- Source snippet: {change.get('new_snippet') or 'not available'}
+- Flywire corridor: {intel.get('corridor', 'Cross-border CNP payments')}
+
+Respond ONLY with a JSON object (no markdown, no preamble) containing:
+{{
+  "what_changed": "one precise sentence — what specifically changed and by how much",
+  "why_it_matters": "one sentence — regulatory or market significance",
+  "acquirer_impact": "one sentence — direct impact on acquiring banks",
+  "cross_border_impact": "one sentence — impact on cross-border CNP payment companies like Flywire",
+  "recommended_actions": ["action 1", "action 2", "action 3"]
+}}
+
+Be specific. Use numbers where available. Do not invent figures not in the data above."""
+
+    try:
+        resp = requests.post(
+            f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={GEMINI_API_KEY}",
+            json={
+                "contents": [{"role": "user", "parts": [{"text": prompt}]}],
+                "generationConfig": {"maxOutputTokens": 600, "temperature": 0.1},
+            },
+            timeout=30,
+        )
+        if not resp.ok:
+            log.warning("Gemini impact analysis failed: %s %s", resp.status_code, resp.text[:200])
+            return None
+        data = resp.json()
+        text = (data.get("candidates", [{}])[0]
+                .get("content", {}).get("parts", [{}])[0].get("text", ""))
+        text = text.strip().strip("`").strip()
+        if text.startswith("json"):
+            text = text[4:].strip()
+        result = json.loads(text)
+        result["generated_at"] = now_iso()
+        result["model"] = GEMINI_MODEL
+        log.info("Impact analysis generated for %s", change["id"])
+        return result
+    except Exception as e:
+        log.warning("Impact analysis generation failed: %s", e)
+        return None
+
+
 def check_source(source, snapshots, changes_store):
     sid = source["id"]
+    snap = snapshots.get(sid, {})
+
     try:
         resp = fetch(source["url"])
         text = extract_text(resp)
     except requests.exceptions.RequestException as e:
         log.warning("[%s] fetch failed: %s", sid, e)
+        # Item 15 — track consecutive failures for source health monitoring
+        snap["consecutive_failures"] = snap.get("consecutive_failures", 0) + 1
+        snap["last_failure"] = now_iso()
+        snap["last_failure_reason"] = str(e)[:200]
+        snapshots[sid] = snap
+        if snap["consecutive_failures"] == SOURCE_FAILURE_ALERT_THRESHOLD:
+            log.warning("[%s] SOURCE HEALTH ALERT — %d consecutive failures",
+                        sid, snap["consecutive_failures"])
         return None
 
-    # Skip maintenance/error pages entirely — do not update the snapshot.
-    # This prevents false positives when a site is temporarily down and then
-    # comes back (which would look like two hash changes to the comparator).
+    # Skip maintenance/error pages — do not update snapshot, do not alert.
     if is_maintenance_page(text):
         log.warning("[%s] maintenance/error page detected (%d chars) — skipping, snapshot unchanged",
                     sid, len(text))
+        snap["consecutive_failures"] = snap.get("consecutive_failures", 0) + 1
+        snap["last_failure"] = now_iso()
+        snap["last_failure_reason"] = f"maintenance page ({len(text)} chars)"
+        snapshots[sid] = snap
         return None
 
+    # Successful fetch — reset failure counter
+    snap["consecutive_failures"] = 0
     h = content_hash(text)
-    prev = snapshots.get(sid)
-    snapshots[sid] = {"hash": h, "text": text[:8000], "checked_at": now_iso()}
+    prev_hash = snap.get("hash")
+    prev_text = snap.get("text", "")
+    snap.update({"hash": h, "text": text[:8000], "checked_at": now_iso()})
+    snapshots[sid] = snap
 
-    if prev is None:
+    if prev_hash is None:
         log.info("[%s] baseline established (%d chars)", sid, len(text))
         return None
-    if prev["hash"] == h:
+    if prev_hash == h:
         log.info("[%s] no change", sid)
         return None
 
-    # Additional false-positive guard: if the rate patterns are identical
-    # between old and new content, the "change" is likely layout/nav noise.
-    old_rates = set(extract_rates(prev.get("text", "")))
+    # Rate-pattern guard: suppress if only layout/nav changed, not actual rates
+    old_rates = set(extract_rates(prev_text))
     new_rates = set(extract_rates(text))
     if old_rates and new_rates and old_rates == new_rates:
-        log.info("[%s] hash changed but rate patterns identical %s — likely layout change, skipping",
-                 sid, old_rates)
+        log.info("[%s] hash changed but rate patterns identical %s — layout noise, skipping", sid, old_rates)
         return None
 
     category = classify_category(text, source["category"] if source["category"] != "regulatory" else None)
     cnp      = classify_cnp(text, source["cnp"])
     trigger  = classify_trigger(text)
-    old_val, new_val = diff_rates(prev.get("text", ""), text)
+    old_val, new_val = diff_rates(prev_text, text)
     snippet_match = RATE_PATTERN.search(text)
-    if snippet_match:
-        start = max(0, snippet_match.start() - 120)
-        new_snippet = text[start:start + 280]
-    else:
-        new_snippet = text[:280]
+    new_snippet = text[max(0, snippet_match.start()-120):snippet_match.start()+160] if snippet_match else text[:280]
 
     change = {
         "id": f"chg_{sid}_{int(datetime.now().timestamp())}",
@@ -579,14 +661,18 @@ def check_source(source, snapshots, changes_store):
         "old_value": old_val, "new_value": new_val,
         "trigger": trigger, "effective_date": None, "detected_at": now_iso(),
         "source_name": source["name"], "source_url": source["url"],
-        "old_snippet": (prev.get("text", "") or "")[:280],
+        "old_snippet": prev_text[:280],
         "new_snippet": new_snippet, "reviewed": False, "auto_detected": True,
+        "impact_analysis": None,  # populated below if Gemini key is available
     }
 
-    # Deduplication guard: if the same market+category was already detected
-    # within the last 24 hours, this is likely the same regulatory event
-    # appearing on multiple monitored sources. Log it but suppress the Slack
-    # alert to avoid duplicate notifications for the same development.
+    # Item 12 — generate impact analysis via Gemini and store permanently
+    intel = FLYWIRE_INTEL.get((source["market"], category), DEFAULT_INTEL)
+    impact = generate_impact_analysis(change, intel)
+    if impact:
+        change["impact_analysis"] = impact
+
+    # Deduplication: suppress Slack alert if same market+category within 24h
     cutoff_24h = (datetime.now(timezone.utc) - timedelta(hours=24)).isoformat()
     duplicate = any(
         c.get("market") == change["market"]
@@ -736,6 +822,19 @@ def compute_predictions(all_changes, prev_predictions):
         else:
             title = latest.get("title", f"{market} {network} {category} regulatory activity")
 
+        # Item 10 — staleness flag: if status is open_consultation and the
+        # most recent evidence is more than 6 months old, flag it as
+        # potentially stale so a reviewer knows to verify the source is
+        # still the latest available information.
+        is_stale = False
+        if status == "open_consultation":
+            try:
+                last_dt_raw = datetime.fromisoformat(latest["detected_at"].replace("Z", "+00:00"))
+                last_dt = last_dt_raw if last_dt_raw.tzinfo else last_dt_raw.replace(tzinfo=timezone.utc)
+                is_stale = (datetime.now(timezone.utc) - last_dt).days > 180
+            except (ValueError, KeyError):
+                pass
+
         pred_id = f"fw_{market.lower()}_{category.lower()}_{trigger[:4]}"
         pred = {
             "id":           pred_id,
@@ -754,6 +853,7 @@ def compute_predictions(all_changes, prev_predictions):
             "evidence_url": evidence_url,
             "evidence_ids": [e["id"] for e in evidence_entries],
             "computed_at":  now_iso(),
+            "is_stale":     is_stale,
         }
         predictions.append(pred)
 
@@ -806,8 +906,30 @@ def main():
     save_json(RATES_FILE,       rates_data)
     save_json(PREDICTIONS_FILE, predictions_data)
 
-    log.info("Run complete — %d source(s) checked, %d new change(s), %d rate(s) tracked, %d prediction(s)",
-             len(SOURCES), len(new_changes), rates_data["_meta"]["entry_count"], len(predictions))
+    # Item 15 — source health summary. Surface any source that has failed
+    # SOURCE_FAILURE_ALERT_THRESHOLD or more times in a row, so a silent
+    # GitHub Actions success doesn't hide a source that's actually broken.
+    unhealthy = [
+        (sid, snap.get("consecutive_failures", 0), snap.get("last_failure_reason", "unknown"))
+        for sid, snap in snapshots.items()
+        if snap.get("consecutive_failures", 0) >= SOURCE_FAILURE_ALERT_THRESHOLD
+    ]
+    if unhealthy:
+        lines = "\n".join(f"  • {sid}: {fails} consecutive failures ({reason})" for sid, fails, reason in unhealthy)
+        log.warning("SOURCE HEALTH WARNING — %d source(s) unhealthy:\n%s", len(unhealthy), lines)
+        slack_post({
+            "text": f"⚠️ FlyScout source health warning — {len(unhealthy)} source(s) failing repeatedly",
+            "blocks": [
+                {"type": "header", "text": {"type": "plain_text", "text": f"⚠️ {len(unhealthy)} source(s) need attention"}},
+                {"type": "section", "text": {"type": "mrkdwn",
+                    "text": "\n".join(f"• *{sid}*: {fails} consecutive failures — {reason}" for sid, fails, reason in unhealthy)}},
+                {"type": "context", "elements": [{"type": "mrkdwn",
+                    "text": "These sources may have a dead URL, a network block, or an extended outage. Check check_rules.py SOURCES list."}]}
+            ]
+        })
+
+    log.info("Run complete — %d source(s) checked, %d new change(s), %d rate(s) tracked, %d prediction(s), %d unhealthy source(s)",
+             len(SOURCES), len(new_changes), rates_data["_meta"]["entry_count"], len(predictions), len(unhealthy))
 
 
 if __name__ == "__main__":
