@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "computed_at": "2026-06-29T22:17:51.783177+00:00",
+    "computed_at": "2026-06-30T05:37:21.174364+00:00",
     "method": "Flywire-specific rule-based engine — corridor/impact/action from FLYWIRE_INTEL templates, urgency/confidence/ETA derived from change log trigger types and effective dates",
     "count": 10
   },
@@ -24,12 +24,13 @@
         "seed_au_003",
         "seed_au_004"
       ],
-      "computed_at": "2026-06-29T22:17:51.783084+00:00"
+      "computed_at": "2026-06-30T05:37:21.044773+00:00",
+      "is_stale": false
     },
     {
       "id": "fw_us_interchange_regu",
       "market": "US",
-      "network": "Mastercard",
+      "network": "Visa",
       "category": "interchange",
       "status": "confirmed",
       "urgency": "high",
@@ -45,7 +46,8 @@
         "seed_us_003",
         "seed_us_006"
       ],
-      "computed_at": "2026-06-29T22:17:51.783016+00:00"
+      "computed_at": "2026-06-30T05:37:21.044674+00:00",
+      "is_stale": false
     },
     {
       "id": "fw_us_surcharge_regu",
@@ -65,7 +67,8 @@
       "evidence_ids": [
         "seed_us_004"
       ],
-      "computed_at": "2026-06-29T22:17:51.783036+00:00"
+      "computed_at": "2026-06-30T05:37:21.044707+00:00",
+      "is_stale": false
     },
     {
       "id": "fw_uk_interchange_gove",
@@ -86,7 +89,8 @@
         "seed_uk_001",
         "seed_uk_002"
       ],
-      "computed_at": "2026-06-29T22:17:51.783050+00:00"
+      "computed_at": "2026-06-30T05:37:21.044729+00:00",
+      "is_stale": true
     },
     {
       "id": "fw_au_interchange_regu",
@@ -106,7 +110,8 @@
       "evidence_ids": [
         "seed_known_au_debit_cnp"
       ],
-      "computed_at": "2026-06-29T22:17:51.783170+00:00"
+      "computed_at": "2026-06-30T05:37:21.174345+00:00",
+      "is_stale": false
     },
     {
       "id": "fw_eu_interchange_regu",
@@ -127,7 +132,8 @@
         "seed_eu_001",
         "seed_eu_002"
       ],
-      "computed_at": "2026-06-29T22:17:51.783066+00:00"
+      "computed_at": "2026-06-30T05:37:21.044750+00:00",
+      "is_stale": false
     },
     {
       "id": "fw_ca_surcharge_netw",
@@ -148,7 +154,8 @@
         "seed_ca_001",
         "seed_ca_002"
       ],
-      "computed_at": "2026-06-29T22:17:51.783095+00:00"
+      "computed_at": "2026-06-30T05:37:21.044786+00:00",
+      "is_stale": false
     },
     {
       "id": "fw_ca_interchange_netw",
@@ -169,28 +176,8 @@
         "seed_known_ca_smb_credit",
         "seed_known_ca_smb_debit"
       ],
-      "computed_at": "2026-06-29T22:17:51.783131+00:00"
-    },
-    {
-      "id": "fw_jp_interchange_netw",
-      "market": "JP",
-      "network": "Mastercard",
-      "category": "interchange",
-      "status": "monitoring",
-      "urgency": "medium",
-      "confidence": 50,
-      "title": "JP interchange: 1.10% contactless NFC → 0.90% contactless NFC / 0.75% QR-code (new tier)",
-      "eta": "2022-09-01 — in force",
-      "corridor": "JP domestic CNP — education payments",
-      "impact": "Japan debit restructured Nov 2024: contactless NFC 0.90%, new QR tier 0.75%. JFTC/METI interchange disclosure requirement in force since Sep 2022. Cashless ratio reached 42.8% in 2024 (exceeded 40% target).",
-      "action": "1. Update JP pricing models to reflect Nov 2024 debit restructuring.\n2. Monitor METI cashless policy for any further rate mandates.\n3. Low urgency — no further Visa/MC JP rule changes confirmed since Jan 2024.",
-      "evidence": "Payments Regulation in Asia — CMSPI (2024-01-01) → Payments Regulation in Asia — CMSPI (2024-11-01)",
-      "evidence_url": "https://cmspi.com/app/uploads/2024/08/Payments-Regulation-in-Asia-CMSPI-Whitepaper-Exec-Summary-1.pdf",
-      "evidence_ids": [
-        "seed_jp_001",
-        "seed_known_jp_debit"
-      ],
-      "computed_at": "2026-06-29T22:17:51.783158+00:00"
+      "computed_at": "2026-06-30T05:37:21.044799+00:00",
+      "is_stale": false
     },
     {
       "id": "fw_sg_interchange_gove",
@@ -210,7 +197,30 @@
       "evidence_ids": [
         "seed_sg_001"
       ],
-      "computed_at": "2026-06-29T22:17:51.783143+00:00"
+      "computed_at": "2026-06-30T05:37:21.044812+00:00",
+      "is_stale": false
+    },
+    {
+      "id": "fw_jp_interchange_gove",
+      "market": "JP",
+      "network": "Regulator",
+      "category": "interchange",
+      "status": "open_consultation",
+      "urgency": "low",
+      "confidence": 25,
+      "title": "Japan FSA — Recent Releases (incl. Payment Services) updated",
+      "eta": "2022-09-01 — in force",
+      "corridor": "JP domestic CNP — education payments",
+      "impact": "Japan debit restructured Nov 2024: contactless NFC 0.90%, new QR tier 0.75%. JFTC/METI interchange disclosure requirement in force since Sep 2022. Cashless ratio reached 42.8% in 2024 (exceeded 40% target).",
+      "action": "1. Update JP pricing models to reflect Nov 2024 debit restructuring.\n2. Monitor METI cashless policy for any further rate mandates.\n3. Low urgency — no further Visa/MC JP rule changes confirmed since Jan 2024.",
+      "evidence": "Payments Regulation in Asia — CMSPI (2024-11-01) → Japan FSA — Recent Releases (incl. Payment Services) (2026-06-30)",
+      "evidence_url": "https://www.fsa.go.jp/en/recent.html",
+      "evidence_ids": [
+        "seed_known_jp_debit",
+        "chg_jp_fsa_1782797820"
+      ],
+      "computed_at": "2026-06-30T05:37:21.044841+00:00",
+      "is_stale": false
     }
   ]
 }
