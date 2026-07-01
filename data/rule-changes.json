@@ -11,7 +11,7 @@
       "CA",
       "JP"
     ],
-    "last_updated": "2026-06-30T22:53:34.472301+00:00"
+    "last_updated": "2026-07-01T12:21:40.727745+00:00"
   },
   "changes": [
     {
@@ -532,6 +532,27 @@
       "source_url": "https://www.fsa.go.jp/en/recent.html",
       "old_snippet": "Past Releases : Financial Services Agency HOME Tweet Past Releases June 2026 June 29 FSA Weekly Review No.693 June 29, 2026 June 26 Publication of \"FSA Analytical Notes (2026.6) vol.2: Analysis of Margin Dynamics in OTC Derivatives Market during Periods of High Volatility\" in Jap",
       "new_snippet": "Past Releases : Financial Services Agency HOME Tweet Past Releases June 2026 June 30 Updated Japan Fintech Week 2026 official website June 29 FSA Weekly Review No.693 June 29, 2026 June 26 Publication of \"FSA Analytical Notes (2026.6) vol.2: Analysis of Margin Dynamics in OTC Der",
+      "reviewed": false,
+      "auto_detected": true,
+      "impact_analysis": null
+    },
+    {
+      "id": "chg_jp_fsa_1782908480",
+      "market": "JP",
+      "network": "Regulator",
+      "category": "interchange",
+      "cnp": false,
+      "title": "Japan FSA — Recent Releases (incl. Payment Services) updated",
+      "summary": "Content change detected on Japan FSA — Recent Releases (incl. Payment Services). Review source — no specific rate pattern extracted.",
+      "old_value": null,
+      "new_value": null,
+      "trigger": "regulatory_order",
+      "effective_date": null,
+      "detected_at": "2026-07-01T12:21:20.583186+00:00",
+      "source_name": "Japan FSA — Recent Releases (incl. Payment Services)",
+      "source_url": "https://www.fsa.go.jp/en/recent.html",
+      "old_snippet": "Past Releases : Financial Services Agency HOME Tweet Past Releases June 2026 June 30 Updated Japan Fintech Week 2026 official website June 29 FSA Weekly Review No.693 June 29, 2026 June 26 Publication of \"FSA Analytical Notes (2026.6) vol.2: Analysis of Margin Dynamics in OTC Der",
+      "new_snippet": "Past Releases : Financial Services Agency HOME Tweet Past Releases July 2026 Site Map About FSA Ministerial Team Organization Location Pamphlet Open Policy Lab Press Releases & Public Relations Press Releases Press Conferences Official Statements FSA Weekly Review & ACCESS FSA Sp",
       "reviewed": false,
       "auto_detected": true,
       "impact_analysis": null
