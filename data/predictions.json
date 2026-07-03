@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "computed_at": "2026-07-03T11:40:47.333642+00:00",
+    "computed_at": "2026-07-03T21:43:44.319093+00:00",
     "method": "Flywire-specific rule-based engine — corridor/impact/action from FLYWIRE_INTEL templates, urgency/confidence/ETA derived from change log trigger types and effective dates",
     "count": 10
   },
@@ -24,13 +24,13 @@
         "seed_au_003",
         "seed_au_004"
       ],
-      "computed_at": "2026-07-03T11:40:47.333436+00:00",
+      "computed_at": "2026-07-03T21:43:44.318966+00:00",
       "is_stale": false
     },
     {
       "id": "fw_us_interchange_regu",
       "market": "US",
-      "network": "Both",
+      "network": "Visa",
       "category": "interchange",
       "status": "confirmed",
       "urgency": "high",
@@ -46,7 +46,7 @@
         "seed_us_003",
         "seed_us_006"
       ],
-      "computed_at": "2026-07-03T11:40:47.333306+00:00",
+      "computed_at": "2026-07-03T21:43:44.318791+00:00",
       "is_stale": false
     },
     {
@@ -67,7 +67,7 @@
       "evidence_ids": [
         "seed_us_004"
       ],
-      "computed_at": "2026-07-03T11:40:47.333343+00:00",
+      "computed_at": "2026-07-03T21:43:44.318820+00:00",
       "is_stale": false
     },
     {
@@ -89,7 +89,7 @@
         "seed_uk_001",
         "seed_uk_002"
       ],
-      "computed_at": "2026-07-03T11:40:47.333371+00:00",
+      "computed_at": "2026-07-03T21:43:44.318895+00:00",
       "is_stale": true
     },
     {
@@ -110,13 +110,13 @@
       "evidence_ids": [
         "seed_known_au_debit_cnp"
       ],
-      "computed_at": "2026-07-03T11:40:47.333629+00:00",
+      "computed_at": "2026-07-03T21:43:44.319083+00:00",
       "is_stale": false
     },
     {
       "id": "fw_eu_interchange_regu",
       "market": "EU",
-      "network": "Both",
+      "network": "Regulator",
       "category": "interchange",
       "status": "confirmed",
       "urgency": "medium",
@@ -126,19 +126,19 @@
       "corridor": "EU domestic and cross-border CNP — education and healthcare",
       "impact": "EU IFR caps consumer credit CNP at 0.30% (cheapest market globally for Flywire). Non-EEA cards (e.g. US/AU student paying EU university) cost 1.50% credit CNP — capped until Nov 2029 by voluntary Visa/MC commitment (confirmed Jul 2024).",
       "action": "1. Low urgency — EU caps stable and extended to 2029.\n2. Ensure EU acquirer contracts correctly apply IFR rates to consumer cards.\n3. Flag commercial/corporate card volumes — these are NOT covered by IFR caps.\n4. Monitor EU Parliament for proposed IFR debit cap reduction (0.20%→0.15%).",
-      "evidence": "Visa and Mastercard extend fee caps on non-EU cards until 2029 — FStech (2024-07-08) → EBA — Payment Services & IFR Regulation (2026-07-03)",
+      "evidence": "EBA — Payment Services & IFR Regulation (2026-07-03) → EBA — Payment Services & IFR Regulation (2026-07-03)",
       "evidence_url": "https://www.eba.europa.eu/regulation-and-policy/payment-services-and-electronic-money",
       "evidence_ids": [
-        "seed_eu_002",
-        "chg_eu_eba_1783078821"
+        "chg_eu_eba_1783078821",
+        "chg_eu_eba_1783114995"
       ],
-      "computed_at": "2026-07-03T11:40:47.333402+00:00",
+      "computed_at": "2026-07-03T21:43:44.318932+00:00",
       "is_stale": false
     },
     {
       "id": "fw_ca_surcharge_netw",
       "market": "CA",
-      "network": "Both",
+      "network": "Visa",
       "category": "surcharge",
       "status": "monitoring",
       "urgency": "medium",
@@ -154,7 +154,7 @@
         "seed_ca_001",
         "seed_ca_002"
       ],
-      "computed_at": "2026-07-03T11:40:47.333456+00:00",
+      "computed_at": "2026-07-03T21:43:44.318990+00:00",
       "is_stale": false
     },
     {
@@ -176,7 +176,7 @@
         "seed_known_ca_smb_credit",
         "seed_known_ca_smb_debit"
       ],
-      "computed_at": "2026-07-03T11:40:47.333477+00:00",
+      "computed_at": "2026-07-03T21:43:44.319015+00:00",
       "is_stale": false
     },
     {
@@ -198,7 +198,7 @@
         "chg_jp_fsa_1782992541",
         "chg_jp_fsa_1783078827"
       ],
-      "computed_at": "2026-07-03T11:40:47.333602+00:00",
+      "computed_at": "2026-07-03T21:43:44.319063+00:00",
       "is_stale": false
     },
     {
@@ -219,7 +219,7 @@
       "evidence_ids": [
         "seed_sg_001"
       ],
-      "computed_at": "2026-07-03T11:40:47.333560+00:00",
+      "computed_at": "2026-07-03T21:43:44.319034+00:00",
       "is_stale": false
     }
   ]
