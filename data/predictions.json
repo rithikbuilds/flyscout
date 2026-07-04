@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "computed_at": "2026-07-04T11:15:23.522830+00:00",
+    "computed_at": "2026-07-04T18:50:51.966637+00:00",
     "method": "Flywire-specific rule-based engine — corridor/impact/action from FLYWIRE_INTEL templates, urgency/confidence/ETA derived from change log trigger types and effective dates",
     "count": 10
   },
@@ -24,7 +24,7 @@
         "seed_au_003",
         "seed_au_004"
       ],
-      "computed_at": "2026-07-04T11:15:23.522754+00:00",
+      "computed_at": "2026-07-04T18:50:51.966551+00:00",
       "is_stale": false
     },
     {
@@ -46,7 +46,7 @@
         "seed_us_003",
         "seed_us_006"
       ],
-      "computed_at": "2026-07-04T11:15:23.522694+00:00",
+      "computed_at": "2026-07-04T18:50:51.966475+00:00",
       "is_stale": false
     },
     {
@@ -67,7 +67,7 @@
       "evidence_ids": [
         "seed_us_004"
       ],
-      "computed_at": "2026-07-04T11:15:23.522712+00:00",
+      "computed_at": "2026-07-04T18:50:51.966496+00:00",
       "is_stale": false
     },
     {
@@ -89,7 +89,7 @@
         "seed_uk_001",
         "seed_uk_002"
       ],
-      "computed_at": "2026-07-04T11:15:23.522726+00:00",
+      "computed_at": "2026-07-04T18:50:51.966513+00:00",
       "is_stale": true
     },
     {
@@ -110,7 +110,7 @@
       "evidence_ids": [
         "seed_known_au_debit_cnp"
       ],
-      "computed_at": "2026-07-04T11:15:23.522825+00:00",
+      "computed_at": "2026-07-04T18:50:51.966629+00:00",
       "is_stale": false
     },
     {
@@ -132,7 +132,7 @@
         "chg_eu_eba_1783078821",
         "chg_eu_eba_1783114995"
       ],
-      "computed_at": "2026-07-04T11:15:23.522740+00:00",
+      "computed_at": "2026-07-04T18:50:51.966532+00:00",
       "is_stale": false
     },
     {
@@ -154,7 +154,7 @@
         "seed_ca_001",
         "seed_ca_002"
       ],
-      "computed_at": "2026-07-04T11:15:23.522763+00:00",
+      "computed_at": "2026-07-04T18:50:51.966562+00:00",
       "is_stale": false
     },
     {
@@ -176,7 +176,7 @@
         "seed_known_ca_smb_credit",
         "seed_known_ca_smb_debit"
       ],
-      "computed_at": "2026-07-04T11:15:23.522771+00:00",
+      "computed_at": "2026-07-04T18:50:51.966572+00:00",
       "is_stale": false
     },
     {
@@ -198,7 +198,7 @@
         "chg_jp_fsa_1782992541",
         "chg_jp_fsa_1783078827"
       ],
-      "computed_at": "2026-07-04T11:15:23.522814+00:00",
+      "computed_at": "2026-07-04T18:50:51.966616+00:00",
       "is_stale": false
     },
     {
@@ -219,7 +219,7 @@
       "evidence_ids": [
         "seed_sg_001"
       ],
-      "computed_at": "2026-07-04T11:15:23.522791+00:00",
+      "computed_at": "2026-07-04T18:50:51.966594+00:00",
       "is_stale": false
     }
   ]
