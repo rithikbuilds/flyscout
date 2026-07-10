@@ -11,7 +11,7 @@
       "CA",
       "JP"
     ],
-    "last_updated": "2026-07-10T05:49:35.339831+00:00"
+    "last_updated": "2026-07-10T12:17:09.787475+00:00"
   },
   "changes": [
     {
@@ -658,6 +658,27 @@
       "source_url": "https://www.fsa.go.jp/en/recent.html",
       "old_snippet": "Past Releases : Financial Services Agency HOME Tweet Past Releases July 2026 July 3 Publication of the \"Initiatives and Challenges in Anti-Money Laundering and Countering Financial Crime (July 2026)\" July 2 Exchange of Letters (EoL) on the Cooperation Framework with the Internati",
       "new_snippet": "Past Releases : Financial Services Agency HOME Tweet Past Releases July 2026 July 8 FSA Weekly Review No.694 July 8, 2026 July 7 Publication of the finalized \"the Partial Amendment to the Designation of a country or region under Articles 17-2 and 17-3 of the Order for Enforcement",
+      "reviewed": false,
+      "auto_detected": true,
+      "impact_analysis": null
+    },
+    {
+      "id": "chg_jp_fsa_1783685827",
+      "market": "JP",
+      "network": "Regulator",
+      "category": "interchange",
+      "cnp": false,
+      "title": "Japan FSA — Recent Releases (incl. Payment Services) updated",
+      "summary": "Content change detected on Japan FSA — Recent Releases (incl. Payment Services). Review source — no specific rate pattern extracted.",
+      "old_value": null,
+      "new_value": null,
+      "trigger": "government_consultation",
+      "effective_date": null,
+      "detected_at": "2026-07-10T12:17:07.436529+00:00",
+      "source_name": "Japan FSA — Recent Releases (incl. Payment Services)",
+      "source_url": "https://www.fsa.go.jp/en/recent.html",
+      "old_snippet": "Past Releases : Financial Services Agency HOME Tweet Past Releases July 2026 July 8 FSA Weekly Review No.694 July 8, 2026 July 7 Publication of the finalized \"the Partial Amendment to the Designation of a country or region under Articles 17-2 and 17-3 of the Order for Enforcement",
+      "new_snippet": "Past Releases : Financial Services Agency HOME Tweet Past Releases July 2026 July 10 FSA publishes English translation of monthly magazine, Access FSA No.272 FSA publishes English translation of monthly magazine, Access FSA No.271 We have updated the âCold Callingâ list (as o",
       "reviewed": false,
       "auto_detected": true,
       "impact_analysis": null
