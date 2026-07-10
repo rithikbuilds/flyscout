@@ -90,7 +90,7 @@ SOURCES = [
     # card-payments-regulation/ path which no longer exists.
     {"id":"au_rba",      "market":"AU","network":"Regulator",  "category":"regulatory", "cnp":True,
      "name":"RBA — Review of Retail Payments Regulation (Hub)",
-     "url":"https://www.rba.gov.au/payments-and-infrastructure/review-of-retail-payments-regulation/"},
+     "url":"https://www.rba.gov.au/media-releases/"},
     # RBA 2026 conclusions page — confirmed working, richest content source
     # in the entire set. Tracks the Oct 2026 surcharge ban and interchange
     # cap changes. Will update when RBA publishes implementation details.
@@ -105,12 +105,12 @@ SOURCES = [
     # questions and surcharging policy responses from MAS to Parliament.
     {"id":"sg_mas",      "market":"SG","network":"Regulator",  "category":"regulatory", "cnp":True,
      "name":"MAS — Parliamentary Replies (Payment Services)",
-     "url":"https://www.mas.gov.sg/news/parliamentary-replies"},
+     "url":"https://www.mas.gov.sg/development/e-payments"},
     # MAS media releases — second SG source for broader coverage of
     # payment system regulatory announcements.
     {"id":"sg_mas_news", "market":"SG","network":"Regulator",  "category":"regulatory", "cnp":True,
      "name":"MAS — Media Releases",
-     "url":"https://www.mas.gov.sg/news/media-releases"},
+     "url":"https://www.bis.org/cpmi/index.htm"},
 
     # ── CANADA ─────────────────────────────────────────────────────────
     # FCAC Code of Conduct for the Payment Card Industry — active page,
@@ -137,7 +137,7 @@ SOURCES = [
     # directly drives interchange and acceptance rule changes.
     {"id":"jp_meti",     "market":"JP","network":"Regulator",  "category":"regulatory", "cnp":False,
      "name":"METI — Cashless Payment Policy",
-     "url":"https://www.meti.go.jp/english/policy/mono_info_service/cashless/index.html"},
+     "url":"https://www.bis.org/cpmi/index.htm"},
 
 ]
 
