@@ -85,11 +85,11 @@ SOURCES = [
      "url":"https://www.eba.europa.eu/regulation-and-policy/payment-services-and-electronic-money"},
 
     # ── AUSTRALIA ──────────────────────────────────────────────────────
-    # RBA retail payments regulation review hub — broader landing page for
-    # all RBA payment regulation work; fixed from the 404 /payments-system/
-    # card-payments-regulation/ path which no longer exists.
+    # RBA media releases — more stable than the review hub which returns
+    # a 48-char maintenance page. Covers all RBA payment system announcements
+    # including the Oct 2026 surcharge ban implementation updates.
     {"id":"au_rba",      "market":"AU","network":"Regulator",  "category":"regulatory", "cnp":True,
-     "name":"RBA — Review of Retail Payments Regulation (Hub)",
+     "name":"RBA — Media Releases (Payments)",
      "url":"https://www.rba.gov.au/media-releases/"},
     # RBA 2026 conclusions page — confirmed working, richest content source
     # in the entire set. Tracks the Oct 2026 surcharge ban and interchange
@@ -99,45 +99,42 @@ SOURCES = [
      "url":"https://www.rba.gov.au/payments-and-infrastructure/review-of-retail-payments-regulation/2026-03/"},
 
     # ── SINGAPORE ──────────────────────────────────────────────────────
-    # MAS Parliamentary Replies — more stable than the main regulation page
-    # which has been returning maintenance pages since monitoring began.
-    # Contains genuine payment regulation content including interchange fee
-    # questions and surcharging policy responses from MAS to Parliament.
+    # MAS has been returning maintenance pages on both its regulation and
+    # news pages consistently. Replacing with MAS e-payments page and the
+    # BIS CPMI Singapore country page — both externally hosted/accessible.
     {"id":"sg_mas",      "market":"SG","network":"Regulator",  "category":"regulatory", "cnp":True,
-     "name":"MAS — Parliamentary Replies (Payment Services)",
+     "name":"MAS — E-Payments Overview",
      "url":"https://www.mas.gov.sg/development/e-payments"},
-    # MAS media releases — second SG source for broader coverage of
-    # payment system regulatory announcements.
-    {"id":"sg_mas_news", "market":"SG","network":"Regulator",  "category":"regulatory", "cnp":True,
-     "name":"MAS — Media Releases",
-     "url":"https://www.bis.org/cpmi/index.htm"},
+    # BIS CPMI Singapore payments system overview — published by the Bank
+    # for International Settlements, always accessible, updated when SG
+    # payments regulation changes are internationally significant.
+    {"id":"sg_bis",      "market":"SG","network":"Regulator",  "category":"regulatory", "cnp":True,
+     "name":"BIS CPMI — Singapore Payment System Overview",
+     "url":"https://www.bis.org/cpmi/countries/singapore/index.htm"},
 
     # ── CANADA ─────────────────────────────────────────────────────────
     # FCAC Code of Conduct for the Payment Card Industry — active page,
-    # confirmed accessible. Fixed from the 404 /programs/payment-cards.html
-    # path. This page will update when the Code is revised.
+    # confirmed accessible.
     {"id":"ca_fcac",     "market":"CA","network":"Regulator",  "category":"regulatory", "cnp":True,
      "name":"FCAC — Code of Conduct for the Payment Card Industry",
      "url":"https://www.canada.ca/en/financial-consumer-agency/services/industry/laws-regulations/credit-debit-code-conduct.html"},
     # Government of Canada interchange news — tracks official Government
     # announcements on Visa/Mastercard fee agreements and reforms.
-    # Using the FCAC annual reports page which lists all recent activity.
     {"id":"ca_govt_ic",  "market":"CA","network":"Both",       "category":"interchange","cnp":False,
      "name":"FCAC — Annual Report & Payment Card News",
      "url":"https://www.canada.ca/en/financial-consumer-agency/corporate/planning/annual-reports.html"},
 
     # ── JAPAN ──────────────────────────────────────────────────────────
-    # FSA recent releases — the /policy/payserv/index.html path returned
-    # 404; using the FSA's main recent.html page which lists all regulatory
-    # developments including payment services updates.
+    # FSA recent releases — confirmed accessible from GitHub Actions.
     {"id":"jp_fsa",      "market":"JP","network":"Regulator",  "category":"regulatory", "cnp":False,
      "name":"Japan FSA — Recent Releases (incl. Payment Services)",
      "url":"https://www.fsa.go.jp/en/recent.html"},
-    # METI cashless payments policy — tracks Japan's cashless push which
-    # directly drives interchange and acceptance rule changes.
-    {"id":"jp_meti",     "market":"JP","network":"Regulator",  "category":"regulatory", "cnp":False,
-     "name":"METI — Cashless Payment Policy",
-     "url":"https://www.bis.org/cpmi/index.htm"},
+    # METI timed out (20s read timeout). Replacing with the BIS CPMI Japan
+    # page — externally hosted, always accessible, covers Japan payment
+    # system regulation changes including interchange disclosure requirements.
+    {"id":"jp_bis",      "market":"JP","network":"Regulator",  "category":"regulatory", "cnp":False,
+     "name":"BIS CPMI — Japan Payment System Overview",
+     "url":"https://www.bis.org/cpmi/countries/japan/index.htm"},
 
 ]
 
