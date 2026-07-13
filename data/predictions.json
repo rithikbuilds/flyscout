@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "computed_at": "2026-07-13T05:21:40.965611+00:00",
+    "computed_at": "2026-07-13T12:24:44.478882+00:00",
     "method": "Flywire-specific rule-based engine — corridor/impact/action from FLYWIRE_INTEL templates, urgency/confidence/ETA derived from change log trigger types and effective dates",
     "count": 10
   },
@@ -24,13 +24,13 @@
         "seed_au_003",
         "seed_au_004"
       ],
-      "computed_at": "2026-07-13T05:21:40.965538+00:00",
+      "computed_at": "2026-07-13T12:24:44.478810+00:00",
       "is_stale": false
     },
     {
       "id": "fw_us_interchange_regu",
       "market": "US",
-      "network": "Mastercard",
+      "network": "Visa",
       "category": "interchange",
       "status": "confirmed",
       "urgency": "high",
@@ -46,7 +46,7 @@
         "seed_us_003",
         "seed_us_006"
       ],
-      "computed_at": "2026-07-13T05:21:40.965462+00:00",
+      "computed_at": "2026-07-13T12:24:44.478733+00:00",
       "is_stale": false
     },
     {
@@ -67,7 +67,7 @@
       "evidence_ids": [
         "seed_us_004"
       ],
-      "computed_at": "2026-07-13T05:21:40.965483+00:00",
+      "computed_at": "2026-07-13T12:24:44.478755+00:00",
       "is_stale": false
     },
     {
@@ -89,7 +89,7 @@
         "seed_uk_001",
         "seed_uk_002"
       ],
-      "computed_at": "2026-07-13T05:21:40.965501+00:00",
+      "computed_at": "2026-07-13T12:24:44.478773+00:00",
       "is_stale": true
     },
     {
@@ -110,7 +110,7 @@
       "evidence_ids": [
         "seed_known_au_debit_cnp"
       ],
-      "computed_at": "2026-07-13T05:21:40.965603+00:00",
+      "computed_at": "2026-07-13T12:24:44.478874+00:00",
       "is_stale": false
     },
     {
@@ -132,7 +132,7 @@
         "chg_eu_eba_1783078821",
         "chg_eu_eba_1783114995"
       ],
-      "computed_at": "2026-07-13T05:21:40.965518+00:00",
+      "computed_at": "2026-07-13T12:24:44.478791+00:00",
       "is_stale": false
     },
     {
@@ -154,7 +154,7 @@
         "seed_ca_001",
         "seed_ca_002"
       ],
-      "computed_at": "2026-07-13T05:21:40.965549+00:00",
+      "computed_at": "2026-07-13T12:24:44.478820+00:00",
       "is_stale": false
     },
     {
@@ -176,7 +176,7 @@
         "seed_known_ca_smb_credit",
         "seed_known_ca_smb_debit"
       ],
-      "computed_at": "2026-07-13T05:21:40.965559+00:00",
+      "computed_at": "2026-07-13T12:24:44.478830+00:00",
       "is_stale": false
     },
     {
@@ -197,7 +197,7 @@
       "evidence_ids": [
         "seed_sg_001"
       ],
-      "computed_at": "2026-07-13T05:21:40.965569+00:00",
+      "computed_at": "2026-07-13T12:24:44.478841+00:00",
       "is_stale": false
     },
     {
@@ -213,13 +213,13 @@
       "corridor": "JP domestic CNP — education payments",
       "impact": "Japan debit restructured Nov 2024: contactless NFC 0.90%, new QR tier 0.75%. JFTC/METI interchange disclosure requirement in force since Sep 2022. Cashless ratio reached 42.8% in 2024 (exceeded 40% target).",
       "action": "1. Update JP pricing models to reflect Nov 2024 debit restructuring.\n2. Monitor METI cashless policy for any further rate mandates.\n3. Low urgency — no further Visa/MC JP rule changes confirmed since Jan 2024.",
-      "evidence": "Japan FSA — Recent Releases (incl. Payment Services) (2026-07-09) → Japan FSA — Recent Releases (incl. Payment Services) (2026-07-10)",
+      "evidence": "Japan FSA — Recent Releases (incl. Payment Services) (2026-07-10) → Japan FSA — Recent Releases (incl. Payment Services) (2026-07-13)",
       "evidence_url": "https://www.fsa.go.jp/en/recent.html",
       "evidence_ids": [
-        "chg_jp_fsa_1783599848",
-        "chg_jp_fsa_1783685827"
+        "chg_jp_fsa_1783685827",
+        "chg_jp_fsa_1783945483"
       ],
-      "computed_at": "2026-07-13T05:21:40.965590+00:00",
+      "computed_at": "2026-07-13T12:24:44.478862+00:00",
       "is_stale": false
     }
   ]
