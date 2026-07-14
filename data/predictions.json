@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "computed_at": "2026-07-14T11:15:00.690442+00:00",
+    "computed_at": "2026-07-14T18:57:35.915443+00:00",
     "method": "Flywire-specific rule-based engine — corridor/impact/action from FLYWIRE_INTEL templates, urgency/confidence/ETA derived from change log trigger types and effective dates",
     "count": 10
   },
@@ -24,13 +24,13 @@
         "seed_au_003",
         "seed_au_004"
       ],
-      "computed_at": "2026-07-14T11:15:00.690367+00:00",
+      "computed_at": "2026-07-14T18:57:35.915364+00:00",
       "is_stale": false
     },
     {
       "id": "fw_us_interchange_regu",
       "market": "US",
-      "network": "Mastercard",
+      "network": "Both",
       "category": "interchange",
       "status": "confirmed",
       "urgency": "high",
@@ -46,7 +46,7 @@
         "seed_us_003",
         "seed_us_006"
       ],
-      "computed_at": "2026-07-14T11:15:00.690289+00:00",
+      "computed_at": "2026-07-14T18:57:35.915285+00:00",
       "is_stale": false
     },
     {
@@ -67,7 +67,7 @@
       "evidence_ids": [
         "seed_us_004"
       ],
-      "computed_at": "2026-07-14T11:15:00.690310+00:00",
+      "computed_at": "2026-07-14T18:57:35.915306+00:00",
       "is_stale": false
     },
     {
@@ -89,7 +89,7 @@
         "seed_uk_001",
         "seed_uk_002"
       ],
-      "computed_at": "2026-07-14T11:15:00.690327+00:00",
+      "computed_at": "2026-07-14T18:57:35.915323+00:00",
       "is_stale": true
     },
     {
@@ -110,13 +110,13 @@
       "evidence_ids": [
         "seed_known_au_debit_cnp"
       ],
-      "computed_at": "2026-07-14T11:15:00.690434+00:00",
+      "computed_at": "2026-07-14T18:57:35.915435+00:00",
       "is_stale": false
     },
     {
       "id": "fw_eu_interchange_regu",
       "market": "EU",
-      "network": "Both",
+      "network": "Regulator",
       "category": "interchange",
       "status": "confirmed",
       "urgency": "medium",
@@ -126,13 +126,13 @@
       "corridor": "EU domestic and cross-border CNP — education and healthcare",
       "impact": "EU IFR caps consumer credit CNP at 0.30% (cheapest market globally for Flywire). Non-EEA cards (e.g. US/AU student paying EU university) cost 1.50% credit CNP — capped until Nov 2029 by voluntary Visa/MC commitment (confirmed Jul 2024).",
       "action": "1. Low urgency — EU caps stable and extended to 2029.\n2. Ensure EU acquirer contracts correctly apply IFR rates to consumer cards.\n3. Flag commercial/corporate card volumes — these are NOT covered by IFR caps.\n4. Monitor EU Parliament for proposed IFR debit cap reduction (0.20%→0.15%).",
-      "evidence": "EBA — Payment Services & IFR Regulation (2026-07-03) → EBA — Payment Services & IFR Regulation (2026-07-03)",
+      "evidence": "EBA — Payment Services & IFR Regulation (2026-07-03) → EBA — Payment Services & IFR Regulation (2026-07-14)",
       "evidence_url": "https://www.eba.europa.eu/regulation-and-policy/payment-services-and-electronic-money",
       "evidence_ids": [
-        "chg_eu_eba_1783078821",
-        "chg_eu_eba_1783114995"
+        "chg_eu_eba_1783114995",
+        "chg_eu_eba_1784055448"
       ],
-      "computed_at": "2026-07-14T11:15:00.690345+00:00",
+      "computed_at": "2026-07-14T18:57:35.915344+00:00",
       "is_stale": false
     },
     {
@@ -154,7 +154,7 @@
         "seed_ca_001",
         "seed_ca_002"
       ],
-      "computed_at": "2026-07-14T11:15:00.690379+00:00",
+      "computed_at": "2026-07-14T18:57:35.915377+00:00",
       "is_stale": false
     },
     {
@@ -176,7 +176,7 @@
         "seed_known_ca_smb_credit",
         "seed_known_ca_smb_debit"
       ],
-      "computed_at": "2026-07-14T11:15:00.690389+00:00",
+      "computed_at": "2026-07-14T18:57:35.915387+00:00",
       "is_stale": false
     },
     {
@@ -197,7 +197,7 @@
       "evidence_ids": [
         "seed_sg_001"
       ],
-      "computed_at": "2026-07-14T11:15:00.690400+00:00",
+      "computed_at": "2026-07-14T18:57:35.915398+00:00",
       "is_stale": false
     },
     {
@@ -219,7 +219,7 @@
         "chg_jp_fsa_1783685827",
         "chg_jp_fsa_1783945483"
       ],
-      "computed_at": "2026-07-14T11:15:00.690422+00:00",
+      "computed_at": "2026-07-14T18:57:35.915422+00:00",
       "is_stale": false
     }
   ]
