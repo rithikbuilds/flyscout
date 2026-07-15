@@ -1,36 +1,14 @@
 {
   "_meta": {
-    "computed_at": "2026-07-15T04:36:51.746957+00:00",
+    "computed_at": "2026-07-15T11:18:55.824304+00:00",
     "method": "Flywire-specific rule-based engine — corridor/impact/action from FLYWIRE_INTEL templates, urgency/confidence/ETA derived from change log trigger types and effective dates",
     "count": 10
   },
   "predictions": [
     {
-      "id": "fw_au_surcharge_regu",
-      "market": "AU",
-      "network": "Both",
-      "category": "surcharge",
-      "status": "confirmed",
-      "urgency": "critical",
-      "confidence": 100,
-      "title": "AU surcharge: Surcharging permitted (cost-of-acceptance); no foreign-card cap → Surcharging banned from 1 Oct 2026; domestic interchange caps cut; foreign-card cap from 1 Apr 2027",
-      "eta": "2026-03-31 — in force",
-      "corridor": "International students → AU universities (Visa/MC CNP)",
-      "impact": "Flywire cannot pass card acceptance costs to payers at AU institutions via surcharge from 1 Oct 2026 (RBA final decision). Domestic interchange caps also cut from same date. Foreign-card interchange cap follows 1 Apr 2027 (cost saving for international student home-country cards).",
-      "action": "1. Audit all AU merchant agreements — identify where Flywire currently passes surcharges.\n2. Model AU card acceptance costs under new lower interchange caps.\n3. Decide: absorb into spread, increase base pricing, or negotiate acquirer rate reduction.\n4. Notify AU institutional clients of any pricing changes before 1 Oct 2026.",
-      "evidence": "No surcharging clarity until 2026 — SmartCompany (2025-10-24) → RBA Conclusions Paper — Merchant Card Payment Costs and Surcharging (2026-03-31)",
-      "evidence_url": "https://www.rba.gov.au/media-releases/2026/mr-26-10.html",
-      "evidence_ids": [
-        "seed_au_003",
-        "seed_au_004"
-      ],
-      "computed_at": "2026-07-15T04:36:51.746831+00:00",
-      "is_stale": false
-    },
-    {
       "id": "fw_us_interchange_regu",
       "market": "US",
-      "network": "Mastercard",
+      "network": "Both",
       "category": "interchange",
       "status": "confirmed",
       "urgency": "high",
@@ -46,7 +24,7 @@
         "seed_us_003",
         "seed_us_006"
       ],
-      "computed_at": "2026-07-15T04:36:51.746706+00:00",
+      "computed_at": "2026-07-15T11:18:55.511270+00:00",
       "is_stale": false
     },
     {
@@ -67,7 +45,7 @@
       "evidence_ids": [
         "seed_us_004"
       ],
-      "computed_at": "2026-07-15T04:36:51.746738+00:00",
+      "computed_at": "2026-07-15T11:18:55.511290+00:00",
       "is_stale": false
     },
     {
@@ -89,8 +67,30 @@
         "seed_uk_001",
         "seed_uk_002"
       ],
-      "computed_at": "2026-07-15T04:36:51.746767+00:00",
+      "computed_at": "2026-07-15T11:18:55.511308+00:00",
       "is_stale": true
+    },
+    {
+      "id": "fw_au_surcharge_gove",
+      "market": "AU",
+      "network": "Both",
+      "category": "surcharge",
+      "status": "open_consultation",
+      "urgency": "high",
+      "confidence": 65,
+      "title": "RBA — 2026 Review: Merchant Card Payment Costs Conclusions updated",
+      "eta": "2026-03-31 — in force",
+      "corridor": "International students → AU universities (Visa/MC CNP)",
+      "impact": "Flywire cannot pass card acceptance costs to payers at AU institutions via surcharge from 1 Oct 2026 (RBA final decision). Domestic interchange caps also cut from same date. Foreign-card interchange cap follows 1 Apr 2027 (cost saving for international student home-country cards).",
+      "action": "1. Audit all AU merchant agreements — identify where Flywire currently passes surcharges.\n2. Model AU card acceptance costs under new lower interchange caps.\n3. Decide: absorb into spread, increase base pricing, or negotiate acquirer rate reduction.\n4. Notify AU institutional clients of any pricing changes before 1 Oct 2026.",
+      "evidence": "RBA Conclusions Paper — Merchant Card Payment Costs and Surcharging (2026-03-31) → RBA — 2026 Review: Merchant Card Payment Costs Conclusions (2026-07-15)",
+      "evidence_url": "https://www.rba.gov.au/payments-and-infrastructure/review-of-retail-payments-regulation/2026-03/",
+      "evidence_ids": [
+        "seed_au_004",
+        "chg_au_rba_2026_1784114327"
+      ],
+      "computed_at": "2026-07-15T11:18:55.511348+00:00",
+      "is_stale": false
     },
     {
       "id": "fw_au_interchange_regu",
@@ -110,7 +110,7 @@
       "evidence_ids": [
         "seed_known_au_debit_cnp"
       ],
-      "computed_at": "2026-07-15T04:36:51.746945+00:00",
+      "computed_at": "2026-07-15T11:18:55.824289+00:00",
       "is_stale": false
     },
     {
@@ -132,13 +132,13 @@
         "chg_eu_eba_1784055448",
         "chg_eu_eba_1784090204"
       ],
-      "computed_at": "2026-07-15T04:36:51.746800+00:00",
+      "computed_at": "2026-07-15T11:18:55.511327+00:00",
       "is_stale": false
     },
     {
       "id": "fw_ca_surcharge_netw",
       "market": "CA",
-      "network": "Visa",
+      "network": "Both",
       "category": "surcharge",
       "status": "monitoring",
       "urgency": "medium",
@@ -154,7 +154,7 @@
         "seed_ca_001",
         "seed_ca_002"
       ],
-      "computed_at": "2026-07-15T04:36:51.746849+00:00",
+      "computed_at": "2026-07-15T11:18:55.824166+00:00",
       "is_stale": false
     },
     {
@@ -176,7 +176,7 @@
         "seed_known_ca_smb_credit",
         "seed_known_ca_smb_debit"
       ],
-      "computed_at": "2026-07-15T04:36:51.746865+00:00",
+      "computed_at": "2026-07-15T11:18:55.824193+00:00",
       "is_stale": false
     },
     {
@@ -197,7 +197,7 @@
       "evidence_ids": [
         "seed_sg_001"
       ],
-      "computed_at": "2026-07-15T04:36:51.746883+00:00",
+      "computed_at": "2026-07-15T11:18:55.824210+00:00",
       "is_stale": false
     },
     {
@@ -219,7 +219,7 @@
         "chg_jp_fsa_1783685827",
         "chg_jp_fsa_1783945483"
       ],
-      "computed_at": "2026-07-15T04:36:51.746921+00:00",
+      "computed_at": "2026-07-15T11:18:55.824260+00:00",
       "is_stale": false
     }
   ]
