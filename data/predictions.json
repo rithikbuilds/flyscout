@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "computed_at": "2026-07-15T16:03:59.002594+00:00",
+    "computed_at": "2026-07-15T18:50:41.855904+00:00",
     "method": "Flywire-specific rule-based engine — corridor/impact/action from FLYWIRE_INTEL templates, urgency/confidence/ETA derived from change log trigger types and effective dates",
     "count": 10
   },
@@ -8,7 +8,7 @@
     {
       "id": "fw_us_interchange_regu",
       "market": "US",
-      "network": "Both",
+      "network": "Mastercard",
       "category": "interchange",
       "status": "confirmed",
       "urgency": "high",
@@ -24,7 +24,7 @@
         "seed_us_003",
         "seed_us_006"
       ],
-      "computed_at": "2026-07-15T16:03:59.002441+00:00",
+      "computed_at": "2026-07-15T18:50:41.855655+00:00",
       "is_stale": false
     },
     {
@@ -45,7 +45,7 @@
       "evidence_ids": [
         "seed_us_004"
       ],
-      "computed_at": "2026-07-15T16:03:59.002462+00:00",
+      "computed_at": "2026-07-15T18:50:41.855689+00:00",
       "is_stale": false
     },
     {
@@ -67,7 +67,7 @@
         "seed_uk_001",
         "seed_uk_002"
       ],
-      "computed_at": "2026-07-15T16:03:59.002479+00:00",
+      "computed_at": "2026-07-15T18:50:41.855715+00:00",
       "is_stale": true
     },
     {
@@ -89,7 +89,7 @@
         "seed_au_004",
         "chg_au_rba_2026_1784114327"
       ],
-      "computed_at": "2026-07-15T16:03:59.002520+00:00",
+      "computed_at": "2026-07-15T18:50:41.855782+00:00",
       "is_stale": false
     },
     {
@@ -110,7 +110,7 @@
       "evidence_ids": [
         "seed_known_au_debit_cnp"
       ],
-      "computed_at": "2026-07-15T16:03:59.002587+00:00",
+      "computed_at": "2026-07-15T18:50:41.855893+00:00",
       "is_stale": false
     },
     {
@@ -132,13 +132,13 @@
         "chg_eu_eba_1784055448",
         "chg_eu_eba_1784090204"
       ],
-      "computed_at": "2026-07-15T16:03:59.002499+00:00",
+      "computed_at": "2026-07-15T18:50:41.855747+00:00",
       "is_stale": false
     },
     {
       "id": "fw_ca_surcharge_netw",
       "market": "CA",
-      "network": "Both",
+      "network": "Visa",
       "category": "surcharge",
       "status": "monitoring",
       "urgency": "medium",
@@ -154,7 +154,7 @@
         "seed_ca_001",
         "seed_ca_002"
       ],
-      "computed_at": "2026-07-15T16:03:59.002531+00:00",
+      "computed_at": "2026-07-15T18:50:41.855801+00:00",
       "is_stale": false
     },
     {
@@ -176,7 +176,7 @@
         "seed_known_ca_smb_credit",
         "seed_known_ca_smb_debit"
       ],
-      "computed_at": "2026-07-15T16:03:59.002541+00:00",
+      "computed_at": "2026-07-15T18:50:41.855816+00:00",
       "is_stale": false
     },
     {
@@ -197,7 +197,7 @@
       "evidence_ids": [
         "seed_sg_001"
       ],
-      "computed_at": "2026-07-15T16:03:59.002552+00:00",
+      "computed_at": "2026-07-15T18:50:41.855834+00:00",
       "is_stale": false
     },
     {
@@ -219,7 +219,7 @@
         "chg_jp_fsa_1783685827",
         "chg_jp_fsa_1783945483"
       ],
-      "computed_at": "2026-07-15T16:03:59.002573+00:00",
+      "computed_at": "2026-07-15T18:50:41.855870+00:00",
       "is_stale": false
     }
   ]
