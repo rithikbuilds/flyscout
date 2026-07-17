@@ -11,7 +11,7 @@
       "CA",
       "JP"
     ],
-    "last_updated": "2026-07-16T18:52:13.280727+00:00"
+    "last_updated": "2026-07-17T04:50:06.607397+00:00"
   },
   "changes": [
     {
@@ -784,6 +784,27 @@
       "source_url": "https://www.canada.ca/en/financial-consumer-agency/corporate/planning/annual-reports.html",
       "old_snippet": "Annual reports: Financial Consumer Agency of Canada - Canada.ca Annual reports FCAC's annual reports present the performance results and major initiatives of the Agency through the fiscal year from April 1 to March 31. 2024 to 2025 Annual report 2024 to 2025 Financial statements ",
       "new_snippet": "Annual reports: Financial Consumer Agency of Canada - Canada.ca Annual reports: Financial Consumer Agency of Canada FCAC's annual reports present the performance results and major initiatives of the Agency through the fiscal year from April 1 to March 31. 2024 to 2025 Annual repo",
+      "reviewed": false,
+      "auto_detected": true,
+      "impact_analysis": null
+    },
+    {
+      "id": "chg_ca_govt_ic_1784263805",
+      "market": "CA",
+      "network": "Both",
+      "category": "interchange",
+      "cnp": false,
+      "title": "FCAC — Annual Report & Payment Card News updated",
+      "summary": "Content change detected on FCAC — Annual Report & Payment Card News. Review source — no specific rate pattern extracted.",
+      "old_value": null,
+      "new_value": null,
+      "trigger": "internal_capture",
+      "effective_date": null,
+      "detected_at": "2026-07-17T04:50:05.903207+00:00",
+      "source_name": "FCAC — Annual Report & Payment Card News",
+      "source_url": "https://www.canada.ca/en/financial-consumer-agency/corporate/planning/annual-reports.html",
+      "old_snippet": "Annual reports: Financial Consumer Agency of Canada - Canada.ca Annual reports: Financial Consumer Agency of Canada FCAC's annual reports present the performance results and major initiatives of the Agency through the fiscal year from April 1 to March 31. 2024 to 2025 Annual repo",
+      "new_snippet": "Annual reports: Financial Consumer Agency of Canada - Canada.ca Annual reports FCAC's annual reports present the performance results and major initiatives of the Agency through the fiscal year from April 1 to March 31. 2024 to 2025 Annual report 2024 to 2025 Financial statements ",
       "reviewed": false,
       "auto_detected": true,
       "impact_analysis": null

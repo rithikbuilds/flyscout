@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "computed_at": "2026-07-16T18:52:13.409553+00:00",
+    "computed_at": "2026-07-17T04:50:06.607905+00:00",
     "method": "Flywire-specific rule-based engine — corridor/impact/action from FLYWIRE_INTEL templates, urgency/confidence/ETA derived from change log trigger types and effective dates",
     "count": 10
   },
@@ -8,7 +8,7 @@
     {
       "id": "fw_us_interchange_regu",
       "market": "US",
-      "network": "Mastercard",
+      "network": "Both",
       "category": "interchange",
       "status": "confirmed",
       "urgency": "high",
@@ -24,7 +24,7 @@
         "seed_us_003",
         "seed_us_006"
       ],
-      "computed_at": "2026-07-16T18:52:13.280898+00:00",
+      "computed_at": "2026-07-17T04:50:06.607752+00:00",
       "is_stale": false
     },
     {
@@ -45,7 +45,7 @@
       "evidence_ids": [
         "seed_us_004"
       ],
-      "computed_at": "2026-07-16T18:52:13.280918+00:00",
+      "computed_at": "2026-07-17T04:50:06.607773+00:00",
       "is_stale": false
     },
     {
@@ -67,7 +67,7 @@
         "seed_uk_001",
         "seed_uk_002"
       ],
-      "computed_at": "2026-07-16T18:52:13.280936+00:00",
+      "computed_at": "2026-07-17T04:50:06.607789+00:00",
       "is_stale": true
     },
     {
@@ -89,7 +89,7 @@
         "seed_au_004",
         "chg_au_rba_2026_1784114327"
       ],
-      "computed_at": "2026-07-16T18:52:13.280975+00:00",
+      "computed_at": "2026-07-17T04:50:06.607827+00:00",
       "is_stale": false
     },
     {
@@ -110,7 +110,7 @@
       "evidence_ids": [
         "seed_known_au_debit_cnp"
       ],
-      "computed_at": "2026-07-16T18:52:13.409537+00:00",
+      "computed_at": "2026-07-17T04:50:06.607897+00:00",
       "is_stale": false
     },
     {
@@ -132,13 +132,13 @@
         "chg_eu_eba_1784055448",
         "chg_eu_eba_1784090204"
       ],
-      "computed_at": "2026-07-16T18:52:13.280954+00:00",
+      "computed_at": "2026-07-17T04:50:06.607808+00:00",
       "is_stale": false
     },
     {
       "id": "fw_ca_surcharge_netw",
       "market": "CA",
-      "network": "Visa",
+      "network": "Both",
       "category": "surcharge",
       "status": "monitoring",
       "urgency": "medium",
@@ -154,13 +154,13 @@
         "seed_ca_001",
         "seed_ca_002"
       ],
-      "computed_at": "2026-07-16T18:52:13.280985+00:00",
+      "computed_at": "2026-07-17T04:50:06.607839+00:00",
       "is_stale": false
     },
     {
       "id": "fw_ca_interchange_inte",
       "market": "CA",
-      "network": "Visa",
+      "network": "Both",
       "category": "interchange",
       "status": "monitoring",
       "urgency": "low",
@@ -170,13 +170,13 @@
       "corridor": "CA domestic CNP — education payments",
       "impact": "SMB interchange relief targets ~0.95% average effective credit interchange for eligible merchants. Visa SMB credit 1.35%, debit 0.50% (from Mar 2025). Flywire's CA institutional clients may qualify for SMB rates.",
       "action": "1. Confirm which CA institutions qualify for Visa/MC SMB interchange rates.\n2. Update CA pricing models to reflect Mar 2025 rate reduction (1.40%→1.35% credit).\n3. Flag for annual CA pricing review.",
-      "evidence": "The Future of Interchange Fees: 2026 — Clearly Payments (2025-03-01) → FCAC — Annual Report & Payment Card News (2026-07-16)",
+      "evidence": "FCAC — Annual Report & Payment Card News (2026-07-16) → FCAC — Annual Report & Payment Card News (2026-07-17)",
       "evidence_url": "https://www.canada.ca/en/financial-consumer-agency/corporate/planning/annual-reports.html",
       "evidence_ids": [
-        "seed_known_ca_smb_debit",
-        "chg_ca_govt_ic_1784227932"
+        "chg_ca_govt_ic_1784227932",
+        "chg_ca_govt_ic_1784263805"
       ],
-      "computed_at": "2026-07-16T18:52:13.280997+00:00",
+      "computed_at": "2026-07-17T04:50:06.607851+00:00",
       "is_stale": false
     },
     {
@@ -197,7 +197,7 @@
       "evidence_ids": [
         "seed_sg_001"
       ],
-      "computed_at": "2026-07-16T18:52:13.409448+00:00",
+      "computed_at": "2026-07-17T04:50:06.607862+00:00",
       "is_stale": false
     },
     {
@@ -219,7 +219,7 @@
         "chg_jp_fsa_1783685827",
         "chg_jp_fsa_1783945483"
       ],
-      "computed_at": "2026-07-16T18:52:13.409511+00:00",
+      "computed_at": "2026-07-17T04:50:06.607884+00:00",
       "is_stale": false
     }
   ]
