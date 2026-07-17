@@ -11,7 +11,7 @@
       "CA",
       "JP"
     ],
-    "last_updated": "2026-07-17T09:56:33.699468+00:00"
+    "last_updated": "2026-07-17T11:12:08.718097+00:00"
   },
   "changes": [
     {
@@ -847,6 +847,27 @@
       "source_url": "https://www.psr.org.uk/our-work/market-reviews/market-review-into-card-scheme-and-processing-fees/",
       "old_snippet": "Market review into card scheme and processing fees | Payment Systems Regulator Skip to main content Market review into card scheme and processing fees Last updated: May 2026 Market review into card scheme and processing fees Cards are the most popular way for consumers to make a ",
       "new_snippet": "Market review into card scheme and processing fees | Payment Systems Regulator Skip to main content Market review into card scheme and processing fees Last updated: May 2026 Market review into card scheme and processing fees Cards are the most popular way for consumers to make a ",
+      "reviewed": false,
+      "auto_detected": true,
+      "impact_analysis": null
+    },
+    {
+      "id": "chg_jp_fsa_1784286727",
+      "market": "JP",
+      "network": "Regulator",
+      "category": "interchange",
+      "cnp": false,
+      "title": "Japan FSA — Recent Releases (incl. Payment Services) updated",
+      "summary": "Content change detected on Japan FSA — Recent Releases (incl. Payment Services). Review source — no specific rate pattern extracted.",
+      "old_value": null,
+      "new_value": null,
+      "trigger": "government_consultation",
+      "effective_date": null,
+      "detected_at": "2026-07-17T11:12:07.963544+00:00",
+      "source_name": "Japan FSA — Recent Releases (incl. Payment Services)",
+      "source_url": "https://www.fsa.go.jp/en/recent.html",
+      "old_snippet": "Past Releases : Financial Services Agency HOME Tweet Past Releases July 2026 July 13 Updated: FinTech Support Desk Press Conference by KATAYAMA Satsuki, Minister of Finance and Minister of State for Financial Services (July 3, 2026) July 10 FSA publishes English translation of mo",
+      "new_snippet": "Past Releases : Financial Services Agency HOME Tweet Past Releases July 2026 July 17 \"The Code of Conduct for ESG Evaluation and Data Providers\": 30 ESG Evaluation and Data Providers have endorsed the \"Code of Conduct\" as of June 30, 2026 Recent Developments of Practices on Manag",
       "reviewed": false,
       "auto_detected": true,
       "impact_analysis": null
