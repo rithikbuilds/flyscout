@@ -1,32 +1,10 @@
 {
   "_meta": {
-    "computed_at": "2026-07-17T04:50:06.607905+00:00",
+    "computed_at": "2026-07-17T09:56:33.896920+00:00",
     "method": "Flywire-specific rule-based engine — corridor/impact/action from FLYWIRE_INTEL templates, urgency/confidence/ETA derived from change log trigger types and effective dates",
     "count": 10
   },
   "predictions": [
-    {
-      "id": "fw_us_interchange_regu",
-      "market": "US",
-      "network": "Both",
-      "category": "interchange",
-      "status": "confirmed",
-      "urgency": "high",
-      "confidence": 80,
-      "title": "US interchange: Regulation II cap: 21¢ + 5bps + 1¢ fraud adj (legally settled) → Vacated by court order — stayed pending Eighth Circuit appeal (cap remains in effect)",
-      "eta": "2025-08-06 — in force",
-      "corridor": "US domestic payments — education, healthcare, travel (Visa/MC CNP)",
-      "impact": "US has the highest CNP credit interchange globally (2.30–2.40% Visa Signature/Infinite). Reg II debit cap vacated by court (Aug 2025, stayed pending 8th Circuit appeal) — if upheld, US debit costs could rise 2–4x from current 21¢+5bps. Antitrust settlement caps qualifying consumer credit at 125bps from Mar 2025.",
-      "action": "1. Identify what percentage of US volume is domestic debit — model 2x/4x cost scenarios.\n2. Verify whether Flywire's US institutional clients qualify for the 125bps antitrust cap.\n3. Monitor Eighth Circuit case docket — ruling timing determines urgency of debit cost action.\n4. Ensure US acquirer contracts allow interchange pass-through adjustment.",
-      "evidence": "Visa Interchange Rates — Merchant Cost Consulting (2025-01-01) → District Court Vacates Regulation II — Cooley (2025-08-06)",
-      "evidence_url": "https://www.cooley.com/news/insight/2025/2025-08-15-district-court-vacates-regulation-iis-debit-card-interchange-fee-standard",
-      "evidence_ids": [
-        "seed_us_003",
-        "seed_us_006"
-      ],
-      "computed_at": "2026-07-17T04:50:06.607752+00:00",
-      "is_stale": false
-    },
     {
       "id": "fw_us_surcharge_regu",
       "market": "US",
@@ -45,7 +23,7 @@
       "evidence_ids": [
         "seed_us_004"
       ],
-      "computed_at": "2026-07-17T04:50:06.607773+00:00",
+      "computed_at": "2026-07-17T09:56:33.896786+00:00",
       "is_stale": false
     },
     {
@@ -56,19 +34,19 @@
       "status": "open_consultation",
       "urgency": "high",
       "confidence": 55,
-      "title": "UK PSR publishes market review into card-acquiring services",
+      "title": "UK PSR — Card Scheme and Processing Fees Market Review updated",
       "eta": "TBC — awaiting regulatory decision",
       "corridor": "EU-issued cards → UK university merchants (CNP)",
       "impact": "Post-Brexit: EU-issued cards at UK merchants cost up to 1.50% credit / 1.20% debit CNP (was 0.30%/0.20% under EU IFR). Surcharging banned in UK (Consumer Rights Act 2018) so Flywire/institution absorbs the full cross-border cost. PSR market review may re-cap toward 0.30% — a 120bps saving on EU student flows to UK universities.",
       "action": "1. Quantify total EU-issued card CNP volume at UK merchants over last 12 months.\n2. Model the margin impact of a 0.30% re-cap scenario vs current 1.50%.\n3. Track PSR card-acquiring market review — submit response if consultation opens.\n4. Avoid locking UK institutional pricing contracts beyond Q2 2026 without a PSR review clause.",
-      "evidence": "The Future of Interchange Fees: 2026 — Clearly Payments (2024-01-01) → UK Payment Systems Regulator — Card Acquiring Market Review (2024-03-01)",
-      "evidence_url": "https://www.psr.org.uk/our-work/card-acquiring/",
+      "evidence": "UK Payment Systems Regulator — Card Acquiring Market Review (2024-03-01) → UK PSR — Card Scheme and Processing Fees Market Review (2026-07-17)",
+      "evidence_url": "https://www.psr.org.uk/our-work/market-reviews/market-review-into-card-scheme-and-processing-fees/",
       "evidence_ids": [
-        "seed_uk_001",
-        "seed_uk_002"
+        "seed_uk_002",
+        "chg_uk_psr_scheme_1784282184"
       ],
-      "computed_at": "2026-07-17T04:50:06.607789+00:00",
-      "is_stale": true
+      "computed_at": "2026-07-17T09:56:33.896811+00:00",
+      "is_stale": false
     },
     {
       "id": "fw_au_surcharge_gove",
@@ -89,7 +67,7 @@
         "seed_au_004",
         "chg_au_rba_2026_1784114327"
       ],
-      "computed_at": "2026-07-17T04:50:06.607827+00:00",
+      "computed_at": "2026-07-17T09:56:33.896851+00:00",
       "is_stale": false
     },
     {
@@ -110,7 +88,7 @@
       "evidence_ids": [
         "seed_known_au_debit_cnp"
       ],
-      "computed_at": "2026-07-17T04:50:06.607897+00:00",
+      "computed_at": "2026-07-17T09:56:33.896913+00:00",
       "is_stale": false
     },
     {
@@ -132,13 +110,13 @@
         "chg_eu_eba_1784055448",
         "chg_eu_eba_1784090204"
       ],
-      "computed_at": "2026-07-17T04:50:06.607808+00:00",
+      "computed_at": "2026-07-17T09:56:33.896831+00:00",
       "is_stale": false
     },
     {
       "id": "fw_ca_surcharge_netw",
       "market": "CA",
-      "network": "Both",
+      "network": "Visa",
       "category": "surcharge",
       "status": "monitoring",
       "urgency": "medium",
@@ -154,7 +132,29 @@
         "seed_ca_001",
         "seed_ca_002"
       ],
-      "computed_at": "2026-07-17T04:50:06.607839+00:00",
+      "computed_at": "2026-07-17T09:56:33.896862+00:00",
+      "is_stale": false
+    },
+    {
+      "id": "fw_us_interchange_inte",
+      "market": "US",
+      "network": "Visa",
+      "category": "interchange",
+      "status": "monitoring",
+      "urgency": "low",
+      "confidence": 20,
+      "title": "Visa USA Interchange — Merchant Fees Hub updated",
+      "eta": "2025-08-06 — in force",
+      "corridor": "US domestic payments — education, healthcare, travel (Visa/MC CNP)",
+      "impact": "US has the highest CNP credit interchange globally (2.30–2.40% Visa Signature/Infinite). Reg II debit cap vacated by court (Aug 2025, stayed pending 8th Circuit appeal) — if upheld, US debit costs could rise 2–4x from current 21¢+5bps. Antitrust settlement caps qualifying consumer credit at 125bps from Mar 2025.",
+      "action": "1. Identify what percentage of US volume is domestic debit — model 2x/4x cost scenarios.\n2. Verify whether Flywire's US institutional clients qualify for the 125bps antitrust cap.\n3. Monitor Eighth Circuit case docket — ruling timing determines urgency of debit cost action.\n4. Ensure US acquirer contracts allow interchange pass-through adjustment.",
+      "evidence": "District Court Vacates Regulation II — Cooley (2025-08-06) → Visa USA Interchange — Merchant Fees Hub (2026-07-17)",
+      "evidence_url": "https://usa.visa.com/support/small-business/regulations-fees.html",
+      "evidence_ids": [
+        "seed_us_006",
+        "chg_us_visa_ic_1784282182"
+      ],
+      "computed_at": "2026-07-17T09:56:33.699721+00:00",
       "is_stale": false
     },
     {
@@ -176,7 +176,7 @@
         "chg_ca_govt_ic_1784227932",
         "chg_ca_govt_ic_1784263805"
       ],
-      "computed_at": "2026-07-17T04:50:06.607851+00:00",
+      "computed_at": "2026-07-17T09:56:33.896873+00:00",
       "is_stale": false
     },
     {
@@ -197,7 +197,7 @@
       "evidence_ids": [
         "seed_sg_001"
       ],
-      "computed_at": "2026-07-17T04:50:06.607862+00:00",
+      "computed_at": "2026-07-17T09:56:33.896883+00:00",
       "is_stale": false
     },
     {
@@ -219,7 +219,7 @@
         "chg_jp_fsa_1783685827",
         "chg_jp_fsa_1783945483"
       ],
-      "computed_at": "2026-07-17T04:50:06.607884+00:00",
+      "computed_at": "2026-07-17T09:56:33.896903+00:00",
       "is_stale": false
     }
   ]

@@ -11,7 +11,7 @@
       "CA",
       "JP"
     ],
-    "last_updated": "2026-07-17T04:50:06.607397+00:00"
+    "last_updated": "2026-07-17T09:56:33.699468+00:00"
   },
   "changes": [
     {
@@ -805,6 +805,48 @@
       "source_url": "https://www.canada.ca/en/financial-consumer-agency/corporate/planning/annual-reports.html",
       "old_snippet": "Annual reports: Financial Consumer Agency of Canada - Canada.ca Annual reports: Financial Consumer Agency of Canada FCAC's annual reports present the performance results and major initiatives of the Agency through the fiscal year from April 1 to March 31. 2024 to 2025 Annual repo",
       "new_snippet": "Annual reports: Financial Consumer Agency of Canada - Canada.ca Annual reports FCAC's annual reports present the performance results and major initiatives of the Agency through the fiscal year from April 1 to March 31. 2024 to 2025 Annual report 2024 to 2025 Financial statements ",
+      "reviewed": false,
+      "auto_detected": true,
+      "impact_analysis": null
+    },
+    {
+      "id": "chg_us_visa_ic_1784282182",
+      "market": "US",
+      "network": "Visa",
+      "category": "interchange",
+      "cnp": false,
+      "title": "Visa USA Interchange — Merchant Fees Hub updated",
+      "summary": "Content change detected on Visa USA Interchange — Merchant Fees Hub. Review source — no specific rate pattern extracted.",
+      "old_value": null,
+      "new_value": null,
+      "trigger": "internal_capture",
+      "effective_date": null,
+      "detected_at": "2026-07-17T09:56:22.646960+00:00",
+      "source_name": "Visa USA Interchange — Merchant Fees Hub",
+      "source_url": "https://usa.visa.com/support/small-business/regulations-fees.html",
+      "old_snippet": "Credit Card Processing Fees & Interchange Rates | Visa Our commitment to transparency Gain insight into all aspects of the Visa payment system â the requirements that help keep the system safe for all and the operational requirements to ensure efficiency. Visa Rules The Visa Sy",
+      "new_snippet": "Credit Card Processing Fees & Interchange Rates | Visa Our commitment to transparency Gain insight into all aspects of the Visa payment system â the requirements that help keep the system safe for all and the operational requirements to ensure efficiency. Visa Rules The Visa Sy",
+      "reviewed": false,
+      "auto_detected": true,
+      "impact_analysis": null
+    },
+    {
+      "id": "chg_uk_psr_scheme_1784282184",
+      "market": "UK",
+      "network": "Regulator",
+      "category": "interchange",
+      "cnp": true,
+      "title": "UK PSR — Card Scheme and Processing Fees Market Review updated",
+      "summary": "Content change detected on UK PSR — Card Scheme and Processing Fees Market Review. Review source — no specific rate pattern extracted.",
+      "old_value": null,
+      "new_value": null,
+      "trigger": "government_consultation",
+      "effective_date": null,
+      "detected_at": "2026-07-17T09:56:24.547054+00:00",
+      "source_name": "UK PSR — Card Scheme and Processing Fees Market Review",
+      "source_url": "https://www.psr.org.uk/our-work/market-reviews/market-review-into-card-scheme-and-processing-fees/",
+      "old_snippet": "Market review into card scheme and processing fees | Payment Systems Regulator Skip to main content Market review into card scheme and processing fees Last updated: May 2026 Market review into card scheme and processing fees Cards are the most popular way for consumers to make a ",
+      "new_snippet": "Market review into card scheme and processing fees | Payment Systems Regulator Skip to main content Market review into card scheme and processing fees Last updated: May 2026 Market review into card scheme and processing fees Cards are the most popular way for consumers to make a ",
       "reviewed": false,
       "auto_detected": true,
       "impact_analysis": null
