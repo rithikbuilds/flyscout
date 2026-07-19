@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "computed_at": "2026-07-18T18:42:00.852581+00:00",
+    "computed_at": "2026-07-19T04:57:33.496344+00:00",
     "method": "Flywire-specific rule-based engine — corridor/impact/action from FLYWIRE_INTEL templates, urgency/confidence/ETA derived from change log trigger types and effective dates",
     "count": 10
   },
@@ -23,7 +23,7 @@
       "evidence_ids": [
         "seed_us_004"
       ],
-      "computed_at": "2026-07-18T18:42:00.852474+00:00",
+      "computed_at": "2026-07-19T04:57:33.496190+00:00",
       "is_stale": false
     },
     {
@@ -45,7 +45,7 @@
         "seed_uk_002",
         "chg_uk_psr_scheme_1784282184"
       ],
-      "computed_at": "2026-07-18T18:42:00.852488+00:00",
+      "computed_at": "2026-07-19T04:57:33.496209+00:00",
       "is_stale": false
     },
     {
@@ -67,7 +67,7 @@
         "seed_au_004",
         "chg_au_rba_2026_1784114327"
       ],
-      "computed_at": "2026-07-18T18:42:00.852521+00:00",
+      "computed_at": "2026-07-19T04:57:33.496256+00:00",
       "is_stale": false
     },
     {
@@ -88,7 +88,7 @@
       "evidence_ids": [
         "seed_known_au_debit_cnp"
       ],
-      "computed_at": "2026-07-18T18:42:00.852575+00:00",
+      "computed_at": "2026-07-19T04:57:33.496334+00:00",
       "is_stale": false
     },
     {
@@ -110,13 +110,13 @@
         "chg_eu_eba_1784055448",
         "chg_eu_eba_1784090204"
       ],
-      "computed_at": "2026-07-18T18:42:00.852504+00:00",
+      "computed_at": "2026-07-19T04:57:33.496232+00:00",
       "is_stale": false
     },
     {
       "id": "fw_ca_surcharge_netw",
       "market": "CA",
-      "network": "Visa",
+      "network": "Both",
       "category": "surcharge",
       "status": "monitoring",
       "urgency": "medium",
@@ -132,7 +132,7 @@
         "seed_ca_001",
         "seed_ca_002"
       ],
-      "computed_at": "2026-07-18T18:42:00.852530+00:00",
+      "computed_at": "2026-07-19T04:57:33.496269+00:00",
       "is_stale": false
     },
     {
@@ -154,7 +154,7 @@
         "seed_us_006",
         "chg_us_visa_ic_1784282182"
       ],
-      "computed_at": "2026-07-18T18:42:00.852458+00:00",
+      "computed_at": "2026-07-19T04:57:33.496165+00:00",
       "is_stale": false
     },
     {
@@ -176,7 +176,7 @@
         "chg_ca_govt_ic_1784227932",
         "chg_ca_govt_ic_1784263805"
       ],
-      "computed_at": "2026-07-18T18:42:00.852539+00:00",
+      "computed_at": "2026-07-19T04:57:33.496283+00:00",
       "is_stale": false
     },
     {
@@ -197,7 +197,7 @@
       "evidence_ids": [
         "seed_sg_001"
       ],
-      "computed_at": "2026-07-18T18:42:00.852547+00:00",
+      "computed_at": "2026-07-19T04:57:33.496296+00:00",
       "is_stale": false
     },
     {
@@ -219,7 +219,7 @@
         "chg_jp_fsa_1783945483",
         "chg_jp_fsa_1784286727"
       ],
-      "computed_at": "2026-07-18T18:42:00.852565+00:00",
+      "computed_at": "2026-07-19T04:57:33.496320+00:00",
       "is_stale": false
     }
   ]

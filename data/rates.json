@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "computed_at": "2026-07-18T18:42:00.852389+00:00",
+    "computed_at": "2026-07-19T04:57:33.496081+00:00",
     "description": "Latest detected rates per market/network/category, extracted automatically from rule-changes.json. Only entries with extractable percentage values are included.",
     "entry_count": 9
   },
