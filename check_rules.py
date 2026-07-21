@@ -99,20 +99,35 @@ SOURCES = [
      "url":"https://www.rba.gov.au/payments-and-infrastructure/review-of-retail-payments-regulation/2026-03/"},
 
     # ── SINGAPORE ──────────────────────────────────────────────────────
-    # MAS has been returning maintenance pages on both its regulation and
-    # news pages consistently. Replacing with MAS e-payments page and the
-    # BIS CPMI Singapore country page — both externally hosted/accessible.
-    {"id":"sg_mas",      "market":"SG","network":"Regulator",  "category":"regulatory", "cnp":True,
-     "name":"MAS — E-Payments Overview",
-     "url":"https://www.mas.gov.sg/development/e-payments"},
-    # BIS CPMI Singapore payments system overview — published by the Bank
-    # for International Settlements, always accessible, updated when SG
-    # payments regulation changes are internationally significant.
-    {"id":"sg_bis",      "market":"SG","network":"Regulator",  "category":"regulatory", "cnp":True,
-     "name":"BIS CPMI — Singapore Payment System Overview",
-     "url":"https://www.bis.org/cpmi/countries/singapore/index.htm"},
+    # ── SINGAPORE ──────────────────────────────────────────────────────
+    # NOTE: The entire mas.gov.sg domain blocks GitHub Actions IP addresses
+    # (same pattern as mastercard.com). All attempts since monitoring began
+    # have returned maintenance pages or been blocked. No accessible SG source
+    # has been found that GitHub Actions can reach. Singapore is temporarily
+    # unmonitored by automation — check mas.gov.sg directly for regulatory
+    # updates. Uncomment and add a source here when one is confirmed working.
+    # {"id":"sg_placeholder", ...}
 
-    # ── CANADA ─────────────────────────────────────────────────────────
+    # ── GLOBAL / MULTI-MARKET TRACKERS ────────────────────────────────
+    # Merchant Cost Consulting — Visa interchange. Updates promptly when
+    # Visa publishes new rate schedules. Covers US in detail plus global
+    # context (UK, EU, AU cross-border rates referenced in articles).
+    # Already monitoring their Mastercard page as us_mc_ic above.
+    {"id":"mcc_visa",    "market":"US","network":"Visa",       "category":"interchange","cnp":False,
+     "name":"Visa Interchange Rates 2026 — Merchant Cost Consulting",
+     "url":"https://merchantcostconsulting.com/lower-credit-card-processing-fees/visa-interchange-rates/"},
+    # Clearly Payments — Future of Interchange Fees article updated when
+    # major multi-market changes occur. Covers UK, EU, AU, CA, SG in one
+    # page. Source used for several verified seed entries in our dataset.
+    {"id":"clearly_global","market":"UK","network":"Both",     "category":"interchange","cnp":True,
+     "name":"Future of Interchange Fees — Clearly Payments (multi-market)",
+     "url":"https://www.clearlypayments.com/blog/the-future-of-interchange-fees-2026-and-beyond/"},
+    # Chargebacks911 — Mastercard interchange article, updated April 2026.
+    # Covers global Mastercard changes including CNP fee updates.
+    {"id":"cb911_mc",   "market":"US","network":"Mastercard",  "category":"interchange","cnp":True,
+     "name":"Mastercard Interchange Fees 2026 — Chargebacks911",
+     "url":"https://chargebacks911.com/mastercard-interchange-fees/"},
+
     # FCAC Code of Conduct for the Payment Card Industry — active page,
     # confirmed accessible.
     {"id":"ca_fcac",     "market":"CA","network":"Regulator",  "category":"regulatory", "cnp":True,
@@ -125,16 +140,16 @@ SOURCES = [
      "url":"https://www.canada.ca/en/financial-consumer-agency/corporate/planning/annual-reports.html"},
 
     # ── JAPAN ──────────────────────────────────────────────────────────
-    # FSA recent releases — confirmed accessible from GitHub Actions.
+    # Japan FSA recent releases — confirmed accessible from GitHub Actions.
     {"id":"jp_fsa",      "market":"JP","network":"Regulator",  "category":"regulatory", "cnp":False,
      "name":"Japan FSA — Recent Releases (incl. Payment Services)",
      "url":"https://www.fsa.go.jp/en/recent.html"},
-    # METI timed out (20s read timeout). Replacing with the BIS CPMI Japan
-    # page — externally hosted, always accessible, covers Japan payment
-    # system regulation changes including interchange disclosure requirements.
-    {"id":"jp_bis",      "market":"JP","network":"Regulator",  "category":"regulatory", "cnp":False,
-     "name":"BIS CPMI — Japan Payment System Overview",
-     "url":"https://www.bis.org/cpmi/countries/japan/index.htm"},
+    # Bank of Japan — payment and settlement systems overview.
+    # boj.or.jp is accessible from GitHub Actions and covers payment
+    # system policy including any interchange-related announcements.
+    {"id":"jp_boj",      "market":"JP","network":"Regulator",  "category":"regulatory", "cnp":False,
+     "name":"Bank of Japan — Payment and Settlement Systems",
+     "url":"https://www.boj.or.jp/en/paym/outline/index.htm"},
 
 ]
 
