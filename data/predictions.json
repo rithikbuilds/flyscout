@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "computed_at": "2026-07-28T03:10:01.990006+00:00",
+    "computed_at": "2026-07-28T04:50:34.213695+00:00",
     "method": "Flywire-specific rule-based engine — corridor/impact/action from FLYWIRE_INTEL templates, urgency/confidence/ETA derived from change log trigger types and effective dates",
     "count": 10
   },
@@ -23,7 +23,7 @@
       "evidence_ids": [
         "seed_us_004"
       ],
-      "computed_at": "2026-07-28T03:10:01.989874+00:00",
+      "computed_at": "2026-07-28T04:50:34.213562+00:00",
       "is_stale": false
     },
     {
@@ -45,7 +45,7 @@
         "seed_uk_002",
         "chg_uk_psr_scheme_1784282184"
       ],
-      "computed_at": "2026-07-28T03:10:01.989891+00:00",
+      "computed_at": "2026-07-28T04:50:34.213579+00:00",
       "is_stale": false
     },
     {
@@ -67,7 +67,7 @@
         "seed_au_004",
         "chg_au_rba_2026_1784114327"
       ],
-      "computed_at": "2026-07-28T03:10:01.989931+00:00",
+      "computed_at": "2026-07-28T04:50:34.213618+00:00",
       "is_stale": false
     },
     {
@@ -88,7 +88,7 @@
       "evidence_ids": [
         "seed_known_au_debit_cnp"
       ],
-      "computed_at": "2026-07-28T03:10:01.989998+00:00",
+      "computed_at": "2026-07-28T04:50:34.213687+00:00",
       "is_stale": false
     },
     {
@@ -104,13 +104,13 @@
       "corridor": "US domestic payments — education, healthcare, travel (Visa/MC CNP)",
       "impact": "US has the highest CNP credit interchange globally (2.30–2.40% Visa Signature/Infinite). Reg II debit cap vacated by court (Aug 2025, stayed pending 8th Circuit appeal) — if upheld, US debit costs could rise 2–4x from current 21¢+5bps. Antitrust settlement caps qualifying consumer credit at 125bps from Mar 2025.",
       "action": "1. Identify what percentage of US volume is domestic debit — model 2x/4x cost scenarios.\n2. Verify whether Flywire's US institutional clients qualify for the 125bps antitrust cap.\n3. Monitor Eighth Circuit case docket — ruling timing determines urgency of debit cost action.\n4. Ensure US acquirer contracts allow interchange pass-through adjustment.",
-      "evidence": "Mastercard Interchange Fees 2026 — Chargebacks911 (2026-07-27) → Mastercard Interchange Fees 2026 — Chargebacks911 (2026-07-28)",
+      "evidence": "Mastercard Interchange Fees 2026 — Chargebacks911 (2026-07-28) → Mastercard Interchange Fees 2026 — Chargebacks911 (2026-07-28)",
       "evidence_url": "https://chargebacks911.com/mastercard-interchange-fees/",
       "evidence_ids": [
-        "chg_cb911_mc_1785179202",
-        "chg_cb911_mc_1785208198"
+        "chg_cb911_mc_1785208198",
+        "chg_cb911_mc_1785214229"
       ],
-      "computed_at": "2026-07-28T03:10:01.989852+00:00",
+      "computed_at": "2026-07-28T04:50:34.213540+00:00",
       "is_stale": false
     },
     {
@@ -132,13 +132,13 @@
         "chg_eu_eba_1784055448",
         "chg_eu_eba_1784090204"
       ],
-      "computed_at": "2026-07-28T03:10:01.989911+00:00",
+      "computed_at": "2026-07-28T04:50:34.213598+00:00",
       "is_stale": false
     },
     {
       "id": "fw_ca_surcharge_netw",
       "market": "CA",
-      "network": "Both",
+      "network": "Visa",
       "category": "surcharge",
       "status": "monitoring",
       "urgency": "medium",
@@ -154,7 +154,7 @@
         "seed_ca_001",
         "seed_ca_002"
       ],
-      "computed_at": "2026-07-28T03:10:01.989942+00:00",
+      "computed_at": "2026-07-28T04:50:34.213630+00:00",
       "is_stale": false
     },
     {
@@ -176,7 +176,7 @@
         "chg_ca_govt_ic_1784227932",
         "chg_ca_govt_ic_1784263805"
       ],
-      "computed_at": "2026-07-28T03:10:01.989954+00:00",
+      "computed_at": "2026-07-28T04:50:34.213641+00:00",
       "is_stale": false
     },
     {
@@ -197,7 +197,7 @@
       "evidence_ids": [
         "seed_sg_001"
       ],
-      "computed_at": "2026-07-28T03:10:01.989965+00:00",
+      "computed_at": "2026-07-28T04:50:34.213653+00:00",
       "is_stale": false
     },
     {
@@ -219,7 +219,7 @@
         "chg_jp_fsa_1784720417",
         "chg_jp_fsa_1785156433"
       ],
-      "computed_at": "2026-07-28T03:10:01.989986+00:00",
+      "computed_at": "2026-07-28T04:50:34.213674+00:00",
       "is_stale": false
     }
   ]
