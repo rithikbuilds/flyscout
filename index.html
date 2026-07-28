@@ -17,7 +17,7 @@
   --r:8px; --r2:12px; --shadow:0 1px 2px rgba(20,33,61,0.05); --shadow-md:0 4px 16px rgba(20,33,61,0.08);
   --ff:'Inter',-apple-system,sans-serif; --fm:'JetBrains Mono',monospace;
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+,::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--ff);background:var(--bg-soft);color:var(--text);line-height:1.5;-webkit-font-smoothing:antialiased}
 a{color:var(--teal-dark);text-decoration:none}
 a:hover{text-decoration:underline}
@@ -380,7 +380,7 @@ function setKeyStatus(state, detail) {
     testing: { text: 'Testing key against Gemini...', color: 'var(--amber)' },
     verified: { text: '✓ Verified — key is real and working. Chat can phrase answers and search the live web.', color: 'var(--green)' },
     invalid: { text: '✗ ' + (detail || 'Invalid key — Gemini rejected it. Double-check you copied it correctly.'), color: 'var(--red)' },
-    error: { text: '⚠ Could not verify — ' + (detail || 'network error') + '. The key was saved but not confirmed working; try testing again.', color: 'var(--amber)' },
+    error: { text: '⚠️ Could not verify — ' + (detail || 'network error') + '. The key was saved but not confirmed working; try testing again.', color: 'var(--amber)' },
   };
   const m = map[state] || map.empty;
   st.textContent = m.text;
@@ -401,7 +401,7 @@ async function saveAndTestGeminiKey() {
   try { localStorage.setItem('fs_gemini_key', v); } catch(e) {}
 
   try {
-    const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${v}`, {
+    const resp = await fetch(https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${v}, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -441,7 +441,7 @@ function renderDashboard() {
   const thisMonth = new Date().toISOString().slice(0, 7);
   const monthChanges = CHANGES.filter(c => (c.detected_at || '').startsWith(thisMonth));
   document.getElementById('st-month').textContent = monthChanges.length;
-  document.getElementById('st-month-sub').textContent = total ? `of ${total} total` : '—';
+  document.getElementById('st-month-sub').textContent = total ? of ${total} total : '—';
 
   // Last automated check — only show a real timestamp if the script has
   // actually run. Seed data has auto_detected:false so we can tell the
@@ -456,7 +456,7 @@ function renderDashboard() {
       // Overdue — something may be wrong with the scheduled run
       lastCheckEl.style.color = 'var(--amber)';
       if (lastCheckSub) {
-        lastCheckSub.textContent = '⚠ Check overdue — verify GitHub Actions is running';
+        lastCheckSub.textContent = '⚠️ Check overdue — verify GitHub Actions is running';
         lastCheckSub.style.color = 'var(--amber)';
       }
     } else {
@@ -518,7 +518,7 @@ function renderFilters() {
   const markets = [...new Set(CHANGES.map(c => c.market))];
   const el = document.getElementById('cl-filters');
   el.innerHTML = ['all', ...markets].map(m =>
-    `<div class="fchip ${activeFilter===m?'on':''}" onclick="setFilter('${m}')">${m === 'all' ? 'All markets' : m}</div>`
+    <div class="fchip ${activeFilter===m?'on':''}" onclick="setFilter('${m}')">${m === 'all' ? 'All markets' : m}</div>
   ).join('');
 }
 function setFilter(m) { activeFilter = m; renderFilters(); renderChangeLog(); }
@@ -531,9 +531,9 @@ function renderChangeLog() {
 
   if (!items.length) {
     const mktMsg = activeFilter !== 'all'
-      ? `No rule changes tracked yet for <strong>${activeFilter}</strong> — monitoring is active, check back after a few days or trigger a manual run from the Actions tab.`
+      ? No rule changes tracked yet for <strong>${activeFilter}</strong> — monitoring is active, check back after a few days or trigger a manual run from the Actions tab.
       : 'No rule changes tracked yet. The automated check runs 3x daily — check back soon, or trigger a manual run from the Actions tab.';
-    el.innerHTML = `<div class="empty"><div class="empty-icon">📭</div><p>${mktMsg}</p></div>`;
+    el.innerHTML = <div class="empty"><div class="empty-icon">📭</div><p>${mktMsg}</p></div>;
     return;
   }
 
@@ -546,7 +546,7 @@ function renderChangeLog() {
       ? '<span class="badge b-seed">seed</span>'
       : isReviewed
         ? '<span class="badge" style="background:var(--green-bg);color:var(--green);border:1px solid #BBF7D0">✓ verified</span>'
-        : '<span class="badge" style="background:var(--amber-bg);color:var(--amber);border:1px solid #FCD34D">⚠ unverified</span>';
+        : '<span class="badge" style="background:var(--amber-bg);color:var(--amber);border:1px solid #FCD34D">⚠️ unverified</span>';
     return `<div class="chg-card">
       <div class="chg-head">
         <span class="badge b-market">${c.market}</span>
@@ -563,7 +563,7 @@ function renderChangeLog() {
         <div class="diff-box diff-old"><div class="diff-label">Before</div>${c.old_value || '—'}</div>
         <div class="diff-box diff-new"><div class="diff-label">After</div>${c.new_value || '—'}</div>
       </div>` : ''}
-      ${c.new_snippet ? `<div class="chg-snippet">"${c.new_snippet}"</div>` : ''}
+      ${c.new_snippet ? <div class="chg-snippet">"${c.new_snippet}"</div> : ''}
       ${c.impact_analysis ? `
       <div style="background:var(--teal-light);border-radius:var(--r);padding:12px 14px;margin-bottom:10px;border-left:3px solid var(--teal)">
         <div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--teal-dark);margin-bottom:6px">🤖 Auto-generated impact analysis</div>
@@ -574,7 +574,7 @@ function renderChangeLog() {
         ${c.impact_analysis.recommended_actions ? `
         <div style="font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--teal-dark);margin-bottom:4px">Recommended actions</div>
         <ul style="margin:0;padding-left:18px;font-size:12px;color:var(--text);line-height:1.6">
-          ${c.impact_analysis.recommended_actions.map(a => `<li>${a}</li>`).join('')}
+          ${c.impact_analysis.recommended_actions.map(a => <li>${a}</li>).join('')}
         </ul>` : ''}
       </div>` : ''}
       <div class="chg-foot"><span>${c.source_name}</span> · <a href="${c.source_url}" target="_blank" rel="noopener">View source →</a></div>
@@ -733,8 +733,8 @@ function renderPredictions() {
 
       <div style="display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap;margin-bottom:10px">
         ${isActioned
-          ? `<span class="badge" style="background:var(--green-bg);color:var(--green);border:1px solid #BBF7D0">✓ Team actioned ${actionedDate}</span>`
-          : `<span class="badge" style="background:${u.bg};color:${u.color};border:1px solid ${u.border}">${u.label}</span>`
+          ? <span class="badge" style="background:var(--green-bg);color:var(--green);border:1px solid #BBF7D0">✓ Team actioned ${actionedDate}</span>
+          : <span class="badge" style="background:${u.bg};color:${u.color};border:1px solid ${u.border}">${u.label}</span>
         }
         <span class="badge b-market">${p.market}</span>
         <span class="badge ${netClass[p.network]||'b-both'}">${p.network}</span>
@@ -770,7 +770,7 @@ function renderPredictions() {
       <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding-top:10px;border-top:1px solid var(--border-soft)">
         <div style="font-size:10px;color:var(--text-faint)">${statusLabel[p.status] || p.status}</div>
         <button onclick="toggleActioned('${p.id}')" style="padding:5px 12px;border-radius:20px;border:1px solid ${isActioned ? 'var(--green)' : 'var(--border)'};background:${isActioned ? 'var(--green-bg)' : 'var(--bg-soft)'};color:${isActioned ? 'var(--green)' : 'var(--text-muted)'};font-size:10.5px;font-weight:600;cursor:pointer">
-          ${isActioned ? '↩ Mark as pending' : '✓ Mark as actioned'}
+          ${isActioned ? '↩️ Mark as pending' : '✓ Mark as actioned'}
         </button>
       </div>
     </div>`;
@@ -1009,7 +1009,7 @@ function updateTrendSummary(filtered) {
   if (trendView !== 'credit') active.push({ label: trendView,    fn: () => { setTrendView('credit', document.getElementById('fc-credit')); } });
   if (trendPeriod  !== 'all') active.push({ label: trendPeriod,  fn: () => { setTrendPeriod('all', document.getElementById('tp-all')); } });
   pills.innerHTML = active.map((a, i) =>
-    `<div style="display:inline-flex;align-items:center;gap:5px;padding:3px 10px;background:var(--navy);color:#fff;border-radius:20px;font-size:10.5px;font-weight:600;cursor:pointer" onclick="(${a.fn.toString()})()">${a.label} ✕</div>`
+    <div style="display:inline-flex;align-items:center;gap:5px;padding:3px 10px;background:var(--navy);color:#fff;border-radius:20px;font-size:10.5px;font-weight:600;cursor:pointer" onclick="(${a.fn.toString()})()">${a.label} ✕</div>
   ).join('');
 }
 
@@ -1077,8 +1077,8 @@ function buildOverlayDatasets(filteredBaselines, labels, cutoffIndex) {
     const isIncrease = oldRate !== null && newRate > oldRate;
     const pointColor = isIncrease ? '#DC2626' : '#16A34A';
 
-    const label = `${c.market} detected: ${oldRate !== null ? oldRate.toFixed(2)+'% → ' : ''}${newRate.toFixed(2)}%`;
-    const tooltipDetail = `${c.title}\n${c.detected_at ? c.detected_at.slice(0,10) : ''} · ${c.source_name}`;
+    const label = ${c.market} detected: ${oldRate !== null ? oldRate.toFixed(2)+'% → ' : ''}${newRate.toFixed(2)}%;
+    const tooltipDetail = ${c.title}\n${c.detected_at ? c.detected_at.slice(0,10) : ''} · ${c.source_name};
 
     overlays.push({
       type: 'scatter',
@@ -1116,7 +1116,7 @@ function buildRateChart() {
   if (!filtered.length) {
     canvas.style.display = 'none';
     emptyEl.style.display = 'block';
-    emptyEl.innerHTML = `<div style="font-size:28px;margin-bottom:8px;opacity:.3">📊</div>No data for the selected combination.<br><span style="font-size:11px">Try broadening the Market or Network filter.</span>`;
+    emptyEl.innerHTML = <div style="font-size:28px;margin-bottom:8px;opacity:.3">📊</div>No data for the selected combination.<br><span style="font-size:11px">Try broadening the Market or Network filter.</span>;
     if (legEl) legEl.innerHTML = '';
     return;
   }
@@ -1177,4 +1177,3 @@ function buildRateChart() {
         x: { grid:{color:'rgba(0,0,0,0.03)'}, ticks:{font:{size:10},color:'#64748B',maxRotation:0} },
         y: { grid:{color:'rgba(0,0,0,0.03)'}, ticks:{font:{size:10},color:'#64748B',
              callback: v => isBar ? v : v.toFixed(2)+'%'}, suggestedMin:0 }
-  
