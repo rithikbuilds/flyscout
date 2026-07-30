@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "computed_at": "2026-07-30T11:43:50.250302+00:00",
+    "computed_at": "2026-07-30T19:05:16.704217+00:00",
     "method": "Flywire-specific rule-based engine — corridor/impact/action from FLYWIRE_INTEL templates, urgency/confidence/ETA derived from change log trigger types and effective dates",
     "count": 10
   },
@@ -23,7 +23,7 @@
       "evidence_ids": [
         "seed_us_004"
       ],
-      "computed_at": "2026-07-30T11:43:50.250164+00:00",
+      "computed_at": "2026-07-30T19:05:16.704065+00:00",
       "is_stale": false
     },
     {
@@ -39,13 +39,13 @@
       "corridor": "EU-issued cards → UK university merchants (CNP)",
       "impact": "Post-Brexit: EU-issued cards at UK merchants cost up to 1.50% credit / 1.20% debit CNP (was 0.30%/0.20% under EU IFR). Surcharging banned in UK (Consumer Rights Act 2018) so Flywire/institution absorbs the full cross-border cost. PSR market review may re-cap toward 0.30% — a 120bps saving on EU student flows to UK universities.",
       "action": "1. Quantify total EU-issued card CNP volume at UK merchants over last 12 months.\n2. Model the margin impact of a 0.30% re-cap scenario vs current 1.50%.\n3. Track PSR card-acquiring market review — submit response if consultation opens.\n4. Avoid locking UK institutional pricing contracts beyond Q2 2026 without a PSR review clause.",
-      "evidence": "UK Payment Systems Regulator — Card Acquiring Market Review (2024-03-01) → UK PSR — Card Scheme and Processing Fees Market Review (2026-07-17)",
+      "evidence": "UK PSR — Card Scheme and Processing Fees Market Review (2026-07-17) → UK PSR — Card Scheme and Processing Fees Market Review (2026-07-30)",
       "evidence_url": "https://www.psr.org.uk/our-work/market-reviews/market-review-into-card-scheme-and-processing-fees/",
       "evidence_ids": [
-        "seed_uk_002",
-        "chg_uk_psr_scheme_1784282184"
+        "chg_uk_psr_scheme_1784282184",
+        "chg_uk_psr_scheme_1785438308"
       ],
-      "computed_at": "2026-07-30T11:43:50.250182+00:00",
+      "computed_at": "2026-07-30T19:05:16.704084+00:00",
       "is_stale": false
     },
     {
@@ -67,7 +67,7 @@
         "seed_au_004",
         "chg_au_rba_2026_1784114327"
       ],
-      "computed_at": "2026-07-30T11:43:50.250227+00:00",
+      "computed_at": "2026-07-30T19:05:16.704126+00:00",
       "is_stale": false
     },
     {
@@ -88,7 +88,7 @@
       "evidence_ids": [
         "seed_known_au_debit_cnp"
       ],
-      "computed_at": "2026-07-30T11:43:50.250296+00:00",
+      "computed_at": "2026-07-30T19:05:16.704209+00:00",
       "is_stale": false
     },
     {
@@ -107,10 +107,10 @@
       "evidence": "Mastercard Interchange Fees 2026 — Chargebacks911 (2026-07-30) → Mastercard Interchange Fees 2026 — Chargebacks911 (2026-07-30)",
       "evidence_url": "https://chargebacks911.com/mastercard-interchange-fees/",
       "evidence_ids": [
-        "chg_cb911_mc_1785386600",
-        "chg_cb911_mc_1785411824"
+        "chg_cb911_mc_1785411824",
+        "chg_cb911_mc_1785438312"
       ],
-      "computed_at": "2026-07-30T11:43:50.250142+00:00",
+      "computed_at": "2026-07-30T19:05:16.704042+00:00",
       "is_stale": false
     },
     {
@@ -132,13 +132,13 @@
         "chg_eu_eba_1784055448",
         "chg_eu_eba_1784090204"
       ],
-      "computed_at": "2026-07-30T11:43:50.250201+00:00",
+      "computed_at": "2026-07-30T19:05:16.704104+00:00",
       "is_stale": false
     },
     {
       "id": "fw_ca_surcharge_netw",
       "market": "CA",
-      "network": "Visa",
+      "network": "Both",
       "category": "surcharge",
       "status": "monitoring",
       "urgency": "medium",
@@ -154,7 +154,7 @@
         "seed_ca_001",
         "seed_ca_002"
       ],
-      "computed_at": "2026-07-30T11:43:50.250247+00:00",
+      "computed_at": "2026-07-30T19:05:16.704150+00:00",
       "is_stale": false
     },
     {
@@ -176,7 +176,7 @@
         "chg_ca_govt_ic_1784227932",
         "chg_ca_govt_ic_1784263805"
       ],
-      "computed_at": "2026-07-30T11:43:50.250258+00:00",
+      "computed_at": "2026-07-30T19:05:16.704162+00:00",
       "is_stale": false
     },
     {
@@ -197,7 +197,7 @@
       "evidence_ids": [
         "seed_sg_001"
       ],
-      "computed_at": "2026-07-30T11:43:50.250267+00:00",
+      "computed_at": "2026-07-30T19:05:16.704173+00:00",
       "is_stale": false
     },
     {
@@ -219,7 +219,7 @@
         "chg_jp_fsa_1784720417",
         "chg_jp_fsa_1785156433"
       ],
-      "computed_at": "2026-07-30T11:43:50.250285+00:00",
+      "computed_at": "2026-07-30T19:05:16.704196+00:00",
       "is_stale": false
     }
   ]
