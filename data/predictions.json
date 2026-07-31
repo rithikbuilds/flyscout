@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "computed_at": "2026-07-31T09:53:49.836022+00:00",
+    "computed_at": "2026-07-31T11:50:55.206924+00:00",
     "method": "Flywire-specific rule-based engine — corridor/impact/action from FLYWIRE_INTEL templates, urgency/confidence/ETA derived from change log trigger types and effective dates",
     "count": 10
   },
@@ -23,7 +23,7 @@
       "evidence_ids": [
         "seed_us_004"
       ],
-      "computed_at": "2026-07-31T09:53:49.835883+00:00",
+      "computed_at": "2026-07-31T11:50:55.206836+00:00",
       "is_stale": false
     },
     {
@@ -34,18 +34,18 @@
       "status": "open_consultation",
       "urgency": "high",
       "confidence": 55,
-      "title": "UK PSR — Card Scheme and Processing Fees Market Review updated",
+      "title": "Interchange Fee Updates — Payments Cards & Mobile updated",
       "eta": "TBC — awaiting regulatory decision",
       "corridor": "EU-issued cards → UK university merchants (CNP)",
       "impact": "Post-Brexit: EU-issued cards at UK merchants cost up to 1.50% credit / 1.20% debit CNP (was 0.30%/0.20% under EU IFR). Surcharging banned in UK (Consumer Rights Act 2018) so Flywire/institution absorbs the full cross-border cost. PSR market review may re-cap toward 0.30% — a 120bps saving on EU student flows to UK universities.",
       "action": "1. Quantify total EU-issued card CNP volume at UK merchants over last 12 months.\n2. Model the margin impact of a 0.30% re-cap scenario vs current 1.50%.\n3. Track PSR card-acquiring market review — submit response if consultation opens.\n4. Avoid locking UK institutional pricing contracts beyond Q2 2026 without a PSR review clause.",
-      "evidence": "UK PSR — Card Scheme and Processing Fees Market Review (2026-07-17) → UK PSR — Card Scheme and Processing Fees Market Review (2026-07-30)",
-      "evidence_url": "https://www.psr.org.uk/our-work/market-reviews/market-review-into-card-scheme-and-processing-fees/",
+      "evidence": "UK PSR — Card Scheme and Processing Fees Market Review (2026-07-30) → Interchange Fee Updates — Payments Cards & Mobile (2026-07-31)",
+      "evidence_url": "https://www.paymentscardsandmobile.com/category/interchange-fee/",
       "evidence_ids": [
-        "chg_uk_psr_scheme_1784282184",
-        "chg_uk_psr_scheme_1785438308"
+        "chg_uk_psr_scheme_1785438308",
+        "chg_pcm_ic_1785498644"
       ],
-      "computed_at": "2026-07-31T09:53:49.835900+00:00",
+      "computed_at": "2026-07-31T11:50:55.206848+00:00",
       "is_stale": false
     },
     {
@@ -67,7 +67,7 @@
         "seed_au_004",
         "chg_au_rba_2026_1784114327"
       ],
-      "computed_at": "2026-07-31T09:53:49.835938+00:00",
+      "computed_at": "2026-07-31T11:50:55.206875+00:00",
       "is_stale": false
     },
     {
@@ -88,7 +88,7 @@
       "evidence_ids": [
         "seed_known_au_debit_cnp"
       ],
-      "computed_at": "2026-07-31T09:53:49.836014+00:00",
+      "computed_at": "2026-07-31T11:50:55.206919+00:00",
       "is_stale": false
     },
     {
@@ -107,10 +107,10 @@
       "evidence": "Mastercard Interchange Fees 2026 — Chargebacks911 (2026-07-31) → Mastercard Interchange Fees 2026 — Chargebacks911 (2026-07-31)",
       "evidence_url": "https://chargebacks911.com/mastercard-interchange-fees/",
       "evidence_ids": [
-        "chg_cb911_mc_1785490893",
-        "chg_cb911_mc_1785491618"
+        "chg_cb911_mc_1785491618",
+        "chg_cb911_mc_1785498640"
       ],
-      "computed_at": "2026-07-31T09:53:49.835862+00:00",
+      "computed_at": "2026-07-31T11:50:55.206822+00:00",
       "is_stale": false
     },
     {
@@ -132,7 +132,7 @@
         "chg_eu_eba_1784055448",
         "chg_eu_eba_1784090204"
       ],
-      "computed_at": "2026-07-31T09:53:49.835918+00:00",
+      "computed_at": "2026-07-31T11:50:55.206861+00:00",
       "is_stale": false
     },
     {
@@ -154,7 +154,7 @@
         "seed_ca_001",
         "seed_ca_002"
       ],
-      "computed_at": "2026-07-31T09:53:49.835954+00:00",
+      "computed_at": "2026-07-31T11:50:55.206881+00:00",
       "is_stale": false
     },
     {
@@ -176,7 +176,7 @@
         "chg_ca_govt_ic_1784227932",
         "chg_ca_govt_ic_1784263805"
       ],
-      "computed_at": "2026-07-31T09:53:49.835966+00:00",
+      "computed_at": "2026-07-31T11:50:55.206889+00:00",
       "is_stale": false
     },
     {
@@ -197,7 +197,7 @@
       "evidence_ids": [
         "seed_sg_001"
       ],
-      "computed_at": "2026-07-31T09:53:49.835977+00:00",
+      "computed_at": "2026-07-31T11:50:55.206896+00:00",
       "is_stale": false
     },
     {
@@ -213,13 +213,13 @@
       "corridor": "JP domestic CNP — education payments",
       "impact": "Japan debit restructured Nov 2024: contactless NFC 0.90%, new QR tier 0.75%. JFTC/METI interchange disclosure requirement in force since Sep 2022. Cashless ratio reached 42.8% in 2024 (exceeded 40% target).",
       "action": "1. Update JP pricing models to reflect Nov 2024 debit restructuring.\n2. Monitor METI cashless policy for any further rate mandates.\n3. Low urgency — no further Visa/MC JP rule changes confirmed since Jan 2024.",
-      "evidence": "Japan FSA — Recent Releases (incl. Payment Services) (2026-07-22) → Japan FSA — Recent Releases (incl. Payment Services) (2026-07-27)",
+      "evidence": "Japan FSA — Recent Releases (incl. Payment Services) (2026-07-27) → Japan FSA — Recent Releases (incl. Payment Services) (2026-07-31)",
       "evidence_url": "https://www.fsa.go.jp/en/recent.html",
       "evidence_ids": [
-        "chg_jp_fsa_1784720417",
-        "chg_jp_fsa_1785156433"
+        "chg_jp_fsa_1785156433",
+        "chg_jp_fsa_1785498654"
       ],
-      "computed_at": "2026-07-31T09:53:49.836001+00:00",
+      "computed_at": "2026-07-31T11:50:55.206912+00:00",
       "is_stale": false
     }
   ]
