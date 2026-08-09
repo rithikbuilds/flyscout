@@ -11,7 +11,7 @@
       "CA",
       "JP"
     ],
-    "last_updated": "2026-08-09T10:20:12.214430+00:00"
+    "last_updated": "2026-08-09T18:20:42.686729+00:00"
   },
   "changes": [
     {
@@ -2947,6 +2947,48 @@
       "source_url": "https://www.paymentscardsandmobile.com/category/interchange-fee/",
       "old_snippet": "Interchange Fee Archives - Payments Industry Intelligence Home Interchange Fee Interchange Fee All Cyber Security FinTech API M-Commerce Talent Payments News Mobile Remittance P2P SEPA career Contactless Remittance PSD2 Acquiring Stablecoins Mobile Banking Identity Instant Paymen",
       "new_snippet": "Interchange Fee Archives - Payments Industry Intelligence Home Interchange Fee Interchange Fee All POS Terminals Bitcoin E-Money Cyber Crime Data Analytics Cyber Security FinTech API M-Commerce Talent Payments News Mobile Remittance P2P SEPA career Contactless Remittance PSD2 Acq",
+      "reviewed": false,
+      "auto_detected": true,
+      "impact_analysis": null
+    },
+    {
+      "id": "chg_cb911_mc_1786299633",
+      "market": "US",
+      "network": "Mastercard",
+      "category": "interchange",
+      "cnp": true,
+      "title": "Mastercard Interchange Fees 2026 — Chargebacks911 updated",
+      "summary": "Content change detected on Mastercard Interchange Fees 2026 — Chargebacks911. Review source — no specific rate pattern extracted.",
+      "old_value": null,
+      "new_value": null,
+      "trigger": "network_policy_update",
+      "effective_date": null,
+      "detected_at": "2026-08-09T18:20:33.314066+00:00",
+      "source_name": "Mastercard Interchange Fees 2026 — Chargebacks911",
+      "source_url": "https://chargebacks911.com/mastercard-interchange-fees/",
+      "old_snippet": "Get the Rundown on Mastercard Interchange Rates for 2026 Solutions Resources Download Free Report Learn Articles Tips & Insight You Need Guides & Whitepapers Download Expert Info Webinars Listen and Learn—Live Podcast Episodes Watch or Listen on the Go Glossary Chargebacks Terms ",
+      "new_snippet": "interchange rates in April and October of each year. Card Type Card-Present Card-Not-Present Consumer Debit (Regulated) 0.05% + $0.22 0.05% + $0.22 Consumer Debit (Unregulated) 1.05% + $0.15 1.6% + $0.15 Consumer Credit (Core) 1.58% + $0.10 1.89% + $0.10 Consumer Credit (World) 1",
+      "reviewed": false,
+      "auto_detected": true,
+      "impact_analysis": null
+    },
+    {
+      "id": "chg_pcm_ic_1786299636",
+      "market": "UK",
+      "network": "Both",
+      "category": "interchange",
+      "cnp": true,
+      "title": "Interchange Fee Updates — Payments Cards & Mobile updated",
+      "summary": "Content change detected on Interchange Fee Updates — Payments Cards & Mobile. Review source — no specific rate pattern extracted.",
+      "old_value": null,
+      "new_value": null,
+      "trigger": "government_consultation",
+      "effective_date": null,
+      "detected_at": "2026-08-09T18:20:36.995770+00:00",
+      "source_name": "Interchange Fee Updates — Payments Cards & Mobile",
+      "source_url": "https://www.paymentscardsandmobile.com/category/interchange-fee/",
+      "old_snippet": "Interchange Fee Archives - Payments Industry Intelligence Home Interchange Fee Interchange Fee All POS Terminals Bitcoin E-Money Cyber Crime Data Analytics Cyber Security FinTech API M-Commerce Talent Payments News Mobile Remittance P2P SEPA career Contactless Remittance PSD2 Acq",
+      "new_snippet": "Interchange Fee Archives - Payments Industry Intelligence Home Interchange Fee Interchange Fee All Testimonial EMV Omni-Channel Jobs of the Week Retail Banking Issuing & Acquiring ACH Real-Time Payments jobbio AI Commerce Mobile payments Risk & Compliance Automatic Clearing House",
       "reviewed": false,
       "auto_detected": true,
       "impact_analysis": null
