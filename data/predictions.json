@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "computed_at": "2026-08-10T03:41:33.258151+00:00",
+    "computed_at": "2026-08-10T10:54:44.662608+00:00",
     "method": "Flywire-specific rule-based engine — corridor/impact/action from FLYWIRE_INTEL templates, urgency/confidence/ETA derived from change log trigger types and effective dates",
     "count": 10
   },
@@ -23,7 +23,7 @@
       "evidence_ids": [
         "seed_us_004"
       ],
-      "computed_at": "2026-08-10T03:41:33.258009+00:00",
+      "computed_at": "2026-08-10T10:54:44.662496+00:00",
       "is_stale": false
     },
     {
@@ -45,7 +45,7 @@
         "chg_pcm_ic_1786299636",
         "chg_pcm_ic_1786333283"
       ],
-      "computed_at": "2026-08-10T03:41:33.258035+00:00",
+      "computed_at": "2026-08-10T10:54:44.662516+00:00",
       "is_stale": false
     },
     {
@@ -67,7 +67,7 @@
         "seed_au_004",
         "chg_au_rba_2026_1784114327"
       ],
-      "computed_at": "2026-08-10T03:41:33.258074+00:00",
+      "computed_at": "2026-08-10T10:54:44.662546+00:00",
       "is_stale": false
     },
     {
@@ -88,7 +88,7 @@
       "evidence_ids": [
         "seed_known_au_debit_cnp"
       ],
-      "computed_at": "2026-08-10T03:41:33.258143+00:00",
+      "computed_at": "2026-08-10T10:54:44.662603+00:00",
       "is_stale": false
     },
     {
@@ -104,13 +104,13 @@
       "corridor": "US domestic payments — education, healthcare, travel (Visa/MC CNP)",
       "impact": "US has the highest CNP credit interchange globally (2.30–2.40% Visa Signature/Infinite). Reg II debit cap vacated by court (Aug 2025, stayed pending 8th Circuit appeal) — if upheld, US debit costs could rise 2–4x from current 21¢+5bps. Antitrust settlement caps qualifying consumer credit at 125bps from Mar 2025.",
       "action": "1. Identify what percentage of US volume is domestic debit — model 2x/4x cost scenarios.\n2. Verify whether Flywire's US institutional clients qualify for the 125bps antitrust cap.\n3. Monitor Eighth Circuit case docket — ruling timing determines urgency of debit cost action.\n4. Ensure US acquirer contracts allow interchange pass-through adjustment.",
-      "evidence": "Mastercard Interchange Fees 2026 — Chargebacks911 (2026-08-09) → Mastercard Interchange Fees 2026 — Chargebacks911 (2026-08-10)",
+      "evidence": "Mastercard Interchange Fees 2026 — Chargebacks911 (2026-08-10) → Mastercard Interchange Fees 2026 — Chargebacks911 (2026-08-10)",
       "evidence_url": "https://chargebacks911.com/mastercard-interchange-fees/",
       "evidence_ids": [
-        "chg_cb911_mc_1786299633",
-        "chg_cb911_mc_1786333280"
+        "chg_cb911_mc_1786333280",
+        "chg_cb911_mc_1786359271"
       ],
-      "computed_at": "2026-08-10T03:41:33.257982+00:00",
+      "computed_at": "2026-08-10T10:54:44.662478+00:00",
       "is_stale": false
     },
     {
@@ -132,13 +132,13 @@
         "chg_eu_eba_1784055448",
         "chg_eu_eba_1784090204"
       ],
-      "computed_at": "2026-08-10T03:41:33.258054+00:00",
+      "computed_at": "2026-08-10T10:54:44.662530+00:00",
       "is_stale": false
     },
     {
       "id": "fw_ca_surcharge_netw",
       "market": "CA",
-      "network": "Visa",
+      "network": "Both",
       "category": "surcharge",
       "status": "monitoring",
       "urgency": "medium",
@@ -154,7 +154,7 @@
         "seed_ca_001",
         "seed_ca_002"
       ],
-      "computed_at": "2026-08-10T03:41:33.258085+00:00",
+      "computed_at": "2026-08-10T10:54:44.662555+00:00",
       "is_stale": false
     },
     {
@@ -176,7 +176,7 @@
         "chg_ca_govt_ic_1784227932",
         "chg_ca_govt_ic_1784263805"
       ],
-      "computed_at": "2026-08-10T03:41:33.258096+00:00",
+      "computed_at": "2026-08-10T10:54:44.662564+00:00",
       "is_stale": false
     },
     {
@@ -197,7 +197,7 @@
       "evidence_ids": [
         "seed_sg_001"
       ],
-      "computed_at": "2026-08-10T03:41:33.258107+00:00",
+      "computed_at": "2026-08-10T10:54:44.662572+00:00",
       "is_stale": false
     },
     {
@@ -213,13 +213,13 @@
       "corridor": "JP domestic CNP — education payments",
       "impact": "Japan debit restructured Nov 2024: contactless NFC 0.90%, new QR tier 0.75%. JFTC/METI interchange disclosure requirement in force since Sep 2022. Cashless ratio reached 42.8% in 2024 (exceeded 40% target).",
       "action": "1. Update JP pricing models to reflect Nov 2024 debit restructuring.\n2. Monitor METI cashless policy for any further rate mandates.\n3. Low urgency — no further Visa/MC JP rule changes confirmed since Jan 2024.",
-      "evidence": "Japan FSA — Recent Releases (incl. Payment Services) (2026-08-06) → Japan FSA — Recent Releases (incl. Payment Services) (2026-08-07)",
+      "evidence": "Japan FSA — Recent Releases (incl. Payment Services) (2026-08-07) → Japan FSA — Recent Releases (incl. Payment Services) (2026-08-10)",
       "evidence_url": "https://www.fsa.go.jp/en/recent.html",
       "evidence_ids": [
-        "chg_jp_fsa_1786017295",
-        "chg_jp_fsa_1786099210"
+        "chg_jp_fsa_1786099210",
+        "chg_jp_fsa_1786359283"
       ],
-      "computed_at": "2026-08-10T03:41:33.258130+00:00",
+      "computed_at": "2026-08-10T10:54:44.662592+00:00",
       "is_stale": false
     }
   ]

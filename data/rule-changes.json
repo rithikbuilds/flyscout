@@ -11,7 +11,7 @@
       "CA",
       "JP"
     ],
-    "last_updated": "2026-08-10T03:41:33.257609+00:00"
+    "last_updated": "2026-08-10T10:54:44.662178+00:00"
   },
   "changes": [
     {
@@ -3031,6 +3031,48 @@
       "source_url": "https://www.paymentscardsandmobile.com/category/interchange-fee/",
       "old_snippet": "Interchange Fee Archives - Payments Industry Intelligence Home Interchange Fee Interchange Fee All Testimonial EMV Omni-Channel Jobs of the Week Retail Banking Issuing & Acquiring ACH Real-Time Payments jobbio AI Commerce Mobile payments Risk & Compliance Automatic Clearing House",
       "new_snippet": "Interchange Fee Archives - Payments Industry Intelligence Home Interchange Fee Interchange Fee All Processing & Systems HCE Artificial Intelligence (AI) Non-Fungible Tokens - NFT's Embedded Finance Regulation Biometrics Alternative Payments (APMs) Metaverse Agentic Commerce Video",
+      "reviewed": false,
+      "auto_detected": true,
+      "impact_analysis": null
+    },
+    {
+      "id": "chg_cb911_mc_1786359271",
+      "market": "US",
+      "network": "Mastercard",
+      "category": "interchange",
+      "cnp": true,
+      "title": "Mastercard Interchange Fees 2026 — Chargebacks911 updated",
+      "summary": "Content change detected on Mastercard Interchange Fees 2026 — Chargebacks911. Review source — no specific rate pattern extracted.",
+      "old_value": null,
+      "new_value": null,
+      "trigger": "network_policy_update",
+      "effective_date": null,
+      "detected_at": "2026-08-10T10:54:31.794726+00:00",
+      "source_name": "Mastercard Interchange Fees 2026 — Chargebacks911",
+      "source_url": "https://chargebacks911.com/mastercard-interchange-fees/",
+      "old_snippet": "Get the Rundown on Mastercard Interchange Rates for 2026 Solutions Resources Download Free Report Learn Articles Tips & Insight You Need Guides & Whitepapers Download Expert Info Webinars Listen and Learn—Live Podcast Episodes Watch or Listen on the Go Glossary Chargebacks Terms ",
+      "new_snippet": "interchange rates in April and October of each year. Card Type Card-Present Card-Not-Present Consumer Debit (Regulated) 0.05% + $0.22 0.05% + $0.22 Consumer Debit (Unregulated) 1.05% + $0.15 1.6% + $0.15 Consumer Credit (Core) 1.58% + $0.10 1.89% + $0.10 Consumer Credit (World) 1",
+      "reviewed": false,
+      "auto_detected": true,
+      "impact_analysis": null
+    },
+    {
+      "id": "chg_jp_fsa_1786359283",
+      "market": "JP",
+      "network": "Regulator",
+      "category": "interchange",
+      "cnp": false,
+      "title": "Japan FSA — Recent Releases (incl. Payment Services) updated",
+      "summary": "Content change detected on Japan FSA — Recent Releases (incl. Payment Services). Review source — no specific rate pattern extracted.",
+      "old_value": null,
+      "new_value": null,
+      "trigger": "government_consultation",
+      "effective_date": null,
+      "detected_at": "2026-08-10T10:54:43.922289+00:00",
+      "source_name": "Japan FSA — Recent Releases (incl. Payment Services)",
+      "source_url": "https://www.fsa.go.jp/en/recent.html",
+      "old_snippet": "Past Releases : Financial Services Agency HOME Tweet Past Releases August 2026 August 7 Initiative Summary of Upgrading the FSA August 6 Press Conference by KATAYAMA Satsuki, Minister of Finance and Minister of State for Financial Services (July 30, 2026) Publication of the summa",
+      "new_snippet": "Past Releases : Financial Services Agency HOME Tweet Past Releases August 2026 August 10 FSA Weekly Review No.699 August 10, 2026 August 7 Initiative Summary of Upgrading the FSA August 6 Press Conference by KATAYAMA Satsuki, Minister of Finance and Minister of State for Financia",
       "reviewed": false,
       "auto_detected": true,
       "impact_analysis": null
