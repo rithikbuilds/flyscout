@@ -109,46 +109,24 @@ SOURCES = [
     # {"id":"sg_placeholder", ...}
 
     # ── GLOBAL / MULTI-MARKET TRACKERS ────────────────────────────────
-    # MCC — 2026 interchange updates (Visa + Mastercard, all major changes)
-    {"id":"mcc_2026",    "market":"US","network":"Both",       "category":"interchange","cnp":True,
-     "name":"2026 Interchange Updates — Merchant Cost Consulting",
-     "url":"https://merchantcostconsulting.com/lower-credit-card-processing-fees/2026-interchange-updates/"},
-    # MCC — Visa interchange rates (CNP-specific, updated Dec 2025)
-    {"id":"mcc_visa",    "market":"US","network":"Visa",       "category":"interchange","cnp":True,
+    # Merchant Cost Consulting — Visa interchange. Updates promptly when
+    # Visa publishes new rate schedules. Covers US in detail plus global
+    # context (UK, EU, AU cross-border rates referenced in articles).
+    # Already monitoring their Mastercard page as us_mc_ic above.
+    {"id":"mcc_visa",    "market":"US","network":"Visa",       "category":"interchange","cnp":False,
      "name":"Visa Interchange Rates 2026 — Merchant Cost Consulting",
      "url":"https://merchantcostconsulting.com/lower-credit-card-processing-fees/visa-interchange-rates/"},
-    # MCC — Mastercard interchange rates
-    {"id":"us_mc_ic",    "market":"US","network":"Mastercard", "category":"interchange","cnp":True,
-     "name":"Mastercard US Interchange Rates — Merchant Cost Consulting",
-     "url":"https://merchantcostconsulting.com/lower-credit-card-processing-fees/mastercard-interchange-rates/"},
-    # Chargebacks911 — Mastercard interchange, updated April 2026
-    {"id":"cb911_mc",    "market":"US","network":"Mastercard", "category":"interchange","cnp":True,
+    # Clearly Payments — Future of Interchange Fees article updated when
+    # major multi-market changes occur. Covers UK, EU, AU, CA, SG in one
+    # page. Source used for several verified seed entries in our dataset.
+    {"id":"clearly_global","market":"UK","network":"Both",     "category":"interchange","cnp":True,
+     "name":"Future of Interchange Fees — Clearly Payments (multi-market)",
+     "url":"https://www.clearlypayments.com/blog/the-future-of-interchange-fees-2026-and-beyond/"},
+    # Chargebacks911 — Mastercard interchange article, updated April 2026.
+    # Covers global Mastercard changes including CNP fee updates.
+    {"id":"cb911_mc",   "market":"US","network":"Mastercard",  "category":"interchange","cnp":True,
      "name":"Mastercard Interchange Fees 2026 — Chargebacks911",
      "url":"https://chargebacks911.com/mastercard-interchange-fees/"},
-    # Clearly Payments — multi-market (UK, EU, AU, CA, SG)
-    {"id":"clearly_global","market":"UK","network":"Both",     "category":"interchange","cnp":True,
-     "name":"Future of Interchange Fees 2026 — Clearly Payments",
-     "url":"https://www.clearlypayments.com/blog/the-future-of-interchange-fees-2026-and-beyond/"},
-    # PYMNTS — interchange fee news archive, all markets
-    {"id":"pymnts_ic",   "market":"US","network":"Both",       "category":"interchange","cnp":True,
-     "name":"Interchange Fee News — PYMNTS",
-     "url":"https://www.pymnts.com/trends/interchange-fees/"},
-    # Payments Cards & Mobile — UK and EU interchange coverage
-    {"id":"pcm_ic",      "market":"UK","network":"Both",       "category":"interchange","cnp":True,
-     "name":"Interchange Fee Updates — Payments Cards & Mobile",
-     "url":"https://www.paymentscardsandmobile.com/category/interchange-fee/"},
-    # ValPay — surcharging guidelines 2026, covers AU ban + US states + UK/EU
-    {"id":"valpay_sc",   "market":"US","network":"Both",       "category":"surcharge",  "cnp":True,
-     "name":"Surcharging Guidelines 2026 — ValPay",
-     "url":"https://intercom.help/valpay-partner/en/articles/12417545-surcharging-guidelines-for-2026"},
-    # CMSPI — UK PSR and EU cross-border interchange analysis
-    {"id":"cmspi_uk",    "market":"UK","network":"Both",       "category":"interchange","cnp":True,
-     "name":"Interchange Fee Regulation — CMSPI",
-     "url":"https://cmspi.com/resources/?_resource_topic=interchange-regulation"},
-    # Stax Payments — Visa interchange 2026, CNP focused, updated May 2026
-    {"id":"stax_visa",   "market":"US","network":"Visa",       "category":"interchange","cnp":True,
-     "name":"Visa Interchange Rates 2026 — Stax Payments",
-     "url":"https://staxpayments.com/blog/visa-interchange-rates/"},
 
     # FCAC Code of Conduct for the Payment Card Industry — active page,
     # confirmed accessible.
