@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "computed_at": "2026-08-10T18:39:05.014946+00:00",
+    "computed_at": "2026-08-11T03:24:25.519795+00:00",
     "description": "Latest detected rates per market/network/category, extracted automatically from rule-changes.json. Only entries with extractable percentage values are included.",
     "entry_count": 11
   },
@@ -126,12 +126,12 @@
         "interchange": {
           "value": "0.05%, 0.25%, 0.30%, 0.35%",
           "previous": "0.05%, 0.25%, 0.30%, 0.35%",
-          "detected_at": "2026-08-10T18:38:46.362015+00:00",
+          "detected_at": "2026-08-11T03:24:07.245687+00:00",
           "effective_date": null,
           "source_name": "Mastercard US Interchange Rates — Merchant Cost Consulting",
           "source_url": "https://merchantcostconsulting.com/lower-credit-card-processing-fees/mastercard-interchange-rates/",
           "cnp": true,
-          "change_id": "chg_us_mc_ic_1786387126"
+          "change_id": "chg_us_mc_ic_1786418647"
         }
       },
       "Both": {
