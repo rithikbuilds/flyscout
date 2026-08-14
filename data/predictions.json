@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "computed_at": "2026-08-13T18:43:52.848510+00:00",
+    "computed_at": "2026-08-14T03:53:45.504065+00:00",
     "method": "Flywire-specific rule-based engine — corridor/impact/action from FLYWIRE_INTEL templates, urgency/confidence/ETA derived from change log trigger types and effective dates",
     "count": 10
   },
@@ -23,7 +23,7 @@
       "evidence_ids": [
         "seed_us_004"
       ],
-      "computed_at": "2026-08-13T18:43:52.848348+00:00",
+      "computed_at": "2026-08-14T03:53:45.503890+00:00",
       "is_stale": false
     },
     {
@@ -45,7 +45,7 @@
         "chg_pcm_ic_1786387138",
         "chg_pcm_ic_1786418656"
       ],
-      "computed_at": "2026-08-13T18:43:52.848372+00:00",
+      "computed_at": "2026-08-14T03:53:45.503917+00:00",
       "is_stale": false
     },
     {
@@ -61,13 +61,13 @@
       "corridor": "International students → AU universities (Visa/MC CNP)",
       "impact": "Flywire cannot pass card acceptance costs to payers at AU institutions via surcharge from 1 Oct 2026 (RBA final decision). Domestic interchange caps also cut from same date. Foreign-card interchange cap follows 1 Apr 2027 (cost saving for international student home-country cards).",
       "action": "1. Audit all AU merchant agreements — identify where Flywire currently passes surcharges.\n2. Model AU card acceptance costs under new lower interchange caps.\n3. Decide: absorb into spread, increase base pricing, or negotiate acquirer rate reduction.\n4. Notify AU institutional clients of any pricing changes before 1 Oct 2026.",
-      "evidence": "RBA — 2026 Review: Merchant Card Payment Costs Conclusions (2026-07-15) → RBA — Media Releases (Payments) (2026-08-11)",
+      "evidence": "RBA — Media Releases (Payments) (2026-08-11) → RBA — Media Releases (Payments) (2026-08-14)",
       "evidence_url": "https://www.rba.gov.au/media-releases/",
       "evidence_ids": [
-        "chg_au_rba_2026_1784114327",
-        "chg_au_rba_1786426569"
+        "chg_au_rba_1786426569",
+        "chg_au_rba_1786679617"
       ],
-      "computed_at": "2026-08-13T18:43:52.848407+00:00",
+      "computed_at": "2026-08-14T03:53:45.503959+00:00",
       "is_stale": false
     },
     {
@@ -88,7 +88,7 @@
       "evidence_ids": [
         "seed_known_au_debit_cnp"
       ],
-      "computed_at": "2026-08-13T18:43:52.848502+00:00",
+      "computed_at": "2026-08-14T03:53:45.504056+00:00",
       "is_stale": false
     },
     {
@@ -104,13 +104,13 @@
       "corridor": "US domestic payments — education, healthcare, travel (Visa/MC CNP)",
       "impact": "US has the highest CNP credit interchange globally (2.30–2.40% Visa Signature/Infinite). Reg II debit cap vacated by court (Aug 2025, stayed pending 8th Circuit appeal) — if upheld, US debit costs could rise 2–4x from current 21¢+5bps. Antitrust settlement caps qualifying consumer credit at 125bps from Mar 2025.",
       "action": "1. Identify what percentage of US volume is domestic debit — model 2x/4x cost scenarios.\n2. Verify whether Flywire's US institutional clients qualify for the 125bps antitrust cap.\n3. Monitor Eighth Circuit case docket — ruling timing determines urgency of debit cost action.\n4. Ensure US acquirer contracts allow interchange pass-through adjustment.",
-      "evidence": "Mastercard Interchange Fees 2026 — Chargebacks911 (2026-08-13) → Mastercard Interchange Fees 2026 — Chargebacks911 (2026-08-13)",
+      "evidence": "Mastercard Interchange Fees 2026 — Chargebacks911 (2026-08-13) → Mastercard Interchange Fees 2026 — Chargebacks911 (2026-08-14)",
       "evidence_url": "https://chargebacks911.com/mastercard-interchange-fees/",
       "evidence_ids": [
-        "chg_cb911_mc_1786618184",
-        "chg_cb911_mc_1786646626"
+        "chg_cb911_mc_1786646626",
+        "chg_cb911_mc_1786679620"
       ],
-      "computed_at": "2026-08-13T18:43:52.848329+00:00",
+      "computed_at": "2026-08-14T03:53:45.503868+00:00",
       "is_stale": false
     },
     {
@@ -132,7 +132,7 @@
         "chg_eu_eba_1784055448",
         "chg_eu_eba_1784090204"
       ],
-      "computed_at": "2026-08-13T18:43:52.848389+00:00",
+      "computed_at": "2026-08-14T03:53:45.503937+00:00",
       "is_stale": false
     },
     {
@@ -154,7 +154,7 @@
         "seed_ca_001",
         "seed_ca_002"
       ],
-      "computed_at": "2026-08-13T18:43:52.848417+00:00",
+      "computed_at": "2026-08-14T03:53:45.503971+00:00",
       "is_stale": false
     },
     {
@@ -176,7 +176,7 @@
         "chg_ca_govt_ic_1784227932",
         "chg_ca_govt_ic_1784263805"
       ],
-      "computed_at": "2026-08-13T18:43:52.848427+00:00",
+      "computed_at": "2026-08-14T03:53:45.503982+00:00",
       "is_stale": false
     },
     {
@@ -197,7 +197,7 @@
       "evidence_ids": [
         "seed_sg_001"
       ],
-      "computed_at": "2026-08-13T18:43:52.848459+00:00",
+      "computed_at": "2026-08-14T03:53:45.503993+00:00",
       "is_stale": false
     },
     {
@@ -219,7 +219,7 @@
         "chg_jp_fsa_1786593401",
         "chg_jp_fsa_1786618186"
       ],
-      "computed_at": "2026-08-13T18:43:52.848490+00:00",
+      "computed_at": "2026-08-14T03:53:45.504018+00:00",
       "is_stale": false
     }
   ]
