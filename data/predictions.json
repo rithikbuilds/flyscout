@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "computed_at": "2026-08-14T10:45:19.201445+00:00",
+    "computed_at": "2026-08-14T18:37:21.128452+00:00",
     "method": "Flywire-specific rule-based engine — corridor/impact/action from FLYWIRE_INTEL templates, urgency/confidence/ETA derived from change log trigger types and effective dates",
     "count": 10
   },
@@ -23,7 +23,7 @@
       "evidence_ids": [
         "seed_us_004"
       ],
-      "computed_at": "2026-08-14T10:45:19.201329+00:00",
+      "computed_at": "2026-08-14T18:37:21.128309+00:00",
       "is_stale": false
     },
     {
@@ -45,7 +45,7 @@
         "chg_pcm_ic_1786387138",
         "chg_pcm_ic_1786418656"
       ],
-      "computed_at": "2026-08-14T10:45:19.201351+00:00",
+      "computed_at": "2026-08-14T18:37:21.128335+00:00",
       "is_stale": false
     },
     {
@@ -67,7 +67,7 @@
         "chg_au_rba_1786426569",
         "chg_au_rba_1786679617"
       ],
-      "computed_at": "2026-08-14T10:45:19.201383+00:00",
+      "computed_at": "2026-08-14T18:37:21.128374+00:00",
       "is_stale": false
     },
     {
@@ -88,7 +88,7 @@
       "evidence_ids": [
         "seed_known_au_debit_cnp"
       ],
-      "computed_at": "2026-08-14T10:45:19.201439+00:00",
+      "computed_at": "2026-08-14T18:37:21.128444+00:00",
       "is_stale": false
     },
     {
@@ -107,10 +107,10 @@
       "evidence": "Mastercard Interchange Fees 2026 — Chargebacks911 (2026-08-14) → Mastercard Interchange Fees 2026 — Chargebacks911 (2026-08-14)",
       "evidence_url": "https://chargebacks911.com/mastercard-interchange-fees/",
       "evidence_ids": [
-        "chg_cb911_mc_1786679620",
-        "chg_cb911_mc_1786704315"
+        "chg_cb911_mc_1786704315",
+        "chg_cb911_mc_1786732637"
       ],
-      "computed_at": "2026-08-14T10:45:19.201311+00:00",
+      "computed_at": "2026-08-14T18:37:21.128288+00:00",
       "is_stale": false
     },
     {
@@ -132,13 +132,13 @@
         "chg_eu_eba_1784055448",
         "chg_eu_eba_1784090204"
       ],
-      "computed_at": "2026-08-14T10:45:19.201366+00:00",
+      "computed_at": "2026-08-14T18:37:21.128353+00:00",
       "is_stale": false
     },
     {
       "id": "fw_ca_surcharge_netw",
       "market": "CA",
-      "network": "Visa",
+      "network": "Both",
       "category": "surcharge",
       "status": "monitoring",
       "urgency": "medium",
@@ -154,7 +154,7 @@
         "seed_ca_001",
         "seed_ca_002"
       ],
-      "computed_at": "2026-08-14T10:45:19.201392+00:00",
+      "computed_at": "2026-08-14T18:37:21.128384+00:00",
       "is_stale": false
     },
     {
@@ -176,7 +176,7 @@
         "chg_ca_govt_ic_1784227932",
         "chg_ca_govt_ic_1784263805"
       ],
-      "computed_at": "2026-08-14T10:45:19.201401+00:00",
+      "computed_at": "2026-08-14T18:37:21.128396+00:00",
       "is_stale": false
     },
     {
@@ -197,7 +197,7 @@
       "evidence_ids": [
         "seed_sg_001"
       ],
-      "computed_at": "2026-08-14T10:45:19.201410+00:00",
+      "computed_at": "2026-08-14T18:37:21.128407+00:00",
       "is_stale": false
     },
     {
@@ -219,7 +219,7 @@
         "chg_jp_fsa_1786593401",
         "chg_jp_fsa_1786618186"
       ],
-      "computed_at": "2026-08-14T10:45:19.201429+00:00",
+      "computed_at": "2026-08-14T18:37:21.128433+00:00",
       "is_stale": false
     }
   ]
