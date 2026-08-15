@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "computed_at": "2026-08-15T10:09:51.392669+00:00",
+    "computed_at": "2026-08-15T18:10:08.005616+00:00",
     "method": "Flywire-specific rule-based engine — corridor/impact/action from FLYWIRE_INTEL templates, urgency/confidence/ETA derived from change log trigger types and effective dates",
     "count": 10
   },
@@ -23,7 +23,7 @@
       "evidence_ids": [
         "seed_us_004"
       ],
-      "computed_at": "2026-08-15T10:09:51.392528+00:00",
+      "computed_at": "2026-08-15T18:10:08.005471+00:00",
       "is_stale": false
     },
     {
@@ -45,7 +45,7 @@
         "chg_pcm_ic_1786387138",
         "chg_pcm_ic_1786418656"
       ],
-      "computed_at": "2026-08-15T10:09:51.392554+00:00",
+      "computed_at": "2026-08-15T18:10:08.005497+00:00",
       "is_stale": false
     },
     {
@@ -67,7 +67,7 @@
         "chg_au_rba_1786426569",
         "chg_au_rba_1786679617"
       ],
-      "computed_at": "2026-08-15T10:09:51.392593+00:00",
+      "computed_at": "2026-08-15T18:10:08.005536+00:00",
       "is_stale": false
     },
     {
@@ -88,7 +88,7 @@
       "evidence_ids": [
         "seed_known_au_debit_cnp"
       ],
-      "computed_at": "2026-08-15T10:09:51.392662+00:00",
+      "computed_at": "2026-08-15T18:10:08.005608+00:00",
       "is_stale": false
     },
     {
@@ -107,10 +107,10 @@
       "evidence": "Mastercard Interchange Fees 2026 — Chargebacks911 (2026-08-15) → Mastercard Interchange Fees 2026 — Chargebacks911 (2026-08-15)",
       "evidence_url": "https://chargebacks911.com/mastercard-interchange-fees/",
       "evidence_ids": [
-        "chg_cb911_mc_1786761711",
-        "chg_cb911_mc_1786788587"
+        "chg_cb911_mc_1786788587",
+        "chg_cb911_mc_1786817402"
       ],
-      "computed_at": "2026-08-15T10:09:51.392506+00:00",
+      "computed_at": "2026-08-15T18:10:08.005450+00:00",
       "is_stale": false
     },
     {
@@ -132,7 +132,7 @@
         "chg_eu_eba_1784055448",
         "chg_eu_eba_1784090204"
       ],
-      "computed_at": "2026-08-15T10:09:51.392573+00:00",
+      "computed_at": "2026-08-15T18:10:08.005516+00:00",
       "is_stale": false
     },
     {
@@ -154,7 +154,7 @@
         "seed_ca_001",
         "seed_ca_002"
       ],
-      "computed_at": "2026-08-15T10:09:51.392604+00:00",
+      "computed_at": "2026-08-15T18:10:08.005547+00:00",
       "is_stale": false
     },
     {
@@ -176,7 +176,7 @@
         "chg_ca_govt_ic_1784227932",
         "chg_ca_govt_ic_1784263805"
       ],
-      "computed_at": "2026-08-15T10:09:51.392615+00:00",
+      "computed_at": "2026-08-15T18:10:08.005558+00:00",
       "is_stale": false
     },
     {
@@ -197,7 +197,7 @@
       "evidence_ids": [
         "seed_sg_001"
       ],
-      "computed_at": "2026-08-15T10:09:51.392626+00:00",
+      "computed_at": "2026-08-15T18:10:08.005569+00:00",
       "is_stale": false
     },
     {
@@ -219,7 +219,7 @@
         "chg_jp_fsa_1786593401",
         "chg_jp_fsa_1786618186"
       ],
-      "computed_at": "2026-08-15T10:09:51.392650+00:00",
+      "computed_at": "2026-08-15T18:10:08.005595+00:00",
       "is_stale": false
     }
   ]
