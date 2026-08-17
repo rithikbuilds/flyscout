@@ -529,6 +529,15 @@ function renderChangeLog() {
   let items = activeFilter === 'all' ? CHANGES : CHANGES.filter(c => c.market === activeFilter);
   items = [...items].sort((a,b) => new Date(b.detected_at) - new Date(a.detected_at));
 
+  // Deduplicate: same market+network+category+title → keep only the most recent
+  const seen = new Set();
+  items = items.filter(c => {
+    const key = `${c.market}|${c.network}|${c.category}|${c.title}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+
   if (!items.length) {
     const mktMsg = activeFilter !== 'all'
       ? `No rule changes tracked yet for <strong>${activeFilter}</strong> — monitoring is active, check back after a few days or trigger a manual run from the Actions tab.`
