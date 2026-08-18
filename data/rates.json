@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "computed_at": "2026-08-17T18:18:26.814450+00:00",
+    "computed_at": "2026-08-18T02:45:19.011843+00:00",
     "description": "Latest detected rates per market/network/category, extracted automatically from rule-changes.json. Only entries with extractable percentage values are included.",
     "entry_count": 11
   },
@@ -8,14 +8,14 @@
     "UK": {
       "Both": {
         "interchange": {
-          "value": "1.15% debit / 1.5% credit",
-          "previous": "0.2% debit / 0.3% credit (EU IFR cap)",
-          "detected_at": "2024-01-01T00:00:00Z",
-          "effective_date": "2021-10-01",
-          "source_name": "The Future of Interchange Fees: 2026 — Clearly Payments",
+          "value": "0.95%, 0.2%, 0.3%, 1.15%",
+          "previous": "0.95%, 0.2%, 0.3%, 1.15%",
+          "detected_at": "2026-08-18T02:45:12.146653+00:00",
+          "effective_date": null,
+          "source_name": "Future of Interchange Fees — Clearly Payments (multi-market)",
           "source_url": "https://www.clearlypayments.com/blog/the-future-of-interchange-fees-2026-and-beyond/",
           "cnp": true,
-          "change_id": "seed_uk_001"
+          "change_id": "chg_clearly_global_1787021112"
         }
       }
     },

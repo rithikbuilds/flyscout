@@ -11,7 +11,7 @@
       "CA",
       "JP"
     ],
-    "last_updated": "2026-08-17T18:18:26.814355+00:00"
+    "last_updated": "2026-08-18T02:45:19.011749+00:00"
   },
   "changes": [
     {
@@ -3867,6 +3867,48 @@
       "trigger": "network_policy_update",
       "effective_date": null,
       "detected_at": "2026-08-17T18:18:19.855028+00:00",
+      "source_name": "Mastercard Interchange Fees 2026 — Chargebacks911",
+      "source_url": "https://chargebacks911.com/mastercard-interchange-fees/",
+      "old_snippet": "Get the Rundown on Mastercard Interchange Rates for 2026 Solutions Resources Download Free Report Learn Articles Tips & Insight You Need Guides & Whitepapers Download Expert Info Webinars Listen and Learn—Live Podcast Episodes Watch or Listen on the Go Glossary Chargebacks Terms ",
+      "new_snippet": "interchange rates in April and October of each year. Card Type Card-Present Card-Not-Present Consumer Debit (Regulated) 0.05% + $0.22 0.05% + $0.22 Consumer Debit (Unregulated) 1.05% + $0.15 1.6% + $0.15 Consumer Credit (Core) 1.58% + $0.10 1.89% + $0.10 Consumer Credit (World) 1",
+      "reviewed": false,
+      "auto_detected": true,
+      "impact_analysis": null
+    },
+    {
+      "id": "chg_clearly_global_1787021112",
+      "market": "UK",
+      "network": "Both",
+      "category": "interchange",
+      "cnp": true,
+      "title": "Future of Interchange Fees — Clearly Payments (multi-market) updated",
+      "summary": "Content change detected on Future of Interchange Fees — Clearly Payments (multi-market). Rate values changed.",
+      "old_value": "0.95%, 0.2%, 0.3%, 1.15%",
+      "new_value": "0.95%, 0.2%, 0.3%, 1.15%",
+      "trigger": "regulatory_order",
+      "effective_date": null,
+      "detected_at": "2026-08-18T02:45:12.146653+00:00",
+      "source_name": "Future of Interchange Fees — Clearly Payments (multi-market)",
+      "source_url": "https://www.clearlypayments.com/blog/the-future-of-interchange-fees-2026-and-beyond/",
+      "old_snippet": "The Future of Interchange Fees: 2026 and Beyond Skip to content Payments Research ● Payments Market & Trends The Future of Interchange Fees: 2026 and Beyond Updated: October 21, 2025 Interchange fees make up a large share of the cost merchants pay to accept credit and debit cards",
+      "new_snippet": "3, Canada: The Government announced and finalized agreements lowering the average small-business credit interchange to ~0.95%, with additional ecommerce relief. 2011, United States: The Federal Reserve implemented the Durbin Amendment ’s debit cap via Regulation II, setting a max",
+      "reviewed": false,
+      "auto_detected": true,
+      "impact_analysis": null
+    },
+    {
+      "id": "chg_cb911_mc_1787021113",
+      "market": "US",
+      "network": "Mastercard",
+      "category": "interchange",
+      "cnp": true,
+      "title": "Mastercard Interchange Fees 2026 — Chargebacks911 updated",
+      "summary": "Content change detected on Mastercard Interchange Fees 2026 — Chargebacks911. Review source — no specific rate pattern extracted.",
+      "old_value": null,
+      "new_value": null,
+      "trigger": "network_policy_update",
+      "effective_date": null,
+      "detected_at": "2026-08-18T02:45:13.511894+00:00",
       "source_name": "Mastercard Interchange Fees 2026 — Chargebacks911",
       "source_url": "https://chargebacks911.com/mastercard-interchange-fees/",
       "old_snippet": "Get the Rundown on Mastercard Interchange Rates for 2026 Solutions Resources Download Free Report Learn Articles Tips & Insight You Need Guides & Whitepapers Download Expert Info Webinars Listen and Learn—Live Podcast Episodes Watch or Listen on the Go Glossary Chargebacks Terms ",
