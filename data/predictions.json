@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "computed_at": "2026-08-24T10:25:45.000085+00:00",
+    "computed_at": "2026-08-24T18:20:41.459040+00:00",
     "method": "Flywire-specific rule-based engine — corridor/impact/action from FLYWIRE_INTEL templates, urgency/confidence/ETA derived from change log trigger types and effective dates",
     "count": 10
   },
@@ -24,7 +24,7 @@
         "chg_pcm_ic_1786418656",
         "chg_clearly_global_1787021112"
       ],
-      "computed_at": "2026-08-24T10:25:44.999960+00:00",
+      "computed_at": "2026-08-24T18:20:41.458890+00:00",
       "is_stale": false
     },
     {
@@ -45,7 +45,7 @@
       "evidence_ids": [
         "seed_us_004"
       ],
-      "computed_at": "2026-08-24T10:25:44.999928+00:00",
+      "computed_at": "2026-08-24T18:20:41.458859+00:00",
       "is_stale": false
     },
     {
@@ -67,7 +67,7 @@
         "chg_au_rba_1787134540",
         "chg_au_rba_1787193979"
       ],
-      "computed_at": "2026-08-24T10:25:45.000001+00:00",
+      "computed_at": "2026-08-24T18:20:41.458928+00:00",
       "is_stale": false
     },
     {
@@ -88,7 +88,7 @@
       "evidence_ids": [
         "seed_known_au_debit_cnp"
       ],
-      "computed_at": "2026-08-24T10:25:45.000076+00:00",
+      "computed_at": "2026-08-24T18:20:41.459028+00:00",
       "is_stale": false
     },
     {
@@ -107,10 +107,10 @@
       "evidence": "Mastercard Interchange Fees 2026 — Chargebacks911 (2026-08-24) → Mastercard Interchange Fees 2026 — Chargebacks911 (2026-08-24)",
       "evidence_url": "https://chargebacks911.com/mastercard-interchange-fees/",
       "evidence_ids": [
-        "chg_cb911_mc_1787539985",
-        "chg_cb911_mc_1787567140"
+        "chg_cb911_mc_1787567140",
+        "chg_cb911_mc_1787595637"
       ],
-      "computed_at": "2026-08-24T10:25:44.999903+00:00",
+      "computed_at": "2026-08-24T18:20:41.458837+00:00",
       "is_stale": false
     },
     {
@@ -126,13 +126,13 @@
       "corridor": "EU domestic and cross-border CNP — education and healthcare",
       "impact": "EU IFR caps consumer credit CNP at 0.30% (cheapest market globally for Flywire). Non-EEA cards (e.g. US/AU student paying EU university) cost 1.50% credit CNP — capped until Nov 2029 by voluntary Visa/MC commitment (confirmed Jul 2024).",
       "action": "1. Low urgency — EU caps stable and extended to 2029.\n2. Ensure EU acquirer contracts correctly apply IFR rates to consumer cards.\n3. Flag commercial/corporate card volumes — these are NOT covered by IFR caps.\n4. Monitor EU Parliament for proposed IFR debit cap reduction (0.20%→0.15%).",
-      "evidence": "EBA — Payment Services & IFR Regulation (2026-07-14) → EBA — Payment Services & IFR Regulation (2026-07-15)",
+      "evidence": "EBA — Payment Services & IFR Regulation (2026-07-15) → EBA — Payment Services & IFR Regulation (2026-08-24)",
       "evidence_url": "https://www.eba.europa.eu/regulation-and-policy/payment-services-and-electronic-money",
       "evidence_ids": [
-        "chg_eu_eba_1784055448",
-        "chg_eu_eba_1784090204"
+        "chg_eu_eba_1784090204",
+        "chg_eu_eba_1787595633"
       ],
-      "computed_at": "2026-08-24T10:25:44.999979+00:00",
+      "computed_at": "2026-08-24T18:20:41.458908+00:00",
       "is_stale": false
     },
     {
@@ -154,7 +154,7 @@
         "seed_ca_001",
         "seed_ca_002"
       ],
-      "computed_at": "2026-08-24T10:25:45.000016+00:00",
+      "computed_at": "2026-08-24T18:20:41.458937+00:00",
       "is_stale": false
     },
     {
@@ -176,7 +176,7 @@
         "chg_ca_govt_ic_1784227932",
         "chg_ca_govt_ic_1784263805"
       ],
-      "computed_at": "2026-08-24T10:25:45.000027+00:00",
+      "computed_at": "2026-08-24T18:20:41.458951+00:00",
       "is_stale": false
     },
     {
@@ -197,7 +197,7 @@
       "evidence_ids": [
         "seed_sg_001"
       ],
-      "computed_at": "2026-08-24T10:25:45.000038+00:00",
+      "computed_at": "2026-08-24T18:20:41.458967+00:00",
       "is_stale": false
     },
     {
@@ -213,13 +213,13 @@
       "corridor": "JP domestic CNP — education payments",
       "impact": "Japan debit restructured Nov 2024: contactless NFC 0.90%, new QR tier 0.75%. JFTC/METI interchange disclosure requirement in force since Sep 2022. Cashless ratio reached 42.8% in 2024 (exceeded 40% target).",
       "action": "1. Update JP pricing models to reflect Nov 2024 debit restructuring.\n2. Monitor METI cashless policy for any further rate mandates.\n3. Low urgency — no further Visa/MC JP rule changes confirmed since Jan 2024.",
-      "evidence": "Japan FSA — Recent Releases (incl. Payment Services) (2026-08-13) → Japan FSA — Recent Releases (incl. Payment Services) (2026-08-17)",
+      "evidence": "Japan FSA — Recent Releases (incl. Payment Services) (2026-08-17) → Japan FSA — Recent Releases (incl. Payment Services) (2026-08-24)",
       "evidence_url": "https://www.fsa.go.jp/en/recent.html",
       "evidence_ids": [
-        "chg_jp_fsa_1786618186",
-        "chg_jp_fsa_1786961957"
+        "chg_jp_fsa_1786961957",
+        "chg_jp_fsa_1787595640"
       ],
-      "computed_at": "2026-08-24T10:25:45.000064+00:00",
+      "computed_at": "2026-08-24T18:20:41.458999+00:00",
       "is_stale": false
     }
   ]
