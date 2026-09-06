@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "computed_at": "2026-09-06T06:34:04.104810+00:00",
+    "computed_at": "2026-09-06T13:13:42.250131+00:00",
     "method": "Flywire-specific rule-based engine — corridor/impact/action from FLYWIRE_INTEL templates, urgency/confidence/ETA derived from change log trigger types and effective dates",
     "count": 10
   },
@@ -24,7 +24,7 @@
         "chg_pcm_ic_1786418656",
         "chg_clearly_global_1787021112"
       ],
-      "computed_at": "2026-09-06T06:34:04.104671+00:00",
+      "computed_at": "2026-09-06T13:13:42.250006+00:00",
       "is_stale": false
     },
     {
@@ -45,7 +45,7 @@
       "evidence_ids": [
         "seed_us_004"
       ],
-      "computed_at": "2026-09-06T06:34:04.104642+00:00",
+      "computed_at": "2026-09-06T13:13:42.249974+00:00",
       "is_stale": false
     },
     {
@@ -67,7 +67,7 @@
         "chg_au_rba_1787832283",
         "chg_au_rba_1788417286"
       ],
-      "computed_at": "2026-09-06T06:34:04.104734+00:00",
+      "computed_at": "2026-09-06T13:13:42.250049+00:00",
       "is_stale": false
     },
     {
@@ -88,7 +88,7 @@
       "evidence_ids": [
         "seed_known_au_debit_cnp"
       ],
-      "computed_at": "2026-09-06T06:34:04.104802+00:00",
+      "computed_at": "2026-09-06T13:13:42.250123+00:00",
       "is_stale": false
     },
     {
@@ -104,13 +104,13 @@
       "corridor": "US domestic payments — education, healthcare, travel (Visa/MC CNP)",
       "impact": "US has the highest CNP credit interchange globally (2.30–2.40% Visa Signature/Infinite). Reg II debit cap vacated by court (Aug 2025, stayed pending 8th Circuit appeal) — if upheld, US debit costs could rise 2–4x from current 21¢+5bps. Antitrust settlement caps qualifying consumer credit at 125bps from Mar 2025.",
       "action": "1. Identify what percentage of US volume is domestic debit — model 2x/4x cost scenarios.\n2. Verify whether Flywire's US institutional clients qualify for the 125bps antitrust cap.\n3. Monitor Eighth Circuit case docket — ruling timing determines urgency of debit cost action.\n4. Ensure US acquirer contracts allow interchange pass-through adjustment.",
-      "evidence": "Mastercard Interchange Fees 2026 — Chargebacks911 (2026-09-05) → Mastercard Interchange Fees 2026 — Chargebacks911 (2026-09-06)",
+      "evidence": "Mastercard Interchange Fees 2026 — Chargebacks911 (2026-09-06) → Mastercard Interchange Fees 2026 — Chargebacks911 (2026-09-06)",
       "evidence_url": "https://chargebacks911.com/mastercard-interchange-fees/",
       "evidence_ids": [
-        "chg_cb911_mc_1788637059",
-        "chg_cb911_mc_1788676440"
+        "chg_cb911_mc_1788676440",
+        "chg_cb911_mc_1788700417"
       ],
-      "computed_at": "2026-09-06T06:34:04.104621+00:00",
+      "computed_at": "2026-09-06T13:13:42.249951+00:00",
       "is_stale": false
     },
     {
@@ -132,7 +132,7 @@
         "chg_eu_eba_1787595633",
         "chg_eu_eba_1787923582"
       ],
-      "computed_at": "2026-09-06T06:34:04.104688+00:00",
+      "computed_at": "2026-09-06T13:13:42.250026+00:00",
       "is_stale": false
     },
     {
@@ -154,7 +154,7 @@
         "seed_ca_001",
         "seed_ca_002"
       ],
-      "computed_at": "2026-09-06T06:34:04.104747+00:00",
+      "computed_at": "2026-09-06T13:13:42.250060+00:00",
       "is_stale": false
     },
     {
@@ -176,7 +176,7 @@
         "chg_ca_govt_ic_1784227932",
         "chg_ca_govt_ic_1784263805"
       ],
-      "computed_at": "2026-09-06T06:34:04.104757+00:00",
+      "computed_at": "2026-09-06T13:13:42.250072+00:00",
       "is_stale": false
     },
     {
@@ -197,7 +197,7 @@
       "evidence_ids": [
         "seed_sg_001"
       ],
-      "computed_at": "2026-09-06T06:34:04.104767+00:00",
+      "computed_at": "2026-09-06T13:13:42.250082+00:00",
       "is_stale": true
     },
     {
@@ -219,7 +219,7 @@
         "chg_jp_fsa_1787923587",
         "chg_jp_fsa_1788196557"
       ],
-      "computed_at": "2026-09-06T06:34:04.104790+00:00",
+      "computed_at": "2026-09-06T13:13:42.250110+00:00",
       "is_stale": false
     }
   ]
