@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "computed_at": "2026-09-09T13:59:32.157338+00:00",
+    "computed_at": "2026-09-09T20:07:14.388188+00:00",
     "method": "Flywire-specific rule-based engine — corridor/impact/action from FLYWIRE_INTEL templates, urgency/confidence/ETA derived from change log trigger types and effective dates",
     "count": 10
   },
@@ -24,7 +24,7 @@
         "chg_pcm_ic_1786418656",
         "chg_clearly_global_1787021112"
       ],
-      "computed_at": "2026-09-09T13:59:32.157123+00:00",
+      "computed_at": "2026-09-09T20:07:14.388049+00:00",
       "is_stale": false
     },
     {
@@ -45,7 +45,7 @@
       "evidence_ids": [
         "seed_us_004"
       ],
-      "computed_at": "2026-09-09T13:59:32.157090+00:00",
+      "computed_at": "2026-09-09T20:07:14.388013+00:00",
       "is_stale": false
     },
     {
@@ -67,7 +67,7 @@
         "chg_au_rba_1787832283",
         "chg_au_rba_1788417286"
       ],
-      "computed_at": "2026-09-09T13:59:32.157230+00:00",
+      "computed_at": "2026-09-09T20:07:14.388096+00:00",
       "is_stale": false
     },
     {
@@ -88,7 +88,7 @@
       "evidence_ids": [
         "seed_known_au_debit_cnp"
       ],
-      "computed_at": "2026-09-09T13:59:32.157328+00:00",
+      "computed_at": "2026-09-09T20:07:14.388179+00:00",
       "is_stale": false
     },
     {
@@ -110,7 +110,7 @@
         "chg_cb911_mc_1788936504",
         "chg_cb911_mc_1788962367"
       ],
-      "computed_at": "2026-09-09T13:59:32.157065+00:00",
+      "computed_at": "2026-09-09T20:07:14.387985+00:00",
       "is_stale": false
     },
     {
@@ -132,13 +132,13 @@
         "chg_eu_eba_1787595633",
         "chg_eu_eba_1787923582"
       ],
-      "computed_at": "2026-09-09T13:59:32.157202+00:00",
+      "computed_at": "2026-09-09T20:07:14.388070+00:00",
       "is_stale": false
     },
     {
       "id": "fw_ca_surcharge_netw",
       "market": "CA",
-      "network": "Both",
+      "network": "Visa",
       "category": "surcharge",
       "status": "monitoring",
       "urgency": "medium",
@@ -154,7 +154,7 @@
         "seed_ca_001",
         "seed_ca_002"
       ],
-      "computed_at": "2026-09-09T13:59:32.157250+00:00",
+      "computed_at": "2026-09-09T20:07:14.388108+00:00",
       "is_stale": false
     },
     {
@@ -176,7 +176,7 @@
         "chg_ca_govt_ic_1784227932",
         "chg_ca_govt_ic_1784263805"
       ],
-      "computed_at": "2026-09-09T13:59:32.157270+00:00",
+      "computed_at": "2026-09-09T20:07:14.388121+00:00",
       "is_stale": false
     },
     {
@@ -197,7 +197,7 @@
       "evidence_ids": [
         "seed_sg_001"
       ],
-      "computed_at": "2026-09-09T13:59:32.157284+00:00",
+      "computed_at": "2026-09-09T20:07:14.388133+00:00",
       "is_stale": true
     },
     {
@@ -219,7 +219,7 @@
         "chg_jp_fsa_1788196557",
         "chg_jp_fsa_1788875819"
       ],
-      "computed_at": "2026-09-09T13:59:32.157315+00:00",
+      "computed_at": "2026-09-09T20:07:14.388165+00:00",
       "is_stale": false
     }
   ]
