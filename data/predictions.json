@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "computed_at": "2026-10-13T09:10:50.711018+00:00",
+    "computed_at": "2026-10-13T17:27:54.492006+00:00",
     "method": "Flywire-specific rule-based engine — corridor/impact/action from FLYWIRE_INTEL templates, urgency/confidence/ETA derived from change log trigger types and effective dates",
     "count": 10
   },
@@ -24,7 +24,7 @@
         "chg_pcm_ic_1786418656",
         "chg_clearly_global_1787021112"
       ],
-      "computed_at": "2026-10-13T09:10:50.710898+00:00",
+      "computed_at": "2026-10-13T17:27:54.491924+00:00",
       "is_stale": false
     },
     {
@@ -45,7 +45,7 @@
       "evidence_ids": [
         "seed_us_004"
       ],
-      "computed_at": "2026-10-13T09:10:50.710869+00:00",
+      "computed_at": "2026-10-13T17:27:54.491904+00:00",
       "is_stale": false
     },
     {
@@ -67,7 +67,7 @@
         "chg_au_rba_1790669568",
         "chg_au_rba_1790843893"
       ],
-      "computed_at": "2026-10-13T09:10:50.710940+00:00",
+      "computed_at": "2026-10-13T17:27:54.491953+00:00",
       "is_stale": false
     },
     {
@@ -88,7 +88,7 @@
       "evidence_ids": [
         "seed_known_au_debit_cnp"
       ],
-      "computed_at": "2026-10-13T09:10:50.711010+00:00",
+      "computed_at": "2026-10-13T17:27:54.492001+00:00",
       "is_stale": false
     },
     {
@@ -104,13 +104,13 @@
       "corridor": "US domestic payments — education, healthcare, travel (Visa/MC CNP)",
       "impact": "US has the highest CNP credit interchange globally (2.30–2.40% Visa Signature/Infinite). Reg II debit cap vacated by court (Aug 2025, stayed pending 8th Circuit appeal) — if upheld, US debit costs could rise 2–4x from current 21¢+5bps. Antitrust settlement caps qualifying consumer credit at 125bps from Mar 2025.",
       "action": "1. Identify what percentage of US volume is domestic debit — model 2x/4x cost scenarios.\n2. Verify whether Flywire's US institutional clients qualify for the 125bps antitrust cap.\n3. Monitor Eighth Circuit case docket — ruling timing determines urgency of debit cost action.\n4. Ensure US acquirer contracts allow interchange pass-through adjustment.",
-      "evidence": "Mastercard Interchange Fees 2026 — Chargebacks911 (2026-10-12) → Mastercard Interchange Fees 2026 — Chargebacks911 (2026-10-13)",
+      "evidence": "Mastercard Interchange Fees 2026 — Chargebacks911 (2026-10-13) → Mastercard Interchange Fees 2026 — Chargebacks911 (2026-10-13)",
       "evidence_url": "https://chargebacks911.com/mastercard-interchange-fees/",
       "evidence_ids": [
-        "chg_cb911_mc_1791834177",
-        "chg_cb911_mc_1791882645"
+        "chg_cb911_mc_1791882645",
+        "chg_cb911_mc_1791912468"
       ],
-      "computed_at": "2026-10-13T09:10:50.710847+00:00",
+      "computed_at": "2026-10-13T17:27:54.491889+00:00",
       "is_stale": false
     },
     {
@@ -132,7 +132,7 @@
         "chg_eu_eba_1789048483",
         "chg_eu_eba_1789134891"
       ],
-      "computed_at": "2026-10-13T09:10:50.710918+00:00",
+      "computed_at": "2026-10-13T17:27:54.491937+00:00",
       "is_stale": false
     },
     {
@@ -154,7 +154,7 @@
         "seed_ca_001",
         "seed_ca_002"
       ],
-      "computed_at": "2026-10-13T09:10:50.710950+00:00",
+      "computed_at": "2026-10-13T17:27:54.491959+00:00",
       "is_stale": false
     },
     {
@@ -170,13 +170,13 @@
       "corridor": "CA domestic CNP — education payments",
       "impact": "SMB interchange relief targets ~0.95% average effective credit interchange for eligible merchants. Visa SMB credit 1.35%, debit 0.50% (from Mar 2025). Flywire's CA institutional clients may qualify for SMB rates.",
       "action": "1. Confirm which CA institutions qualify for Visa/MC SMB interchange rates.\n2. Update CA pricing models to reflect Mar 2025 rate reduction (1.40%→1.35% credit).\n3. Flag for annual CA pricing review.",
-      "evidence": "FCAC — Annual Report & Payment Card News (2026-07-16) → FCAC — Annual Report & Payment Card News (2026-07-17)",
+      "evidence": "FCAC — Annual Report & Payment Card News (2026-07-17) → FCAC — Annual Report & Payment Card News (2026-10-13)",
       "evidence_url": "https://www.canada.ca/en/financial-consumer-agency/corporate/planning/annual-reports.html",
       "evidence_ids": [
-        "chg_ca_govt_ic_1784227932",
-        "chg_ca_govt_ic_1784263805"
+        "chg_ca_govt_ic_1784263805",
+        "chg_ca_govt_ic_1791912473"
       ],
-      "computed_at": "2026-10-13T09:10:50.710961+00:00",
+      "computed_at": "2026-10-13T17:27:54.491968+00:00",
       "is_stale": false
     },
     {
@@ -197,7 +197,7 @@
       "evidence_ids": [
         "seed_sg_001"
       ],
-      "computed_at": "2026-10-13T09:10:50.710972+00:00",
+      "computed_at": "2026-10-13T17:27:54.491975+00:00",
       "is_stale": true
     },
     {
@@ -219,7 +219,7 @@
         "chg_jp_fsa_1791393704",
         "chg_jp_fsa_1791479914"
       ],
-      "computed_at": "2026-10-13T09:10:50.710998+00:00",
+      "computed_at": "2026-10-13T17:27:54.491993+00:00",
       "is_stale": false
     }
   ]

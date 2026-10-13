@@ -11,7 +11,7 @@
       "CA",
       "JP"
     ],
-    "last_updated": "2026-10-13T09:10:50.710342+00:00"
+    "last_updated": "2026-10-13T17:27:54.491539+00:00"
   },
   "changes": [
     {
@@ -7210,6 +7210,48 @@
       "source_url": "https://chargebacks911.com/mastercard-interchange-fees/",
       "old_snippet": "Get the Rundown on Mastercard Interchange Rates for 2026 Solutions Resources Download Free Report Learn Articles Tips & Insight You Need Guides & Whitepapers Download Expert Info Webinars Listen and Learn—Live Podcast Episodes Watch or Listen on the Go Glossary Chargebacks Terms ",
       "new_snippet": "interchange rates in April and October of each year. Card Type Card-Present Card-Not-Present Consumer Debit (Regulated) 0.05% + $0.22 0.05% + $0.22 Consumer Debit (Unregulated) 1.05% + $0.15 1.6% + $0.15 Consumer Credit (Core) 1.58% + $0.10 1.89% + $0.10 Consumer Credit (World) 1",
+      "reviewed": false,
+      "auto_detected": true,
+      "impact_analysis": null
+    },
+    {
+      "id": "chg_cb911_mc_1791912468",
+      "market": "US",
+      "network": "Mastercard",
+      "category": "interchange",
+      "cnp": true,
+      "title": "Mastercard Interchange Fees 2026 — Chargebacks911 updated",
+      "summary": "Content change detected on Mastercard Interchange Fees 2026 — Chargebacks911. Review source — no specific rate pattern extracted.",
+      "old_value": null,
+      "new_value": null,
+      "trigger": "network_policy_update",
+      "effective_date": null,
+      "detected_at": "2026-10-13T17:27:48.759239+00:00",
+      "source_name": "Mastercard Interchange Fees 2026 — Chargebacks911",
+      "source_url": "https://chargebacks911.com/mastercard-interchange-fees/",
+      "old_snippet": "Get the Rundown on Mastercard Interchange Rates for 2026 Solutions Resources Download Free Report Learn Articles Tips & Insight You Need Guides & Whitepapers Download Expert Info Webinars Listen and Learn—Live Podcast Episodes Watch or Listen on the Go Glossary Chargebacks Terms ",
+      "new_snippet": "interchange rates in April and October of each year. Card Type Card-Present Card-Not-Present Consumer Debit (Regulated) 0.05% + $0.22 0.05% + $0.22 Consumer Debit (Unregulated) 1.05% + $0.15 1.6% + $0.15 Consumer Credit (Core) 1.58% + $0.10 1.89% + $0.10 Consumer Credit (World) 1",
+      "reviewed": false,
+      "auto_detected": true,
+      "impact_analysis": null
+    },
+    {
+      "id": "chg_ca_govt_ic_1791912473",
+      "market": "CA",
+      "network": "Both",
+      "category": "interchange",
+      "cnp": false,
+      "title": "FCAC — Annual Report & Payment Card News updated",
+      "summary": "Content change detected on FCAC — Annual Report & Payment Card News. Review source — no specific rate pattern extracted.",
+      "old_value": null,
+      "new_value": null,
+      "trigger": "internal_capture",
+      "effective_date": null,
+      "detected_at": "2026-10-13T17:27:53.635275+00:00",
+      "source_name": "FCAC — Annual Report & Payment Card News",
+      "source_url": "https://www.canada.ca/en/financial-consumer-agency/corporate/planning/annual-reports.html",
+      "old_snippet": "Annual reports: Financial Consumer Agency of Canada - Canada.ca Annual reports FCAC's annual reports present the performance results and major initiatives of the Agency through the fiscal year from April 1 to March 31. 2024 to 2025 Annual report 2024 to 2025 Financial statements ",
+      "new_snippet": "Annual reports: Financial Consumer Agency of Canada - Canada.ca Annual reports FCAC's annual reports present the performance results and major initiatives of the Agency through the fiscal year from April 1 to March 31. 2025 to 2026 Annual report 2025 to 2026 Financial statements ",
       "reviewed": false,
       "auto_detected": true,
       "impact_analysis": null
