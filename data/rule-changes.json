@@ -11,7 +11,7 @@
       "CA",
       "JP"
     ],
-    "last_updated": "2026-10-13T22:29:30.823582+00:00"
+    "last_updated": "2026-10-14T07:21:16.993830+00:00"
   },
   "changes": [
     {
@@ -7269,6 +7269,48 @@
       "trigger": "network_policy_update",
       "effective_date": null,
       "detected_at": "2026-10-13T22:29:26.026028+00:00",
+      "source_name": "Mastercard Interchange Fees 2026 — Chargebacks911",
+      "source_url": "https://chargebacks911.com/mastercard-interchange-fees/",
+      "old_snippet": "Get the Rundown on Mastercard Interchange Rates for 2026 Solutions Resources Download Free Report Learn Articles Tips & Insight You Need Guides & Whitepapers Download Expert Info Webinars Listen and Learn—Live Podcast Episodes Watch or Listen on the Go Glossary Chargebacks Terms ",
+      "new_snippet": "interchange rates in April and October of each year. Card Type Card-Present Card-Not-Present Consumer Debit (Regulated) 0.05% + $0.22 0.05% + $0.22 Consumer Debit (Unregulated) 1.05% + $0.15 1.6% + $0.15 Consumer Credit (Core) 1.58% + $0.10 1.89% + $0.10 Consumer Credit (World) 1",
+      "reviewed": false,
+      "auto_detected": true,
+      "impact_analysis": null
+    },
+    {
+      "id": "chg_au_rba_1791962468",
+      "market": "AU",
+      "network": "Regulator",
+      "category": "surcharge",
+      "cnp": true,
+      "title": "RBA — Media Releases (Payments) updated",
+      "summary": "Content change detected on RBA — Media Releases (Payments). Review source — no specific rate pattern extracted.",
+      "old_value": null,
+      "new_value": null,
+      "trigger": "government_consultation",
+      "effective_date": null,
+      "detected_at": "2026-10-14T07:21:08.457195+00:00",
+      "source_name": "RBA — Media Releases (Payments)",
+      "source_url": "https://www.rba.gov.au/media-releases/",
+      "old_snippet": "Media Releases | RBA Latest Media Releases RSS Feed of Media Releases Release of Financial Stability Review – October 2026 1 October 2026 Media Release 2026-28 Statement by the Monetary Policy Board: Monetary Policy Decision 29 September 2026 Media Release 2026-27 Assessment of A",
+      "new_snippet": "Media Releases | RBA Latest Media Releases RSS Feed of Media Releases Appointment of Chief Risk Officer 14 October 2026 Media Release 2026-29 Release of Financial Stability Review – October 2026 1 October 2026 Media Release 2026-28 Statement by the Monetary Policy Board: Monetary",
+      "reviewed": false,
+      "auto_detected": true,
+      "impact_analysis": null
+    },
+    {
+      "id": "chg_cb911_mc_1791962470",
+      "market": "US",
+      "network": "Mastercard",
+      "category": "interchange",
+      "cnp": true,
+      "title": "Mastercard Interchange Fees 2026 — Chargebacks911 updated",
+      "summary": "Content change detected on Mastercard Interchange Fees 2026 — Chargebacks911. Review source — no specific rate pattern extracted.",
+      "old_value": null,
+      "new_value": null,
+      "trigger": "network_policy_update",
+      "effective_date": null,
+      "detected_at": "2026-10-14T07:21:10.798323+00:00",
       "source_name": "Mastercard Interchange Fees 2026 — Chargebacks911",
       "source_url": "https://chargebacks911.com/mastercard-interchange-fees/",
       "old_snippet": "Get the Rundown on Mastercard Interchange Rates for 2026 Solutions Resources Download Free Report Learn Articles Tips & Insight You Need Guides & Whitepapers Download Expert Info Webinars Listen and Learn—Live Podcast Episodes Watch or Listen on the Go Glossary Chargebacks Terms ",
