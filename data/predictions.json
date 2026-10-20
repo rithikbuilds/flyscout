@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "computed_at": "2026-10-20T07:21:39.991545+00:00",
+    "computed_at": "2026-10-20T14:52:21.972055+00:00",
     "method": "Flywire-specific rule-based engine — corridor/impact/action from FLYWIRE_INTEL templates, urgency/confidence/ETA derived from change log trigger types and effective dates",
     "count": 10
   },
@@ -24,7 +24,7 @@
         "chg_pcm_ic_1786418656",
         "chg_clearly_global_1787021112"
       ],
-      "computed_at": "2026-10-20T07:21:39.991405+00:00",
+      "computed_at": "2026-10-20T14:52:21.971899+00:00",
       "is_stale": false
     },
     {
@@ -45,7 +45,7 @@
       "evidence_ids": [
         "seed_us_004"
       ],
-      "computed_at": "2026-10-20T07:21:39.991374+00:00",
+      "computed_at": "2026-10-20T14:52:21.971867+00:00",
       "is_stale": false
     },
     {
@@ -67,7 +67,7 @@
         "chg_au_rba_1790843893",
         "chg_au_rba_1791962468"
       ],
-      "computed_at": "2026-10-20T07:21:39.991452+00:00",
+      "computed_at": "2026-10-20T14:52:21.971948+00:00",
       "is_stale": false
     },
     {
@@ -88,7 +88,7 @@
       "evidence_ids": [
         "seed_known_au_debit_cnp"
       ],
-      "computed_at": "2026-10-20T07:21:39.991537+00:00",
+      "computed_at": "2026-10-20T14:52:21.972045+00:00",
       "is_stale": false
     },
     {
@@ -107,10 +107,10 @@
       "evidence": "Visa USA Interchange — Merchant Fees Hub (2026-10-20) → Mastercard Interchange Fees 2026 — Chargebacks911 (2026-10-20)",
       "evidence_url": "https://chargebacks911.com/mastercard-interchange-fees/",
       "evidence_ids": [
-        "chg_us_visa_ic_1792480887",
-        "chg_cb911_mc_1792480894"
+        "chg_us_visa_ic_1792507931",
+        "chg_cb911_mc_1792507937"
       ],
-      "computed_at": "2026-10-20T07:21:39.991351+00:00",
+      "computed_at": "2026-10-20T14:52:21.971841+00:00",
       "is_stale": false
     },
     {
@@ -132,7 +132,7 @@
         "chg_eu_eba_1789048483",
         "chg_eu_eba_1789134891"
       ],
-      "computed_at": "2026-10-20T07:21:39.991426+00:00",
+      "computed_at": "2026-10-20T14:52:21.971921+00:00",
       "is_stale": false
     },
     {
@@ -154,7 +154,7 @@
         "seed_ca_001",
         "seed_ca_002"
       ],
-      "computed_at": "2026-10-20T07:21:39.991463+00:00",
+      "computed_at": "2026-10-20T14:52:21.971960+00:00",
       "is_stale": false
     },
     {
@@ -176,7 +176,7 @@
         "chg_ca_govt_ic_1784263805",
         "chg_ca_govt_ic_1791912473"
       ],
-      "computed_at": "2026-10-20T07:21:39.991475+00:00",
+      "computed_at": "2026-10-20T14:52:21.971973+00:00",
       "is_stale": false
     },
     {
@@ -197,7 +197,7 @@
       "evidence_ids": [
         "seed_sg_001"
       ],
-      "computed_at": "2026-10-20T07:21:39.991487+00:00",
+      "computed_at": "2026-10-20T14:52:21.971985+00:00",
       "is_stale": true
     },
     {
@@ -213,13 +213,13 @@
       "corridor": "JP domestic CNP — education payments",
       "impact": "Japan debit restructured Nov 2024: contactless NFC 0.90%, new QR tier 0.75%. JFTC/METI interchange disclosure requirement in force since Sep 2022. Cashless ratio reached 42.8% in 2024 (exceeded 40% target).",
       "action": "1. Update JP pricing models to reflect Nov 2024 debit restructuring.\n2. Monitor METI cashless policy for any further rate mandates.\n3. Low urgency — no further Visa/MC JP rule changes confirmed since Jan 2024.",
-      "evidence": "Japan FSA — Recent Releases (incl. Payment Services) (2026-10-08) → Japan FSA — Recent Releases (incl. Payment Services) (2026-10-15)",
+      "evidence": "Japan FSA — Recent Releases (incl. Payment Services) (2026-10-15) → Japan FSA — Recent Releases (incl. Payment Services) (2026-10-20)",
       "evidence_url": "https://www.fsa.go.jp/en/recent.html",
       "evidence_ids": [
-        "chg_jp_fsa_1791479914",
-        "chg_jp_fsa_1792048358"
+        "chg_jp_fsa_1792048358",
+        "chg_jp_fsa_1792507941"
       ],
-      "computed_at": "2026-10-20T07:21:39.991523+00:00",
+      "computed_at": "2026-10-20T14:52:21.972021+00:00",
       "is_stale": false
     }
   ]
