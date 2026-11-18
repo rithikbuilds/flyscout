@@ -11,7 +11,7 @@
       "CA",
       "JP"
     ],
-    "last_updated": "2026-11-18T00:49:19.511047+00:00"
+    "last_updated": "2026-11-18T09:56:51.785878+00:00"
   },
   "changes": [
     {
@@ -10129,6 +10129,48 @@
       "source_url": "https://chargebacks911.com/mastercard-interchange-fees/",
       "old_snippet": "Get the Rundown on Mastercard Interchange Rates for 2026 Solutions Resources Download Free Report Learn Articles Tips & Insight You Need Guides & Whitepapers Download Expert Info Webinars Listen and Learn—Live Podcast Episodes Watch or Listen on the Go Glossary Chargebacks Terms ",
       "new_snippet": "interchange rates in April and October of each year. Card Type Card-Present Card-Not-Present Consumer Debit (Regulated) 0.05% + $0.22 0.05% + $0.22 Consumer Debit (Unregulated) 1.05% + $0.15 1.6% + $0.15 Consumer Credit (Core) 1.58% + $0.10 1.89% + $0.10 Consumer Credit (World) 1",
+      "reviewed": false,
+      "auto_detected": true,
+      "impact_analysis": null
+    },
+    {
+      "id": "chg_cb911_mc_1794995804",
+      "market": "US",
+      "network": "Mastercard",
+      "category": "interchange",
+      "cnp": true,
+      "title": "Mastercard Interchange Fees 2026 — Chargebacks911 updated",
+      "summary": "Content change detected on Mastercard Interchange Fees 2026 — Chargebacks911. Review source — no specific rate pattern extracted.",
+      "old_value": null,
+      "new_value": null,
+      "trigger": "network_policy_update",
+      "effective_date": null,
+      "detected_at": "2026-11-18T09:56:44.525286+00:00",
+      "source_name": "Mastercard Interchange Fees 2026 — Chargebacks911",
+      "source_url": "https://chargebacks911.com/mastercard-interchange-fees/",
+      "old_snippet": "Get the Rundown on Mastercard Interchange Rates for 2026 Solutions Resources Download Free Report Learn Articles Tips & Insight You Need Guides & Whitepapers Download Expert Info Webinars Listen and Learn—Live Podcast Episodes Watch or Listen on the Go Glossary Chargebacks Terms ",
+      "new_snippet": "interchange rates in April and October of each year. Card Type Card-Present Card-Not-Present Consumer Debit (Regulated) 0.05% + $0.22 0.05% + $0.22 Consumer Debit (Unregulated) 1.05% + $0.15 1.6% + $0.15 Consumer Credit (Core) 1.58% + $0.10 1.89% + $0.10 Consumer Credit (World) 1",
+      "reviewed": false,
+      "auto_detected": true,
+      "impact_analysis": null
+    },
+    {
+      "id": "chg_jp_fsa_1794995811",
+      "market": "JP",
+      "network": "Regulator",
+      "category": "interchange",
+      "cnp": false,
+      "title": "Japan FSA — Recent Releases (incl. Payment Services) updated",
+      "summary": "Content change detected on Japan FSA — Recent Releases (incl. Payment Services). Review source — no specific rate pattern extracted.",
+      "old_value": null,
+      "new_value": null,
+      "trigger": "government_consultation",
+      "effective_date": null,
+      "detected_at": "2026-11-18T09:56:51.185827+00:00",
+      "source_name": "Japan FSA — Recent Releases (incl. Payment Services)",
+      "source_url": "https://www.fsa.go.jp/en/recent.html",
+      "old_snippet": "Past Releases : Financial Services Agency HOME Tweet Past Releases November 2026 November 17 Japan Fintech Week 2027 Website Launched FSA Weekly Review No.711 November 17, 2026 FSA publishes English translation of monthly magazine, Access FSA No.276 FSA publishes English translat",
+      "new_snippet": "Past Releases : Financial Services Agency HOME Tweet Past Releases November 2026 November 18 IOSCOâs Appointment of the leadership of standing committees November 17 Japan Fintech Week 2027 Website Launched FSA Weekly Review No.711 November 17, 2026 FSA publishes English transl",
       "reviewed": false,
       "auto_detected": true,
       "impact_analysis": null
